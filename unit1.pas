@@ -711,6 +711,7 @@ var
   mtool_version: String = '';
   mtool_version_data: String = '';
   mtool_database: String = '';
+  data: String = '';
   manifest_data: String = '';
   manifest_hash: String = '';
   scryfall_sets: String = '';

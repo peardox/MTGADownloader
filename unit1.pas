@@ -693,6 +693,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   InitializeLog;
   EnableNetwork := True;
+  EnableBlockingDownloads := True;
   Memo1.Clear;
   Form1.Width := 800;
   Form1.Height := 600;
@@ -724,19 +725,22 @@ begin
     begin
       if manifest_hash <> have_manifest_hash then
         begin
-{}
           manifest_data := get_wotc_manifest(manifest_hash);
           SaveStringToFile('data' + PathDelim + 'manifest.json', manifest_data);
           WritelnLog('Call process_wotc_manifest');
           process_wotc_manifest(manifest_data);
-{}
         end
       else
         begin
-          WritelnLog('Reading data' + PathDelim + 'manifest.json');
-          manifest_data := LoadStringFromFile('data' + PathDelim + 'manifest.json');
-          WritelnLog('Call process_wotc_manifest');
-          process_wotc_manifest(manifest_data);
+          if FileExists(PathDelim + 'manifest.json') then
+            begin
+            WritelnLog('Reading data' + PathDelim + 'manifest.json');
+            manifest_data := LoadStringFromFile('data' + PathDelim + 'manifest.json');
+            WritelnLog('Call process_wotc_manifest');
+            process_wotc_manifest(manifest_data);
+            end
+          else
+            Memo1.Lines.Add('Missing manifest.json');
         end;
     end
   else

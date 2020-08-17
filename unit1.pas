@@ -1,9 +1,10 @@
 unit Unit1;
 
 {$mode objfpc}{$H+}
- {$define build_wotc}
- {$define build_mtool}
- {$define build_scryfall}
+{$define build_wotc}
+{$define build_mtool}
+{$define build_scryfall}
+{$define build_mtgjson}
 
 // {$define wotc_cards_only}
 
@@ -60,6 +61,8 @@ const
   MTOOL_VERSION_URI = 'https://mtgatool.com/database/latest/en';
   SCRYFALL_SET_URI = 'https://api.scryfall.com/sets';
   SCRYFALL_SYMBOL_URI = 'https://api.scryfall.com/symbology';
+  MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
+  MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
 
 implementation
 
@@ -787,6 +790,7 @@ begin
     end;
 {$endif}
 {$ifdef build_scryfall}
+  Memo1.Lines.Add('---------- SCRYFALL ----------');
   scryfall_sets := getScryfallSets;
   if scryfall_sets <> EmptyStr then
     begin
@@ -800,6 +804,17 @@ begin
       SaveStringToFile('data' + PathDelim + 'scryfall_symbols.json', scryfall_symbols);
       process_scryfall_data(scryfall_symbols, 'scryfall_symbols');
     end;
+{$endif}
+
+{$ifdef build_mtgjson}
+  Memo1.Lines.Add('---------- MTGJSON ----------');
+  data := DownloadNetworkFile(MTGJSON_ENUMS_URI, [soGzip]);
+  Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_enums.json');
+  SaveStringToFile('data' + PathDelim + 'mtgjson_enums.json', data);
+
+  data := DownloadNetworkFile(MTGJSON_SETLIST_URI, [soGzip]);
+  Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_setlist.json');
+  SaveStringToFile('data' + PathDelim + 'mtgjson_setlist.json', data);
 {$endif}
 
   ticks := CastleGetTickCount64 - ticks;

@@ -63,6 +63,7 @@ const
   SCRYFALL_SYMBOL_URI = 'https://api.scryfall.com/symbology';
   MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
+  MTGJSON_DECKLIST_URI = 'https://mtgjson.com/api/v5/DeckList.json.gz';
 
 implementation
 
@@ -816,6 +817,10 @@ begin
   data := DownloadNetworkFile(MTGJSON_SETLIST_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_setlist.json');
   SaveStringToFile('data' + PathDelim + 'mtgjson_setlist.json', data);
+
+  data := DownloadNetworkFile(MTGJSON_DECKLIST_URI, [soGzip]);
+  Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_decklist.json');
+  SaveStringToFile('data' + PathDelim + 'mtgjson_decklist.json', data);
 {$endif}
 
   ticks := CastleGetTickCount64 - ticks;

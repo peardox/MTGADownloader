@@ -343,7 +343,7 @@ begin
   contents := DownloadNetworkFile(Uri, sOptions);
   if not(contents = EmptyStr) then
     begin
-      SaveStringToFile('data' + PathDelim + Asset + '.json', contents);
+      SaveStringToFile('castle-data:/' + Asset + '.json', contents);
       Result := contents;
     end;
 
@@ -731,7 +731,7 @@ begin
       if manifest_hash <> have_manifest_hash then
         begin
           manifest_data := get_wotc_manifest(manifest_hash);
-          SaveStringToFile('data' + PathDelim + 'manifest.json', manifest_data);
+          SaveStringToFile('castle-data:/' + 'manifest.json', manifest_data);
           WritelnLog('Call process_wotc_manifest');
           process_wotc_manifest(manifest_data);
         end
@@ -740,7 +740,7 @@ begin
           if FileExists(PathDelim + 'manifest.json') then
             begin
             WritelnLog('Reading data' + PathDelim + 'manifest.json');
-            manifest_data := LoadStringFromFile('data' + PathDelim + 'manifest.json');
+            manifest_data := LoadStringFromFile('castle-data:/' + 'manifest.json');
             WritelnLog('Call process_wotc_manifest');
             process_wotc_manifest(manifest_data);
             end
@@ -764,16 +764,16 @@ begin
       begin
         mtool_version := Json.Find('latest').AsString;
         if not (mtool_version = have_mtool_version) then
-//        if not FileExists('data' + PathDelim + 'mtool.json') then
+//        if not FileExists('castle-data:/' + 'mtool.json') then
           begin
             mtool_database := DownloadNetworkFile(MTOOL_DATABASE_URI);
             Memo1.Lines.Add('Saving to data' + PathDelim + 'mtool.json');
-            SaveStringToFile('data' + PathDelim + 'mtool.json', mtool_database);
+            SaveStringToFile('castle-data:/' + 'mtool.json', mtool_database);
             process_mtool_database(mtool_database, 'mtool_database');
           end
         else
           begin
-            mtool_database := LoadStringFromFile('data' + PathDelim + 'mtool.json');
+            mtool_database := LoadStringFromFile('castle-data:/' + 'mtool.json');
             if not (mtool_database = EmptyStr) then
               begin
                 process_mtool_database(mtool_database, 'mtool_database');
@@ -796,14 +796,14 @@ begin
   scryfall_sets := getScryfallSets;
   if scryfall_sets <> EmptyStr then
     begin
-      SaveStringToFile('data' + PathDelim + 'scryfall_sets.json', scryfall_sets);
+      SaveStringToFile('castle-data:/' + 'scryfall_sets.json', scryfall_sets);
       process_scryfall_data(scryfall_sets, 'scryfall_sets');
     end;
 
   scryfall_symbols := getScryfallSymbols;
   if scryfall_symbols <> EmptyStr then
     begin
-      SaveStringToFile('data' + PathDelim + 'scryfall_symbols.json', scryfall_symbols);
+      SaveStringToFile('castle-data:/' + 'scryfall_symbols.json', scryfall_symbols);
       process_scryfall_data(scryfall_symbols, 'scryfall_symbols');
     end;
 {$endif}
@@ -812,15 +812,15 @@ begin
   Memo1.Lines.Add('---------- MTGJSON ----------');
   data := DownloadNetworkFile(MTGJSON_ENUMS_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_enums.json');
-  SaveStringToFile('data' + PathDelim + 'mtgjson_enums.json', data);
+  SaveStringToFile('castle-data:/' + 'mtgjson_enums.json', data);
 
   data := DownloadNetworkFile(MTGJSON_SETLIST_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_setlist.json');
-  SaveStringToFile('data' + PathDelim + 'mtgjson_setlist.json', data);
+  SaveStringToFile('castle-data:/' + 'mtgjson_setlist.json', data);
 
   data := DownloadNetworkFile(MTGJSON_DECKLIST_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_decklist.json');
-  SaveStringToFile('data' + PathDelim + 'mtgjson_decklist.json', data);
+  SaveStringToFile('castle-data:/' + 'mtgjson_decklist.json', data);
 {$endif}
 
   ticks := CastleGetTickCount64 - ticks;

@@ -1,9 +1,9 @@
 unit Unit1;
 
 {$mode objfpc}{$H+}
-{$define build_wotc}
-{$define build_mtool}
-{$define build_scryfall}
+//{$define build_wotc}
+// {$define build_mtool}
+// {$define build_scryfall}
 {$define build_mtgjson}
 
 // {$define wotc_cards_only}
@@ -15,7 +15,7 @@ uses
   ComCtrls, md5,
   {$ifndef VER3_0} OpenSSLSockets, {$endif}
   CastleDownload, CastleParameters, CastleClassUtils,
-  CastleControl, CastleTimeUtils, CastleLog,
+  CastleControl, CastleTimeUtils, CastleLog, CastleFilesUtils,
   TypInfo, JsonTools
   ;
 
@@ -84,18 +84,6 @@ begin
   result := GetEnumName(TypeInfo(TJsonNodeKind), ord(Node));
 end;
 
-procedure SaveStringToFile(FileName: AnsiString; Str: String);
-var
-  vStrm: TFileStream;
-begin
-  vStrm := TFileStream.Create(FileName, fmOpenReadWrite or fmCreate);
-  try
-    vStrm.Write(Str[1], Length(Str));
-  finally
-    vStrm.Free;
-  end;
-end;
-
 procedure MemoMessage(msg: String; slen: Integer = 80);
 begin
 {
@@ -105,24 +93,6 @@ begin
 }
     Form1.Memo1.Lines.Add(msg);
     Application.ProcessMessages;
-end;
-
-function LoadStringFromFile(FileName: String): String;
-var
-  vStrm: TFileStream;
-  Str: String;
-  fs: Integer;
-begin
-  Str := EmptyStr;
-  vStrm := TFileStream.Create(FileName, fmOpenRead);
-  fs := vStrm.Size - vStrm.Position;
-  SetLength(Str, fs);
-  try
-    vStrm.Read(PChar(Str)^, fs);
-  finally
-    vStrm.Free;
-  end;
-  Result := Str;
 end;
 
 function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []): String;
@@ -343,7 +313,7 @@ begin
   contents := DownloadNetworkFile(Uri, sOptions);
   if not(contents = EmptyStr) then
     begin
-      SaveStringToFile('castle-data:/' + Asset + '.json', contents);
+      StringToFile('castle-data:/' + Asset + '.json', contents);
       Result := contents;
     end;
 
@@ -721,6 +691,7 @@ var
 begin
   ticks := CastleGetTickCount64;
   Memo1.Clear;
+  Button1.Enabled := False;
 
 {$ifdef build_wotc}
   Memo1.Lines.Add('------ WOTC MANIFEST ------');
@@ -731,7 +702,7 @@ begin
       if manifest_hash <> have_manifest_hash then
         begin
           manifest_data := get_wotc_manifest(manifest_hash);
-          SaveStringToFile('castle-data:/' + 'manifest.json', manifest_data);
+          StringToFile('castle-data:/' + 'manifest.json', manifest_data);
           WritelnLog('Call process_wotc_manifest');
           process_wotc_manifest(manifest_data);
         end
@@ -740,7 +711,7 @@ begin
           if FileExists(PathDelim + 'manifest.json') then
             begin
             WritelnLog('Reading data' + PathDelim + 'manifest.json');
-            manifest_data := LoadStringFromFile('castle-data:/' + 'manifest.json');
+            manifest_data := FileToString('castle-data:/' + 'manifest.json');
             WritelnLog('Call process_wotc_manifest');
             process_wotc_manifest(manifest_data);
             end
@@ -768,12 +739,12 @@ begin
           begin
             mtool_database := DownloadNetworkFile(MTOOL_DATABASE_URI);
             Memo1.Lines.Add('Saving to data' + PathDelim + 'mtool.json');
-            SaveStringToFile('castle-data:/' + 'mtool.json', mtool_database);
+            StringToFile('castle-data:/' + 'mtool.json', mtool_database);
             process_mtool_database(mtool_database, 'mtool_database');
           end
         else
           begin
-            mtool_database := LoadStringFromFile('castle-data:/' + 'mtool.json');
+            mtool_database := FileToString('castle-data:/' + 'mtool.json');
             if not (mtool_database = EmptyStr) then
               begin
                 process_mtool_database(mtool_database, 'mtool_database');
@@ -796,14 +767,14 @@ begin
   scryfall_sets := getScryfallSets;
   if scryfall_sets <> EmptyStr then
     begin
-      SaveStringToFile('castle-data:/' + 'scryfall_sets.json', scryfall_sets);
+      StringToFile('castle-data:/' + 'scryfall_sets.json', scryfall_sets);
       process_scryfall_data(scryfall_sets, 'scryfall_sets');
     end;
 
   scryfall_symbols := getScryfallSymbols;
   if scryfall_symbols <> EmptyStr then
     begin
-      SaveStringToFile('castle-data:/' + 'scryfall_symbols.json', scryfall_symbols);
+      StringToFile('castle-data:/' + 'scryfall_symbols.json', scryfall_symbols);
       process_scryfall_data(scryfall_symbols, 'scryfall_symbols');
     end;
 {$endif}
@@ -812,20 +783,21 @@ begin
   Memo1.Lines.Add('---------- MTGJSON ----------');
   data := DownloadNetworkFile(MTGJSON_ENUMS_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_enums.json');
-  SaveStringToFile('castle-data:/' + 'mtgjson_enums.json', data);
+  StringToFile('castle-data:/' + 'mtgjson_enums.json', data);
 
   data := DownloadNetworkFile(MTGJSON_SETLIST_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_setlist.json');
-  SaveStringToFile('castle-data:/' + 'mtgjson_setlist.json', data);
+  StringToFile('castle-data:/' + 'mtgjson_setlist.json', data);
 
   data := DownloadNetworkFile(MTGJSON_DECKLIST_URI, [soGzip]);
   Memo1.Lines.Add('Saving to data' + PathDelim + 'mtgjson_decklist.json');
-  SaveStringToFile('castle-data:/' + 'mtgjson_decklist.json', data);
+  StringToFile('castle-data:/' + 'mtgjson_decklist.json', data);
 {$endif}
 
   ticks := CastleGetTickCount64 - ticks;
   Memo1.Lines.Add('----------- END -----------');
   Memo1.Lines.Add('Time : ' + IntToStr(ticks) + 'ms');
+  Button1.Enabled := True;
 end;
 
 end.

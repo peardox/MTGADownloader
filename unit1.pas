@@ -61,7 +61,7 @@ const
   MTOOL_VERSION_URI = 'https://mtgatool.com/database/latest/en';
   SCRYFALL_SET_URI = 'https://api.scryfall.com/sets';
   SCRYFALL_SYMBOL_URI = 'https://api.scryfall.com/symbology';
-  MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
+  MTGJSON_ENUMS_URI = 'https://mtgjson.com/downloads/api/v5'; // 'https://mtgjson.com/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
   MTGJSON_DECKLIST_URI = 'https://mtgjson.com/api/v5/DeckList.json.gz';
 

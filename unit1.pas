@@ -109,15 +109,15 @@ begin
   strOutput:= TStringStream.Create;
   {$endif}
   try
-    stream := Download(URI, sOptions);
     try
-    {$ifdef growstream}
+      stream := Download(URI, sOptions);
+      {$ifdef growstream}
       ReadGrowingStream(stream, strOutput, false);
-    {$endif}
+      {$endif}
     except
         on E : Exception do
           begin
-          ShowMessage(E.Message);
+          ShowMessage('Oops' + LineEnding + LineEnding + E.Message);
           Result := nil;
           end;
     end;

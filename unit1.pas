@@ -9,7 +9,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  ComCtrls, OpenSSLSockets,
+  ComCtrls,
+  {$ifndef VER3_0} OpenSSLSockets, {$endif}
   CastleDownload, CastleParameters, CastleClassUtils,
   CastleControl, CastleTimeUtils, CastleLog, CastleFilesUtils
   ;
@@ -100,13 +101,19 @@ end;
 function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []): TStream;
 var
   stream: TStream;
+  {$ifdef growstream}
   strOutput: TStringStream;
+  {$endif}
 begin
+  {$ifdef growstream}
   strOutput:= TStringStream.Create;
+  {$endif}
   try
     stream := Download(URI, sOptions);
     try
+    {$ifdef growstream}
       ReadGrowingStream(stream, strOutput, false);
+    {$endif}
     except
         on E : Exception do
           begin
@@ -115,8 +122,12 @@ begin
           end;
     end;
   finally
+    {$ifdef growstream}
     FreeAndNil(stream);
     Result := strOutput;
+    {$else}
+    Result := stream;
+    {$endif}
   end;
 end;
 

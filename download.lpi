@@ -34,7 +34,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="download.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -47,6 +47,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="jsonutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="jsonUtils"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -68,7 +73,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="6">
+    <Exceptions Count="7">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -87,6 +92,9 @@
       <Item6>
         <Name Value="EDownloadError"/>
       </Item6>
+      <Item7>
+        <Name Value="EStreamError"/>
+      </Item7>
     </Exceptions>
   </Debugging>
 </CONFIG>

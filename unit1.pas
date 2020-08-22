@@ -35,7 +35,8 @@ var
   Form1: TForm1;
 
 const
-  SCRYFALL_SYMBOL_URI = 'https://api.scryfall.com/symbology';
+  SCRYFALL_SETS_URI = 'https://api.scryfall.com/sets';
+  SCRYFALL_SYMBOLOGY_URI = 'https://api.scryfall.com/symbology';
   {$ifndef usedecknet}
   MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
@@ -46,9 +47,13 @@ const
   MTGJSON_DECKLIST_URI = 'https://decknet.co.uk/api/v5/DeckList.json.gz';
   {$endif}
 
+  UseCache = True; // Only set to True while developing
+
 procedure MemoMessage(msg: String);
-function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []): TStream;
-function DownloadNetworkString(URI: String; sOptions: TStreamOptions = []): String;
+procedure StreamToFile(const URL: string; Stream: TStream);
+function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []; UsingCache: Boolean = False): TStream;
+function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False): TStream;
+function LoadCachedData(const FileName: String): TStream;
 
 implementation
 
@@ -65,48 +70,15 @@ begin
     Application.ProcessMessages;
 end;
 
-function DownloadNetworkString(URI: String; sOptions: TStreamOptions = []): String;
-var
-  stream: TStream;
-  strOutput: TStringStream;
-begin
-  Result := EmptyStr;
-
-  try
-    strOutput:= TStringStream.Create;
-    try
-      stream := Download(URI, sOptions);
-      ReadGrowingStream(stream, strOutput, false);
-    except
-        on E : Exception do
-          begin
-          ShowMessage('Error : ' + E.Message);
-          stream := nil;
-          FreeAndNil(strOutput);
-          end;
-    end;
-  finally
-    if strOutput <> nil then
-      begin
-        Result := StreamToString(strOutput);
-        FreeAndNil(strOutput);
-      end;
-    if stream <> nil then
-      begin
-        FreeAndNil(stream);
-      end;
-  end;
-end;
-
-function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []): TStream;
+function DownloadNetworkFile(URI: String; sOptions: TStreamOptions = []; UsingCache: Boolean = False): TStream;
 var
   stream: TStream;
   {$ifdef growstream}
-  strOutput: TStringStream;
+  strOutput: TMemoryStream;
   {$endif}
 begin
   {$ifdef growstream}
-  strOutput:= TStringStream.Create;
+  strOutput:= TMemoryStream.Create;
   {$endif}
   try
     try
@@ -117,10 +89,20 @@ begin
     except
         on E : Exception do
           begin
-          ShowMessage('Oops' + LineEnding + LineEnding + E.Message);
-          Result := nil;
-          end;
-    end;
+            if not UsingCache then
+              begin
+                ShowMessage('Oops' + LineEnding +
+                             E.ClassName + LineEnding +
+                             E.Message);
+                end;
+              {$ifdef growstream}
+              FreeAndNil(stream);
+              strOutput := nil;
+              {$else}
+              stream := nil;
+              {$endif}
+           end;
+      end;
   finally
     {$ifdef growstream}
     FreeAndNil(stream);
@@ -132,32 +114,70 @@ begin
 end;
 
 
-function cache_file(Asset: String; Uri: String; sOptions: TStreamOptions = []): TStream;
-var
-  data: TStream;
-begin
-  Result := nil;
-
-  data := DownloadNetworkFile(Uri, sOptions);
-  if not(data = nil) then
-    begin
-      StreamToFile('castle-data:/' + Asset + '.json', data);
-      Result := data;
-    end;
-
-end;
-
 function getScryfallSymbols: TStream;
 var
   data: TStream;
 begin
   try
-    data := DownloadNetworkFile(SCRYFALL_SYMBOL_URI);
+    data := DownloadNetworkFile(SCRYFALL_SYMBOLOGY_URI);
   finally
   end;
 
   Result := data;
 end;
+
+function LoadCachedData(const FileName: String): TStream;
+var
+  data: TStream = nil;
+begin
+  data := DownloadNetworkFile('castle-data:/' + FileName, [soForceMemoryStream], True);
+  if not(data = nil) then
+    begin
+      MemoMessage('Loaded data from ' + PathDelim + FileName);
+    end
+  else
+    begin
+      MemoMessage('No cached data!!!');
+    end;
+
+  Result := data;
+end;
+
+function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False): TStream;
+var
+  data: TStream = nil;
+begin
+  if LoadFromCache then
+    begin
+      data := LoadCachedData(FileName);
+      // Cache miss - let's go get it again
+      if data = nil then
+        begin
+          data := DownloadNetworkFile(URI, [soGzip, soForceMemoryStream]);
+          if not(data = nil) then
+            begin
+              MemoMessage('Saving to data' + PathDelim + FileName);
+              StreamSaveToFile(data, 'castle-data:/' + FileName);
+            end;
+        end;
+    end
+  else
+    begin
+      data := DownloadNetworkFile(URI, [soGzip, soForceMemoryStream]);
+      if not(data = nil) then
+        begin
+          MemoMessage('Saving to data' + PathDelim + FileName);
+          StreamSaveToFile(data, 'castle-data:/' + FileName);
+        end
+      else
+        begin
+          data := LoadCachedData(FileName);
+        end;
+    end;
+
+  Result := data;
+end;
+
 
 { TForm1 }
 
@@ -180,21 +200,25 @@ begin
   Memo1.Clear;
   Button1.Enabled := False;
 
+  MemoMessage('---------- SCRYFALL ----------');
+  data := CacheData(SCRYFALL_SETS_URI, 'scryfall_sets.json', UseCache);
+  FreeAndNil(data);
+
+  data := CacheData(SCRYFALL_SYMBOLOGY_URI, 'scryfall_symbology.json', UseCache);
+  FreeAndNil(data);
+
   MemoMessage('---------- MTGJSON ----------');
-  data := DownloadNetworkFile(MTGJSON_ENUMS_URI, [soGzip, soForceMemoryStream]);
-  MemoMessage('Saving to data' + PathDelim + 'mtgjson_enums.json');
-  StreamToFile('castle-data:/' + 'mtgjson_enums.json', data);
+  data := CacheData(MTGJSON_ENUMS_URI, 'mtgjson_enums.json', UseCache);
+  FreeAndNil(data);
 
-  data := DownloadNetworkFile(MTGJSON_SETLIST_URI, [soGzip, soForceMemoryStream]);
-  MemoMessage('Saving to data' + PathDelim + 'mtgjson_setlist.json');
-  StreamToFile('castle-data:/' + 'mtgjson_setlist.json', data);
+  data := CacheData(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', UseCache);
+  FreeAndNil(data);
 
-  data := DownloadNetworkFile(MTGJSON_DECKLIST_URI, [soGzip, soForceMemoryStream]);
-  MemoMessage('Saving to data' + PathDelim + 'mtgjson_decklist.json');
-  StreamToFile('castle-data:/' + 'mtgjson_decklist.json', data);
+  data := CacheData(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', UseCache);
+  FreeAndNil(data);
 
-  ticks := CastleGetTickCount64 - ticks;
   MemoMessage('----------- END -----------');
+  ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
   Button1.Enabled := True;
 end;

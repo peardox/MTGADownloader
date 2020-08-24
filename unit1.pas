@@ -241,146 +241,6 @@ begin
             end;
         end;
       {$else}
-      'object':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'id':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'code':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'name':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'uri':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'scryfall_uri':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'search_uri':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'released_at':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'set_type':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'card_count':
-        begin
-          if not(Node.Kind = nkNumber) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'digital':
-        begin
-          if not(Node.Kind = nkBool) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'nonfoil_only':
-        begin
-          if not(Node.Kind = nkBool) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'foil_only':
-        begin
-          if not(Node.Kind = nkBool) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'icon_svg_uri':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'tcgplayer_id':
-        begin
-          if not(Node.Kind = nkNumber) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'block_code':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'block':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'parent_set_code':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'mtgo_code':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      'arena_code':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
       {$endif}
       else
           begin
@@ -389,7 +249,9 @@ begin
             '  begin' + LineEnding +
             '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
             '      begin' + LineEnding +
-            '        MemoMessage(' + Chr(39) +  'TypeError' + Chr(39) + ');' + LineEnding +
+            '        MemoMessage(' + Chr(39) +  'TypeError for ' +
+              Node.Name + ' expected '  + JSONKindToString(Node) +
+              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ');' + LineEnding +
             '      end;' + LineEnding +
             '  end;');
             {$else}
@@ -480,13 +342,15 @@ begin
   Button1.Enabled := False;
 
   MemoMessage('---------- SCRYFALL ----------');
+{
   data := CacheData(SCRYFALL_SETS_URI, 'scryfall_sets.json', UseCache);
   process_scryfall(data, 'sets');
   FreeAndNil(data);
-{
+}
   data := CacheData(SCRYFALL_SYMBOLOGY_URI, 'scryfall_symbology.json', UseCache);
+  process_scryfall(data, 'symbols');
   FreeAndNil(data);
-
+{
   MemoMessage('---------- MTGJSON ----------');
   data := CacheData(MTGJSON_ENUMS_URI, 'mtgjson_enums.json', UseCache);
   FreeAndNil(data);

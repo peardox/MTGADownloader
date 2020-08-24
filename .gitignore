@@ -29,8 +29,7 @@ backup/
 *.bak
 lib/
 data/*.json
-data/*.svg
-data/*.png
+data/scryfall/*
 
 # Application bundle for Mac OS
 *.app/

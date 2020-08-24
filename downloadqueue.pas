@@ -14,13 +14,27 @@ type
 
   TDownloadObjectQueue = class(TCastleObjectQueue)
   private
-    function GetCapacity: Integer;
-    procedure SetCapacity(const Value: Integer);
   public
-    property Capacity: Integer read GetCapacity write SetCapacity;
   end;
 
-{ TDownloadObjectQueue ------------------------------------------------------------ }
+  TDownloadObjectItem = class(TObject)
+  private
+    FURI: String;
+    FSaveAs: String;
+    FCompleted: Boolean;
+    FRetries: Integer;
+    FTickStamp: Int64;
+    FElapsed: Int64;
+    FDownload: TCastleDownload;
+  public
+    property URI: String read FURI write FURI;
+    property SaveAs: String read FSaveAs write FSaveAs;
+    property Elapsed: Int64 read FElapsed write FElapsed;
+  end;
+
+{ TDownloadObjectQueue ------------------------------------------------------ }
+
+{ TDownloadItem ------------------------------------------------------------- }
 
 function TCastleObjectQueue.GetCapacity: Integer;
 begin

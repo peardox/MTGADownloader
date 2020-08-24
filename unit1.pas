@@ -4,7 +4,7 @@ unit Unit1;
 
 // {$define wotc_cards_only}
 {$define usedecknet}
-// {$define useprototype}
+ {$define useprototype}
 
 interface
 
@@ -52,11 +52,12 @@ const
 
 procedure MemoMessage(const msg: String);
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
-function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False): TStream;
+function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 function LoadCachedData(const FileName: String): TStream;
 function URIDirectoryExists(const Path: String): Boolean;
 function URIDirectoryCreate(const Url: String): Boolean;
-function CreateCastleDataTreeIfMissing(): Boolean;
+function URIExcludeQuery(const Url: String): String;
+function CreateCastleDataDirectoryIfMissing(const SubDir: String): Boolean;
 
 implementation
 
@@ -71,6 +72,17 @@ procedure MemoMessage(const msg: String);
 begin
     Form1.Memo1.Lines.Add(msg);
     Application.ProcessMessages;
+end;
+
+function URIExcludeQuery(const Url: String): String;
+var
+  pos: Integer;
+begin
+  pos := Url.IndexOf('?');
+  if pos > 0 then
+    Result := Url.Remove(pos)
+  else
+    Result := Url;
 end;
 
 function URIDirectoryCreate(const Url: String): Boolean;
@@ -89,14 +101,14 @@ begin
   Result := URIExists(Path) in [ueDirectory];
 end;
 
-function CreateCastleDataTreeIfMissing(): Boolean;
+function CreateCastleDataDirectoryIfMissing(const SubDir: String): Boolean;
 begin
   Result := False;
 
-  if URIDirectoryExists('castle-data:/') then
+  if URIDirectoryExists('castle-data:/' + SubDir) then
     Result := True
   else
-    if URIDirectoryCreate('castle-data:/') then
+    if URIDirectoryCreate('castle-data:/' + SubDir) then
       Result := True;
 end;
 
@@ -185,7 +197,7 @@ begin
   Result := data;
 end;
 
-function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False): TStream;
+function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 var
   data: TStream = nil;
 begin
@@ -219,7 +231,77 @@ begin
         end;
     end;
 
+  if FreeResult then
+    FreeAndNil(data);
+
   Result := data;
+end;
+
+function FetchScryfallSvgUri(const Json: TJsonNode; const FetchField: String): String;
+var
+  Node: TJsonNode;
+begin
+  Result := EmptyStr;
+
+  for Node in Json do
+    begin
+      if Node.Name = FetchField then
+        begin
+          if not(Node.Kind = nkString) then
+            begin
+              MemoMessage(FetchField + ' is not a String');
+            end
+          else
+            begin
+              Result := Node.AsString;
+            end;
+        end;
+    end;
+end;
+
+function ProcessScryfallData(const Json: TJsonNode; const FetchField: String): TStringList;
+var
+  Node: TJsonNode;
+  URLList: TStringList;
+begin
+  URLList := TStringList.Create;
+  for Node in Json do
+    begin
+      URLList.Add(FetchScryfallSvgUri(Node, FetchField));
+    end;
+  Result := URLList;
+end;
+
+function ProcessScryfall(const Data: TStream; const FetchField: String): TStringList;
+var
+  Json: TJsonNode;
+  Node: TJsonNode;
+begin
+  Result := nil;
+
+  MemoMessage(FetchField);
+  Json := TJsonNode.Create;
+  try
+    try
+      Json.LoadFromStream(Data);
+      for Node in Json do
+        begin
+          if ((Node.Name = 'data') and (Node.Kind = nkArray)) then
+            begin
+              Result := ProcessScryfallData(Node, FetchField);
+            end;
+        end;
+    except
+      on E : Exception do
+        begin
+          ShowMessage('Oops' + LineEnding +
+                       E.ClassName + LineEnding +
+                       E.Message);
+         end;
+    end;
+  finally
+    FreeAndNil(Json);
+  end;
 end;
 
 procedure process_scryfall_array_elements(const Json: TJsonNode);
@@ -241,6 +323,13 @@ begin
             end;
         end;
       {$else}
+      'dummyForPrototype':
+        begin
+          if not(Node.Kind = nkString) then
+            begin
+              MemoMessage('TypeError');
+            end;
+        end;
       {$endif}
       else
           begin
@@ -288,12 +377,12 @@ begin
     end;
 end;
 
-procedure process_scryfall(const Data: TStream; const Title: String);
+procedure process_scryfall(const Data: TStream; const FetchField: String);
 var
   Json: TJsonNode;
   Node: TJsonNode;
 begin
-  MemoMessage(Title);
+  MemoMessage(FetchField);
   Json := TJsonNode.Create;
   try
     try
@@ -312,7 +401,6 @@ begin
           ShowMessage('Oops' + LineEnding +
                        E.ClassName + LineEnding +
                        E.Message);
-//          stream := nil;
          end;
     end;
   finally
@@ -334,23 +422,73 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
+  URLList: TStringList;
   data: TStream = nil;
   ticks: Int64;
+  i: Integer;
+  iconFilename: String;
 begin
   ticks := CastleGetTickCount64;
   Memo1.Clear;
   Button1.Enabled := False;
 
   MemoMessage('---------- SCRYFALL ----------');
-{
-  data := CacheData(SCRYFALL_SETS_URI, 'scryfall_sets.json', UseCache);
-  process_scryfall(data, 'sets');
-  FreeAndNil(data);
-}
-  data := CacheData(SCRYFALL_SYMBOLOGY_URI, 'scryfall_symbology.json', UseCache);
-  process_scryfall(data, 'symbols');
-  FreeAndNil(data);
-{
+  if CreateCastleDataDirectoryIfMissing('scryfall') then
+    if CreateCastleDataDirectoryIfMissing('scryfall/sets/') then
+      if CreateCastleDataDirectoryIfMissing('scryfall/sets/icons') then
+        if CreateCastleDataDirectoryIfMissing('scryfall/sets/icons/svg') then
+          begin
+            data := CacheData(SCRYFALL_SETS_URI, 'scryfall_sets.json', UseCache);
+            URLList := ProcessScryfall(data, 'icon_svg_uri');
+            if not(URLList = nil) then
+              begin
+                for i := 0 to URLList.Count - 1 do
+                  begin
+                    iconFilename := URIExcludeQuery(ExtractURIName(URLList.Strings[i]));
+                    if not(URIFileExists('castle-data:/' + 'scryfall/sets/icons/svg/' + iconFilename)) then
+                      CacheData(URLList.Strings[i], 'scryfall/sets/icons/svg/' + iconFilename, UseCache, True);
+                  end;
+              end;
+            FreeAndNil(URLList);
+            FreeAndNil(data);
+          end
+        else
+          MemoMessage('Cant create scryfall/sets/icons/svg')
+      else
+        MemoMessage('Cant create scryfall/sets/icons')
+    else
+      MemoMessage('Cant create scryfall/sets')
+  else
+    MemoMessage('Cant create scryfall');
+
+  if CreateCastleDataDirectoryIfMissing('scryfall') then
+    if CreateCastleDataDirectoryIfMissing('scryfall/symbols/') then
+      if CreateCastleDataDirectoryIfMissing('scryfall/symbols/icons') then
+        if CreateCastleDataDirectoryIfMissing('scryfall/symbols/icons/svg') then
+          begin
+            data := CacheData(SCRYFALL_SYMBOLOGY_URI, 'scryfall_symbology.json', UseCache);
+            URLList := ProcessScryfall(data, 'svg_uri');
+            if not(URLList = nil) then
+              begin
+                for i := 0 to URLList.Count - 1 do
+                  begin
+                    iconFilename := URIExcludeQuery(ExtractURIName(URLList.Strings[i]));
+                    if not(URIFileExists('castle-data:/' + 'scryfall/symbols/icons/svg/' + iconFilename)) then
+                      CacheData(URLList.Strings[i], 'scryfall/symbols/icons/svg/' + iconFilename, UseCache, True);
+                  end;
+              end;
+            FreeAndNil(URLList);
+            FreeAndNil(data);
+          end
+        else
+          MemoMessage('Cant create scryfall/symbols/icons/svg')
+      else
+        MemoMessage('Cant create scryfall/symbols/icons')
+    else
+      MemoMessage('Cant create scryfall/symbols')
+  else
+    MemoMessage('Cant create scryfall');
+
   MemoMessage('---------- MTGJSON ----------');
   data := CacheData(MTGJSON_ENUMS_URI, 'mtgjson_enums.json', UseCache);
   FreeAndNil(data);
@@ -360,7 +498,7 @@ begin
 
   data := CacheData(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', UseCache);
   FreeAndNil(data);
-}
+
   MemoMessage('----------- END -----------');
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');

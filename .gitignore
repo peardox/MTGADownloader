@@ -29,6 +29,8 @@ backup/
 *.bak
 lib/
 data/*.json
+data/*.svg
+data/*.png
 
 # Application bundle for Mac OS
 *.app/

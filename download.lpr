@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, castle_components, Unit1, AssetGatherers, CacheFileUtils, SVGUtils;
+  Forms, castle_components, Unit1, AssetGatherers, CacheFileUtils;
 
 {$R *.res}
 

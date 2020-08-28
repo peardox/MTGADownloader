@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 256
+  Left = 617
   Height = 240
-  Top = 145
+  Top = 178
   Width = 320
   Caption = 'Form1'
   ClientHeight = 240
@@ -29,6 +29,7 @@ object Form1: TForm1
       ScrollBars = ssAutoBoth
       TabOrder = 0
       TabStop = False
+      WordWrap = False
     end
   end
   object Panel2: TPanel

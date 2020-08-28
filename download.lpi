@@ -34,7 +34,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="5">
       <Unit0>
         <Filename Value="download.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -47,6 +47,21 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="assetgatherers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="AssetGatherers"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="cachefileutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CacheFileUtils"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="svgutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SVGUtils"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -71,7 +86,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="7">
+    <Exceptions Count="8">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -93,6 +108,9 @@
       <Item7>
         <Name Value="EStreamError"/>
       </Item7>
+      <Item8>
+        <Name Value="EStringListError"/>
+      </Item8>
     </Exceptions>
   </Debugging>
 </CONFIG>

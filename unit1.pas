@@ -7,7 +7,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  ComCtrls,
+  ComCtrls, SVGUtils,
   CastleParameters, CastleClassUtils,
   CastleControl, CastleLog, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
   ;
@@ -85,8 +85,8 @@ begin
 
   MemoMessage('---------- SCRYFALL ----------');
 
-  GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons/svg', 'scryfall_sets.json', 'icon_svg_uri');
-  GetScryfallIcons(SCRYFALL_SYMBOLOGY_URI, 'scryfall/symbols/icons/svg', 'scryfall_symbology.json', 'svg_uri');
+  GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');
+  GetScryfallIcons(SCRYFALL_SYMBOLOGY_URI, 'scryfall/symbols/icons', 'scryfall_symbology.json', 'svg_uri');
 
   MemoMessage('---------- MTGJSON ----------');
 

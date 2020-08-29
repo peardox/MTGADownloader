@@ -5,7 +5,7 @@ unit AssetGatherers;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, SVGUtils;
 
 procedure GetScryfallIcons(URI: String; Path: String; SaveAs: String; FetchField: String);
 function GetMTGJsonEnumList(URI: String; SaveAs: String): TStringList;
@@ -17,7 +17,7 @@ uses
   Unit1, CacheFileUtils,
   Dialogs,
   JsonTools, TypInfo,
-  CastleTimeUtils, CastleURIUtils, CastleFilesUtils
+  CastleTimeUtils, CastleURIUtils, CastleFilesUtils, CastleClassUtils
   ;
 
 function JSONKindToString(Node: TJsonNode): string;
@@ -194,9 +194,12 @@ var
   data: TStream = nil;
   i: Integer;
   iconFilename: String;
+  svg: TStream;
 begin
   if CreateCastleDataDirectoryIfMissing(Path) then
     begin
+      CreateCastleDataDirectoryIfMissing(Path + '/svg');
+      CreateCastleDataDirectoryIfMissing(Path + '/png');
       data := CacheData(URI, SaveAs, True);
       if not(data = nil) then
         begin
@@ -206,8 +209,17 @@ begin
               for i := 0 to URLList.Count - 1 do
                 begin
                   iconFilename := URIExcludeQuery(ExtractURIName(URLList.Strings[i]));
-                  if not(URIFileExists('castle-data:/' + Path + iconFilename)) then
-                    CacheData(URLList.Strings[i], Path + iconFilename, True, True);
+                  if iconFilename = 'con.svg' then
+                    iconFilename := 'conflux.svg';
+                  svg := CacheData(URLList.Strings[i], Path + '/svg/' + iconFilename, True, False);
+                  if not(svg = nil) then
+                    begin
+//                  if not(URIFileExists('castle-data:/' + Path + '/png/' + iconFilename + '.png')) then
+                      RasterizeSVG(URIToFilenameSafe('castle-data:/' + Path + '/png/' + iconFilename + '.png'), 512, svg);
+                    FreeAndNil(svg);
+                    end
+                  else
+                    MemoMessage('***********' + URLList.Strings[i] + '***********');
                 end;
             end;
           FreeAndNil(URLList);

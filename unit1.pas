@@ -18,12 +18,15 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    Button2: TButton;
     Memo1: TMemo;
     Panel1: TPanel;
     Panel2: TPanel;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
+    Abort: Boolean;
   public
 
   end;
@@ -66,6 +69,8 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  Abort := False;
+  Button2.Enabled := False;
   InitializeLog;
   Memo1.Clear;
   Form1.Width := 800;
@@ -84,7 +89,14 @@ var
   MTGSetList: TMTGSetList;
   MTGDeckList: TMTGDeckList;
   idx: Integer;
+  cnt: Integer;
+  cards: Integer;
+  setDate: String;
 begin
+  Abort := False;
+  Button2.Enabled := True;
+  cnt := 0;
+  cards := 0;
   ticks := CastleGetTickCount64;
   Memo1.Clear;
   Button1.Enabled := False;
@@ -109,14 +121,24 @@ begin
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code');
   for idx := 0 to MTGSetList.List.Count -1 do
     begin
-//      MemoMessage('Key: ' + MTGSetList.List[idx]);
-      data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json');
-      {
-      MTGSet := TMTGSet.Create(data, 'code');
-      MTGSet.DumpList;
-      FreeAndNil(MTGSet);
-      }
-      FreeAndNil(data);
+      setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
+//      if MTGSetList.List[idx] = 'ZNR' then
+//      if setDate > '2019-01-01' then
+        begin
+          data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json');
+//          MTGSetList.Dump(idx);
+          MTGSet := TMTGSet.Create(data, 'uuid');
+          cards += MTGSet.setTotalSetSize;
+//          MTGSet.DumpList;
+          Inc(cnt);
+          FreeAndNil(MTGSet);
+          FreeAndNil(data);
+          Application.ProcessMessages;
+        end;
+      if Abort then
+        begin
+          break;
+        end;
     end;
 //  MTGSet.DumpList;
   FreeAndNil(MTGSetList);
@@ -136,12 +158,22 @@ begin
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
   Button1.Enabled := True;
+  MemoMessage('Sets analysed : ' + IntToStr(cnt));
+  MemoMessage('Sets cards : ' + IntToStr(cards));
 {
   Memo1.Lines.BeginUpdate;
   DumpList(EnumList);
   Memo1.Lines.EndUpdate;
 }
   FreeAndNil(EnumList);
+  Button2.Enabled := False;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Abort := True;
+  Button2.Enabled := False;
+  Button1.Enabled := True;
 end;
 
 end.

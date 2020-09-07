@@ -1,6 +1,8 @@
 unit SVGUtils;
 
 // https://github.com/bgrabitmap/bgrabitmap.git
+// Compile BGRABitmapPack
+// Install BGRAControls
 
 {$mode objfpc}{$H+}
 

@@ -1,7 +1,7 @@
 unit CacheFileUtils;
 
 {$mode objfpc}{$H+}
-
+// {$define debugMessages}
 interface
 
 uses
@@ -149,7 +149,9 @@ begin
   data := DownloadNetworkFile('castle-data:/' + FileName, [soForceMemoryStream], True);
   if not(data = nil) then
     begin
+      {$if defined(debugMessages)}
       MemoMessage('Loaded data from ' + URIToFilenameSafe('castle-data:/' + FileName));
+      {$endif}
     end
   else
     begin
@@ -174,7 +176,9 @@ begin
           data := DownloadNetworkFile(URI, [soGzip, soForceMemoryStream]);
           if not(data = nil) then
             begin
+              {$if defined(debugMessages)}
               MemoMessage('Saving to data' + PathDelim + FileName);
+              {$endif}
               StreamSaveToFile(data, 'castle-data:/' + FileName);
             end;
         end;
@@ -184,7 +188,9 @@ begin
       data := DownloadNetworkFile(URI, [soGzip, soForceMemoryStream]);
       if not(data = nil) then
         begin
+          {$if defined(debugMessages)}
           MemoMessage('Saving to data' + PathDelim + FileName);
+          {$endif}
           StreamSaveToFile(data, 'castle-data:/' + FileName);
         end
       else

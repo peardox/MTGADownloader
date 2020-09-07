@@ -1,7 +1,7 @@
 unit Unit1;
 
 {$mode objfpc}{$H+}
-{$define usedecknet}
+// {$define usedecknet}
 
 interface
 
@@ -43,6 +43,7 @@ const
   MTGJSON_SETLIST_URI = 'https://decknet.co.uk/api/v5/SetList.json.gz';
   MTGJSON_DECKLIST_URI = 'https://decknet.co.uk/api/v5/DeckList.json.gz';
   {$endif}
+  MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
 
   UseCache = True; // Only set to True while developing
 
@@ -50,7 +51,7 @@ procedure MemoMessage(const msg: String);
 
 implementation
 
-uses CacheFileUtils, AssetGatherers;
+uses CacheFileUtils, AssetGatherers, MTGJsonObjects;
 
 {$R *.lfm}
 
@@ -59,6 +60,7 @@ begin
     Form1.Memo1.Lines.Add(msg);
     Application.ProcessMessages;
 end;
+
 
 { TForm1 }
 
@@ -78,11 +80,16 @@ var
   data: TStream = nil;
   ticks: Int64;
   EnumList: TStringList;
+  MTGSet: TMTGSet;
+  MTGSetList: TMTGSetList;
+  MTGDeckList: TMTGDeckList;
+  idx: Integer;
 begin
   ticks := CastleGetTickCount64;
   Memo1.Clear;
   Button1.Enabled := False;
 
+{
   MemoMessage('---------- SCRYFALL ----------');
 
   GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');
@@ -91,30 +98,49 @@ begin
   MemoMessage('---------- MTGJSON ----------');
 
   EnumList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
+}
 
-  data := CacheData(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', UseCache);
-  if not(data = nil) then
+{
+  MTGSet := TMTGSet.Create(MTGJSON_M21_URI, 'mtgjson/sets/json/set_M21.json', 'code');
+  MTGSet.DumpList;
+  FreeAndNil(MTGSet);
+}
+
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code');
+  for idx := 0 to MTGSetList.List.Count -1 do
     begin
-//     ProcessMTGJson(data, 'Sets');
+//      MemoMessage('Key: ' + MTGSetList.List[idx]);
+      data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json');
+      {
+      MTGSet := TMTGSet.Create(data, 'code');
+      MTGSet.DumpList;
+      FreeAndNil(MTGSet);
+      }
+      FreeAndNil(data);
     end;
-  FreeAndNil(data);
+//  MTGSet.DumpList;
+  FreeAndNil(MTGSetList);
 
-  data := CacheData(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', UseCache);
-  if not(data = nil) then
+{
+  MTGDeckList := TMTGDeckList.Create(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', 'fileName');
+  for idx := 0 to MTGDeckList.List.Count -1 do
     begin
-//     ProcessMTGJson(data, 'Decks');
+//      MemoMessage('Key: ' + MTGDeckList.List[idx]);
+      data := GetMTGJsonDeckJson(MTGDeckList.List[idx], 'mtgjson/decks/json');
+      FreeAndNil(data);
     end;
-  FreeAndNil(data);
-
+//  MTGDeckList.DumpList;
+  FreeAndNil(MTGDeckList);
+}
   MemoMessage('----------- END -----------');
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
   Button1.Enabled := True;
-
+{
   Memo1.Lines.BeginUpdate;
   DumpList(EnumList);
   Memo1.Lines.EndUpdate;
-
+}
   FreeAndNil(EnumList);
 end;
 

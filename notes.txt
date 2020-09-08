@@ -1,0 +1,21 @@
+https://api.scryfall.com/cards/${card.identifiers.scryfallId}?format=image
+
+https://api.scryfall.com/cards/9c017fa9-7021-417a-9c2e-3df409644fcf?format=image
+https://api.scryfall.com/cards/9c017fa9-7021-417a-9c2e-3df409644fcf?format=image&version=png
+https://api.scryfall.com/cards/1bacda35-bb91-4537-a14d-846650fa85f6?format=image&version=png
+https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image&version=png
+
+"name": "Ugin, the Spirit Dragon",
+"number": "1",
+				"identifiers": {
+					"cardKingdomFoilId": "234325",
+					"cardKingdomId": "233906",
+					"mtgArenaId": "71783",
+					"mtgjsonV4Id": "6f3fd456-a7a4-5382-9ed4-6352a4435357",
+					"mtgoId": "81229",
+					"multiverseId": "485324",
+					"scryfallId": "9c017fa9-7021-417a-9c2e-3df409644fcf",
+					"scryfallIllustrationId": "47715ae0-7456-449e-ad32-0a7bc47a4e7a",
+					"scryfallOracleId": "eecb3047-a563-441a-9175-200421981ac3",
+					"tcgplayerProductId": "215338"
+				},

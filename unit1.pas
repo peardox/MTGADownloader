@@ -1,7 +1,7 @@
 unit Unit1;
 
 {$mode objfpc}{$H+}
-// {$define usedecknet}
+ {$define usedecknet}
 
 interface
 
@@ -26,13 +26,12 @@ type
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    Abort: Boolean;
   public
-
   end;
 
 var
   Form1: TForm1;
+  Abort: Boolean;
 
 const
   SCRYFALL_SETS_URI = 'https://api.scryfall.com/sets';
@@ -40,23 +39,47 @@ const
   {$ifndef usedecknet}
   MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
+  MTGJSON_SETLIST_URI_404 = 'https://mtgjson.com/api/v5/RequestA404File.json.gz';
   MTGJSON_DECKLIST_URI = 'https://mtgjson.com/api/v5/DeckList.json.gz';
   {$else}
   MTGJSON_ENUMS_URI = 'https://decknet.co.uk/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://decknet.co.uk/api/v5/SetList.json.gz';
+  MTGJSON_SETLIST_URI_400 = 'https://decknet.co.uk/HTTPErrorCode/400';
+  MTGJSON_SETLIST_URI_401 = 'https://decknet.co.uk/HTTPErrorCode/401';
+  MTGJSON_SETLIST_URI_402 = 'https://decknet.co.uk/HTTPErrorCode/402';
+  MTGJSON_SETLIST_URI_403 = 'https://decknet.co.uk/HTTPErrorCode/403';
+  MTGJSON_SETLIST_URI_404 = 'https://decknet.co.uk/HTTPErrorCode/404';
+  MTGJSON_SETLIST_URI_405 = 'https://decknet.co.uk/HTTPErrorCode/405';
+  MTGJSON_SETLIST_URI_500 = 'https://decknet.co.uk/HTTPErrorCode/500';
   MTGJSON_DECKLIST_URI = 'https://decknet.co.uk/api/v5/DeckList.json.gz';
   {$endif}
   MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
 
   UseCache = True; // Only set to True while developing
 
+{ Declare hooks for other units }
+
+procedure EnableAbortButton(Status: Boolean);
 procedure MemoMessage(const msg: String);
+procedure TriggerProcessMessages;
 
 implementation
 
 uses CacheFileUtils, AssetGatherers, MTGJsonObjects;
 
 {$R *.lfm}
+
+{ Hooks for other units }
+
+procedure TriggerProcessMessages;
+begin
+  Application.ProcessMessages;
+end;
+
+procedure EnableAbortButton(Status: Boolean);
+begin
+  Form1.Button2.Enabled := Status;
+end;
 
 procedure MemoMessage(const msg: String);
 begin
@@ -84,11 +107,12 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   data: TStream = nil;
   ticks: Int64;
-  EnumList: TStringList;
+  SList: TStringList;
   MTGSet: TMTGSet;
   MTGSetList: TMTGSetList;
   MTGDeckList: TMTGDeckList;
   idx: Integer;
+  img: Integer;
   cnt: Integer;
   cards: Integer;
   setDate: String;
@@ -109,7 +133,7 @@ begin
 
   MemoMessage('---------- MTGJSON ----------');
 
-  EnumList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
+  SList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
 }
 
 {
@@ -118,27 +142,38 @@ begin
   FreeAndNil(MTGSet);
 }
 
-  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code');
-  for idx := 0 to MTGSetList.List.Count -1 do
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI_403, 'mtgjson_setlist.json', 'code', False);
+  if not (MTGSetList.List = nil) then
     begin
-      setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
-//      if MTGSetList.List[idx] = 'ZNR' then
-//      if setDate > '2019-01-01' then
-        begin
-          data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json');
-//          MTGSetList.Dump(idx);
-          MTGSet := TMTGSet.Create(data, 'uuid');
-          cards += MTGSet.setTotalSetSize;
+    for idx := 0 to MTGSetList.List.Count -1 do
+      begin
+        setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
+        if MTGSetList.List[idx] = 'M21' then
+//        if setDate > '2019-01-01' then
+          begin
+            data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', False);
+  //          MTGSetList.Dump(idx);
+            MTGSet := TMTGSet.Create(data, 'uuid');
+            cards += MTGSet.setTotalSetSize;
 //          MTGSet.DumpList;
-          Inc(cnt);
-          FreeAndNil(MTGSet);
-          FreeAndNil(data);
-          Application.ProcessMessages;
-        end;
-      if Abort then
-        begin
-          break;
-        end;
+{
+            SList := MTGSet.ExtractImageList;
+            for img := 0 to SList.Count - 1 do
+              begin
+                MemoMessage(SList[img]);
+              end;
+            FreeAndNil(SList);
+}
+            Inc(cnt);
+            FreeAndNil(MTGSet);
+            FreeAndNil(data);
+            Application.ProcessMessages;
+          end;
+        if Abort then
+          begin
+            break;
+          end;
+      end;
     end;
 //  MTGSet.DumpList;
   FreeAndNil(MTGSetList);
@@ -162,10 +197,9 @@ begin
   MemoMessage('Sets cards : ' + IntToStr(cards));
 {
   Memo1.Lines.BeginUpdate;
-  DumpList(EnumList);
+  DumpList(SList);
   Memo1.Lines.EndUpdate;
 }
-  FreeAndNil(EnumList);
   Button2.Enabled := False;
 end;
 

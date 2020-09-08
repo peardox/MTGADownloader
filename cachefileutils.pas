@@ -22,11 +22,16 @@ function CreateCastleDataDirectoryIfMissing(const SubDir: String): Boolean;
 implementation
 
 uses
-  Unit1,
+  Unit1, // To communicate with main form
   Dialogs,
   JsonTools, TypInfo,
   CastleFilesUtils, CastleURIUtils
   ;
+
+function DownloadStatusToString(Status: TDownloadStatus): string;
+begin
+  result := GetEnumName(TypeInfo(TDownloadStatus), ord(Status));
+end;
 
 function URIExcludeQuery(const Url: String): String;
 var
@@ -97,54 +102,81 @@ begin
     Result := False;
 end;
 
+procedure ReportProgress(const Download: TCastleDownload);
+begin
+  if Download.TotalBytes > 0 then
+    begin
+      if Download.DownloadedBytes < Download.TotalBytes then
+        MemoMessage(DownloadStatusToString(Download.Status) + ' - Downloaded '  + IntToStr(Download.DownloadedBytes) + ' of ' + IntToStr(Download.TotalBytes))
+      else
+        MemoMessage(DownloadStatusToString(Download.Status) + ' - Downloaded : ' + IntToStr(Download.TotalBytes));
+    end
+  else
+    MemoMessage(DownloadStatusToString(Download.Status) + ' - Downloaded '  + IntToStr(Download.DownloadedBytes) + ' of (UnKnown)')
+end;
+
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 var
-  stream: TStream;
-  {$ifdef growstream}
-  strOutput: TMemoryStream;
-  {$endif}
+  fDownload: TCastleDownload;
 begin
-  EnableBlockingDownloads := True;
-
-  {$ifdef growstream}
-  strOutput:= TMemoryStream.Create;
-  {$endif}
+  EnableAbortButton(True);
+  Result := nil;
+  fDownload := TCastleDownload.Create(nil);
   try
+    fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
+    fDownload.Url := URI;
+    fDownload.Options := sOptions;
+    fDownload.OwnsContents := False;
+    fDownload.Start;
+    fDownload.WaitForFinish;
+
     try
-      stream := Download(URI, sOptions);
-      {$ifdef growstream}
-      ReadGrowingStream(stream, strOutput, false);
-      {$endif}
-    except
+      while fDownload.Status = dsDownloading do
+      begin
+        ReportProgress(fDownload);
+        TriggerProcessMessages;
+        if Abort then
+          begin
+            EnableAbortButton(False);
+            break;
+          end;
+        sleep(100);
+      end;
+
+      if UsingCache then
+        MemoMessage('Loaded from cache ' + URI)
+      else
+        MemoMessage('Downloaded ' + URI);
+
+      case fDownload.Status of
+        dsSuccess:
+          Result := fDownload.Contents;
+        dsError:
+          MemoMessage('Download Error : ' + fDownload.ErrorMessage);
+        else
+          MemoMessage('Download Status : ' + DownloadStatusToString(fDownload.Status));
+      end;
+      except
         on E : Exception do
           begin
             if not UsingCache then
               begin
                 ShowMessage('Oops' + LineEnding +
+                            'Trying to download : ' + URI + LineEnding +
                              E.ClassName + LineEnding +
                              E.Message);
                 end;
-              {$ifdef growstream}
-              FreeAndNil(stream);
-              strOutput := nil;
-              {$else}
-              stream := nil;
-              {$endif}
            end;
       end;
   finally
-    {$ifdef growstream}
-    FreeAndNil(stream);
-    Result := strOutput;
-    {$else}
-    Result := stream;
-    {$endif}
+    Abort := False;
+    FreeAndNil(fDownload);
   end;
 end;
 
 function LoadCachedData(const FileName: String): TStream;
 var
-  data: TStream = nil;
+  data: TStream;
 begin
   data := DownloadNetworkFile('castle-data:/' + FileName, [soForceMemoryStream], True);
   if not(data = nil) then

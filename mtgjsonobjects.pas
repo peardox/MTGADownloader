@@ -21,7 +21,7 @@ type
       procedure ProcessListArrayDataObject(const Json: TJsonNode); virtual;
       procedure ProcessListObjectDataObject(const Json: TJsonNode); virtual;
     public
-      constructor Create(const DataUri: String; const DataFileName: String; Key: String = '');
+      constructor Create(const DataUri: String; const DataFileName: String; Key: String = ''; UseCache: Boolean = True);
       constructor Create(const Stream: TStream; Key: String = '');
       destructor Destroy; override;
       procedure DumpList; virtual;
@@ -249,6 +249,7 @@ type
       procedure MapJsonSetObject(const Json: TJsonNode);
       procedure ProcessListObjectDataObject(const Json: TJsonNode); override;
     public
+      function ExtractImageList: TStringList;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -279,8 +280,8 @@ const
   MTGJSON_DECK_PREFIX_URI = 'https://mtgjson.com/api/v5/decks/';
   MTGJSON_DECK_POSTFIX_URI = '.json.gz';
 
-  function GetMTGJsonSetJson(SetCode: String; Path: String): TStream;
-  function GetMTGJsonDeckJson(SetCode: String; Path: String): TStream;
+  function GetMTGJsonSetJson(SetCode: String; Path: String; UseCache: Boolean = True): TStream;
+  function GetMTGJsonDeckJson(SetCode: String; Path: String; UseCache: Boolean = True): TStream;
   function UppercaseFirstChar(s: String): String;
   function WriteMemberDeclaration(Node: TJsonNode): String;
   function WritePropertyDeclaration(Prefix: String; Node: TJsonNode): String;
@@ -307,7 +308,7 @@ begin
     end;
 end;
 
-constructor TMTGList.Create(const DataUri: String; const DataFileName: String; Key: String = '');
+constructor TMTGList.Create(const DataUri: String; const DataFileName: String; Key: String = ''; UseCache: Boolean = True);
 var
   Stream: TStream;
 begin
@@ -316,7 +317,7 @@ begin
   FDataFileName := DataFileName;
   FKey := Key;
   try
-  Stream := CacheData(FDataUri, FDataFileName, True);
+  Stream := CacheData(FDataUri, FDataFileName, UseCache);
   if not(Stream = nil) then
     begin
       ProcessList(Stream);
@@ -1486,8 +1487,12 @@ begin
               Txt += '      Rec.F' + Node.Name + ' := Trunc(Node.AsNumber);' + LineEnding
             else if Node.Kind = nkBool then
               Txt += '      Rec.F' + Node.Name + ' := Node.AsBoolean;' + LineEnding
+            else if Node.Kind = nkObject then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonObject(Node); // *** FIXME ***' + LineEnding
+            else if Node.Kind = nkArray then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonArray(Node); // *** FIXME ***' + LineEnding
             else
-              Txt += '      Rec.F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
+              Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
             MemoMessage(Txt);
 
@@ -1514,6 +1519,26 @@ begin
   Result := Rec;
 end;
 
+function TMTGSet.ExtractImageList: TStringList;
+var
+  URL: String;
+  uuid: String;
+  sImageList: TStringList;
+  idx: Integer;
+begin
+  sImageList := TStringList.Create;
+  sImageList.Delimiter := '|';
+
+  for idx := 0 to FCards.Count - 1 do
+    begin
+      URL := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FscryfallId;
+      uuid := FCards[idx];
+      sImageList.Add(URL + '|' + uuid);
+    end;
+
+  Result := sImageList;
+end;
+
 procedure TMTGSet.MapJsonObject(const Json: TJsonNode);
 var
   Node: TJsonNode;
@@ -1528,16 +1553,6 @@ begin
 
   for Node in Json do
     begin
-      if Node.Kind = nkObject then
-        begin
-          Ext += Node.Name + ' -> Object' + LineEnding;
-          continue;
-        end;
-      if Node.Kind = nkArray then
-        begin
-          Ext += Node.Name + ' -> Array' + LineEnding;
-          continue;
-        end;
       case Node.Name of
       'dummyForPrototype':
         begin
@@ -1556,11 +1571,15 @@ begin
               ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
-              Txt += '      F' + Node.Name + ' := Node.AsString;' + LineEnding
+              Txt += '      Rec.F' + Node.Name + ' := Node.AsString;' + LineEnding
             else if Node.Kind = nkNumber then
-              Txt += '      F' + Node.Name + ' := Trunc(Node.AsNumber);' + LineEnding
+              Txt += '      Rec.F' + Node.Name + ' := Trunc(Node.AsNumber);' + LineEnding
             else if Node.Kind = nkBool then
-              Txt += '      F' + Node.Name + ' := Node.AsBoolean;' + LineEnding
+              Txt += '      Rec.F' + Node.Name + ' := Node.AsBoolean;' + LineEnding
+            else if Node.Kind = nkObject then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonObject(Node); // *** FIXME ***' + LineEnding
+            else if Node.Kind = nkArray then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonArray(Node); // *** FIXME ***' + LineEnding
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
@@ -1602,6 +1621,8 @@ begin
             MemoMessage('TypeError for booster expected nkString got ' + JSONKindToString(Node))
           else
             begin
+            //
+            //  MemoMessage('Boosters');
             //  MapJsonObject(Node); // ToDo
             end;
         end;
@@ -1773,6 +1794,10 @@ begin
               Txt += '      F' + Node.Name + ' := Trunc(Node.AsNumber);' + LineEnding
             else if Node.Kind = nkBool then
               Txt += '      F' + Node.Name + ' := Node.AsBoolean;' + LineEnding
+            else if Node.Kind = nkObject then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonObject(Node); // *** FIXME ***' + LineEnding
+            else if Node.Kind = nkArray then
+              Txt += '      // Rec.F' + Node.Name + ' := MapJsonArray(Node); // *** FIXME ***' + LineEnding
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
@@ -1824,7 +1849,7 @@ end;
 
 {=======================================================================}
 
-function GetMTGJsonSetJson(SetCode: String; Path: String): TStream;
+function GetMTGJsonSetJson(SetCode: String; Path: String; UseCache: Boolean = True): TStream;
 var
   data: TStream = nil;
   URI: String;
@@ -1836,7 +1861,7 @@ begin
     begin
       CreateCastleDataDirectoryIfMissing(Path);
       SaveAs := Path + '/set_' + SetCode + '.json';
-      data := CacheData(URI, SaveAs, True);
+      data := CacheData(URI, SaveAs, UseCache);
       if not(data = nil) then
         begin
           Result := data;
@@ -1846,7 +1871,7 @@ begin
     MemoMessage('Failed creating ' + Path);
 end;
 
-function GetMTGJsonDeckJson(SetCode: String; Path: String): TStream;
+function GetMTGJsonDeckJson(SetCode: String; Path: String; UseCache: Boolean = True): TStream;
 var
   data: TStream = nil;
   URI: String;
@@ -1858,7 +1883,7 @@ begin
     begin
       CreateCastleDataDirectoryIfMissing(Path);
       SaveAs := Path + '/deck_' + SetCode + '.json';
-      data := CacheData(URI, SaveAs, True);
+      data := CacheData(URI, SaveAs, UseCache);
       if not(data = nil) then
         begin
           Result := data;

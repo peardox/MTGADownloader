@@ -87,27 +87,34 @@
     <Exceptions Count="8">
       <Item1>
         <Name Value="EAbort"/>
+        <Enabled Value="False"/>
       </Item1>
       <Item2>
         <Name Value="ECodetoolError"/>
+        <Enabled Value="False"/>
       </Item2>
       <Item3>
         <Name Value="EFOpenError"/>
+        <Enabled Value="False"/>
       </Item3>
       <Item4>
         <Name Value="ESocketError"/>
+        <Enabled Value="False"/>
       </Item4>
       <Item5>
         <Name Value="EHTTPClient"/>
       </Item5>
       <Item6>
         <Name Value="EDownloadError"/>
+        <Enabled Value="False"/>
       </Item6>
       <Item7>
         <Name Value="EStreamError"/>
+        <Enabled Value="False"/>
       </Item7>
       <Item8>
         <Name Value="EStringListError"/>
+        <Enabled Value="False"/>
       </Item8>
     </Exceptions>
   </Debugging>

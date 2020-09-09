@@ -7,6 +7,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  cthreads,
+  {$ENDIF}{$ENDIF}
   ComCtrls, SVGUtils,
   CastleParameters, CastleClassUtils,
   CastleControl, CastleLog, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
@@ -142,14 +145,14 @@ begin
   FreeAndNil(MTGSet);
 }
 
-  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI_403, 'mtgjson_setlist.json', 'code', False);
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI_404, 'mtgjson_setlist.json', 'code', False);
   if not (MTGSetList.List = nil) then
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
         setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
         if MTGSetList.List[idx] = 'M21' then
-//        if setDate > '2019-01-01' then
+//        if setDate > '2020-01-01' then
           begin
             data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', False);
   //          MTGSetList.Dump(idx);

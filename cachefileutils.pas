@@ -23,9 +23,10 @@ implementation
 
 uses
   Unit1, // To communicate with main form
-  Dialogs,
+  Dialogs, // ShowMessage
   JsonTools, TypInfo,
-  CastleFilesUtils, CastleURIUtils
+  CastleFilesUtils, CastleURIUtils,
+  CastleApplicationProperties { A work-around }
   ;
 
 function DownloadStatusToString(Status: TDownloadStatus): string;
@@ -104,6 +105,7 @@ end;
 
 procedure ReportProgress(const Download: TCastleDownload);
 begin
+  {$if defined(debugMessages)}
   if Download.TotalBytes > 0 then
     begin
       if Download.DownloadedBytes < Download.TotalBytes then
@@ -113,6 +115,7 @@ begin
     end
   else
     MemoMessage(DownloadStatusToString(Download.Status) + ' - Downloaded '  + IntToStr(Download.DownloadedBytes) + ' of (UnKnown)')
+  {$endif}
 end;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
@@ -121,20 +124,21 @@ var
 begin
   EnableAbortButton(True);
   Result := nil;
-  fDownload := TCastleDownload.Create(nil);
-  try
-    fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
-    fDownload.Url := URI;
-    fDownload.Options := sOptions;
-    fDownload.OwnsContents := False;
-    fDownload.Start;
-    fDownload.WaitForFinish;
 
+  fDownload := TCastleDownload.Create(nil);
+  fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
+  fDownload.Url := URI;
+  fDownload.OwnsContents := True;
+  fDownload.Options := sOptions;
+
+  fDownload.Start;
+  try
     try
       while fDownload.Status = dsDownloading do
       begin
         ReportProgress(fDownload);
-        TriggerProcessMessages;
+//        TriggerProcessMessages;
+        ApplicationProperties._Update;
         if Abort then
           begin
             EnableAbortButton(False);
@@ -143,33 +147,33 @@ begin
         sleep(100);
       end;
 
+      {$if defined(debugMessages)}
       if UsingCache then
         MemoMessage('Loaded from cache ' + URI)
       else
-        MemoMessage('Downloaded ' + URI);
+        MemoMessage('Downloaded ' + URI + ' HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+      {$endif}
 
-      case fDownload.Status of
-        dsSuccess:
-          Result := fDownload.Contents;
-        dsError:
-          MemoMessage('Download Error : ' + fDownload.ErrorMessage);
-        else
-          MemoMessage('Download Status : ' + DownloadStatusToString(fDownload.Status));
-      end;
+      if fDownload.Status = dsSuccess then
+        Result := fDownload.Contents;
+
       except
         on E : Exception do
           begin
-            if not UsingCache then
-              begin
-                ShowMessage('Oops' + LineEnding +
-                            'Trying to download : ' + URI + LineEnding +
-                             E.ClassName + LineEnding +
-                             E.Message);
-                end;
+            {$if defined(debugMessages)}
+            MemoMessage('Oops' + LineEnding +
+                        'Trying to download : ' + URI + LineEnding +
+                        'HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode) + LineEnding +
+                         E.ClassName + LineEnding +
+                         E.Message);
+            {$endif}
            end;
       end;
   finally
     Abort := False;
+    if(Result = nil) then
+      fDownload.Contents.Free;
+    fDownload.OwnsContents := False;
     FreeAndNil(fDownload);
   end;
 end;
@@ -179,16 +183,17 @@ var
   data: TStream;
 begin
   data := DownloadNetworkFile('castle-data:/' + FileName, [soForceMemoryStream], True);
+
+  {$if defined(debugMessages)}
   if not(data = nil) then
     begin
-      {$if defined(debugMessages)}
       MemoMessage('Loaded data from ' + URIToFilenameSafe('castle-data:/' + FileName));
-      {$endif}
     end
   else
     begin
       MemoMessage('No cached data!!!');
     end;
+    {$endif}
 
   Result := data;
 end;
@@ -236,21 +241,6 @@ begin
 
   Result := data;
 end;
-
-{
-ApplicationDataOverride
-ApplicationConfig
-
-function DownloadNetworkFileSynchronous(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
-begin
-
-  Download[I] := TCastleDownload.Create(Self);
-  Download[I].Url := Urls[I];
-  Download[I].OnFinish := @DownloadFinish;
-  Download[I].Options := [soForceMemoryStream];
-  Download[I].Start;
-end;
-}
 
 end.
 

@@ -103,6 +103,7 @@
       </Item4>
       <Item5>
         <Name Value="EHTTPClient"/>
+        <Enabled Value="False"/>
       </Item5>
       <Item6>
         <Name Value="EDownloadError"/>

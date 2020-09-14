@@ -61,8 +61,7 @@ Time : 2735ms
 Sets analysed : 1
 Sets cards : 356
 ===================================================================
-String androidId = Settings.Secure.getString(getContentResolver(),
-                     Settings.Secure.ANDROID_ID);
+String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
 https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID
 

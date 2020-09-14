@@ -177,13 +177,18 @@ begin
                     imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
                     imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;
                     imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
-{
-                    MemoMessage(imgURI);
-                    MemoMessage(imgPath);
-                    MemoMessage(imgFile);
-}
                     CreateCastleDataDirectoryIfMissing(imgPath);
                     CacheImage(imgURI, imgFile, True, True);
+                  end
+                else
+                  begin
+                    MemoMessage('====== Bad Record ======');
+                    MemoMessage(MTGSetList.List[idx]);
+                    MemoMessage(MTGSet.Name(img));
+                    MemoMessage(MTGSet.Number(img));
+                    MemoMessage(MTGSet.Rarity(img));
+                    MemoMessage(imgMTGJsonID);
+                    MemoMessage('========================');
                   end;
               end;
 

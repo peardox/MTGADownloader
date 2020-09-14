@@ -251,6 +251,9 @@ type
     public
       function ExtractImageList: TStringList;
       function ImageID(const idx: Integer): String;
+      function Name(const idx: Integer): String;
+      function Number(const idx: Integer): String;
+      function Rarity(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -1526,8 +1529,44 @@ var
 begin
   URL := EmptyStr;
 
-  if((idx > 0) and (idx < FCards.Count)) then
+  if((idx >= 0) and (idx < FCards.Count)) then
     URL := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FscryfallId;
+
+  Result := URL;
+end;
+
+function TMTGSet.Name(const idx: Integer): String;
+var
+  URL: String;
+begin
+  URL := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    URL := TSetCardRecord(FCards.Objects[idx]).Fname;
+
+  Result := URL;
+end;
+
+function TMTGSet.Number(const idx: Integer): String;
+var
+  URL: String;
+begin
+  URL := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    URL := TSetCardRecord(FCards.Objects[idx]).Fnumber;
+
+  Result := URL;
+end;
+
+function TMTGSet.Rarity(const idx: Integer): String;
+var
+  URL: String;
+begin
+  URL := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    URL := TSetCardRecord(FCards.Objects[idx]).Frarity;
 
   Result := URL;
 end;

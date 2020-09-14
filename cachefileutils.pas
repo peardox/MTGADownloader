@@ -1,7 +1,7 @@
 unit CacheFileUtils;
 
 {$mode objfpc}{$H+}
- {$define debugMessages}
+// {$define debugMessages}
 interface
 
 uses

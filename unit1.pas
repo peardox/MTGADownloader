@@ -122,8 +122,11 @@ var
   cnt: Integer;
   cards: Integer;
   setDate: String;
+  imgMTGJsonID: String;
+  imgScryID:  String;
   imgURI: String;
-  imgUUID: String;
+  imgPath: String;
+  imgFile: String;
 begin
   Abort := False;
   Button2.Enabled := True;
@@ -167,11 +170,21 @@ begin
 
             for img := 0 to MTGSet.Cards.Count - 1 do
               begin
-                MemoMessage(MTGSet.Cards[img] + ' -> ' + MTGSet.ImageID(img));
-                CreateCastleDataDirectoryIfMissing('scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality);
-                CacheImage('https://api.scryfall.com/cards/' + MTGSet.ImageID(img) + '?format=image&version=' + cardQuality,
-                  'scryfall/sets/images/' + MTGSetList.List[idx] + '/'  + cardQuality + '/'+ MTGSet.Cards[img] + '.jpg',
-                  True, True);
+                imgMTGJsonID := MTGSet.Cards[img];
+                imgScryID := MTGSet.ImageID(img);
+                if not (imgScryID = EmptryStr) then
+                  begin
+                    imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
+                    imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;
+                    imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
+{
+                    MemoMessage(imgURI);
+                    MemoMessage(imgPath);
+                    MemoMessage(imgFile);
+}
+                    CreateCastleDataDirectoryIfMissing(imgPath);
+                    CacheImage(imgURI, imgFile, True, True);
+                  end;
               end;
 
             Inc(cnt);

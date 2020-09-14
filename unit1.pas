@@ -9,7 +9,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   ComCtrls, SVGUtils,
   CastleParameters, CastleClassUtils,
   CastleControl, CastleLog, CastleTimeUtils, CastleURIUtils, CastleFilesUtils

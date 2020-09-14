@@ -172,7 +172,7 @@ begin
               begin
                 imgMTGJsonID := MTGSet.Cards[img];
                 imgScryID := MTGSet.ImageID(img);
-                if not (imgScryID = EmptryStr) then
+                if not (imgScryID = EmptyStr) then
                   begin
                     imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
                     imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;

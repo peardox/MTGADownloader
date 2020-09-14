@@ -8,7 +8,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   {$IFDEF UNIX}
-  cthreads,
+  // cthreads,
   {$ENDIF}
   ComCtrls, SVGUtils,
   CastleParameters, CastleClassUtils,

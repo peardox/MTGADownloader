@@ -3,9 +3,9 @@ program download;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}{$IFDEF UseCThreads}{$ENDIF}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, castle_components, Unit1, AssetGatherers, CacheFileUtils;
 

@@ -250,6 +250,7 @@ type
       procedure ProcessListObjectDataObject(const Json: TJsonNode); override;
     public
       function ExtractImageList: TStringList;
+      function ImageID(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -1517,6 +1518,18 @@ begin
       '====================' + LineEnding +
       propdec);
   Result := Rec;
+end;
+
+function TMTGSet.ImageID(const idx: Integer): String;
+var
+  URL: String;
+begin
+  URL := EmptyStr;
+
+  if((idx > 0) and (idx < FCards.Count)) then
+    URL := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FscryfallId;
+
+  Result := URL;
 end;
 
 function TMTGSet.ExtractImageList: TStringList;

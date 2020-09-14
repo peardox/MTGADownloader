@@ -3,7 +3,21 @@ https://api.scryfall.com/cards/${card.identifiers.scryfallId}?format=image
 https://api.scryfall.com/cards/9c017fa9-7021-417a-9c2e-3df409644fcf?format=image
 https://api.scryfall.com/cards/9c017fa9-7021-417a-9c2e-3df409644fcf?format=image&version=png
 https://api.scryfall.com/cards/1bacda35-bb91-4537-a14d-846650fa85f6?format=image&version=png
+
 https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image&version=png
+https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image&version=large
+https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image&version=normal
+https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image&version=small
+
+version...
+
+png         - 745 × 1040 - PNG
+large       - 672 ×  936 - JPG
+normal      - 488 ×  680 - JPG
+small       -  46 ×  204 - JPG
+
+Parse huge json
+https://github.com/halaxa/json-machine
 
 "name": "Ugin, the Spirit Dragon",
 "number": "1",
@@ -19,3 +33,37 @@ https://api.scryfall.com/cards/a11e75a0-17f0-429a-a77a-268fe6257010?format=image
 					"scryfallOracleId": "eecb3047-a563-441a-9175-200421981ac3",
 					"tcgplayerProductId": "215338"
 				},
+
+===================================================================
+Downloaded : https://mtgjson.com/api/v5/SetList.json.gz
+HttpResponseCode : 200
+LastModified :  Wed, 09 Sep 2020 20:15:32 GMT
+Saving to data\mtgjson_setlist.json
+Downloaded : https://mtgjson.com/api/v5/ZNR.json.gz
+HttpResponseCode : 200
+LastModified :  Wed, 09 Sep 2020 20:15:35 GMT
+Saving to data\mtgjson/sets/json/set_ZNR.json
+----------- END -----------
+Time : 1078ms
+Sets analysed : 1
+Sets cards : 259
+===================================================================
+Downloaded : https://mtgjson.com/api/v5/SetList.json.gz
+HttpResponseCode : 200
+LastModified :  Wed, 09 Sep 2020 23:05:57 GMT
+Saving to data\mtgjson_setlist.json
+Downloaded : https://mtgjson.com/api/v5/ZNR.json.gz
+HttpResponseCode : 200
+LastModified :  Wed, 09 Sep 2020 23:12:07 GMT
+Saving to data\mtgjson/sets/json/set_ZNR.json
+----------- END -----------
+Time : 2735ms
+Sets analysed : 1
+Sets cards : 356
+===================================================================
+String androidId = Settings.Secure.getString(getContentResolver(),
+                     Settings.Secure.ANDROID_ID);
+
+https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID
+
+

@@ -1,7 +1,7 @@
 unit Unit1;
 
 {$mode objfpc}{$H+}
- {$define usedecknet}
+// {$define usedecknet}
 
 interface
 
@@ -42,7 +42,7 @@ const
   {$ifndef usedecknet}
   MTGJSON_ENUMS_URI = 'https://mtgjson.com/api/v5/EnumValues.json.gz';
   MTGJSON_SETLIST_URI = 'https://mtgjson.com/api/v5/SetList.json.gz';
-  MTGJSON_SETLIST_URI_404 = 'https://mtgjson.com/api/v5/RequestA404File.json.gz';
+  MTGJSON_PRICELIST_URI = 'https://mtgjson.com/api/v5/AllPrices.json.gz';
   MTGJSON_DECKLIST_URI = 'https://mtgjson.com/api/v5/DeckList.json.gz';
   {$else}
   MTGJSON_ENUMS_URI = 'https://decknet.co.uk/api/v5/EnumValues.json.gz';
@@ -57,6 +57,9 @@ const
   MTGJSON_DECKLIST_URI = 'https://decknet.co.uk/api/v5/DeckList.json.gz';
   {$endif}
   MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
+  MTGSON_PRICES_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
+
+  cardQuality = 'large'; // normal / large
 
   UseCache = True; // Only set to True while developing
 
@@ -119,6 +122,8 @@ var
   cnt: Integer;
   cards: Integer;
   setDate: String;
+  imgURI: String;
+  imgUUID: String;
 begin
   Abort := False;
   Button2.Enabled := True;
@@ -145,28 +150,30 @@ begin
   FreeAndNil(MTGSet);
 }
 
-  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI_404, 'mtgjson_setlist.json', 'code', False);
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
         setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
-        if MTGSetList.List[idx] = 'M21' then
-//        if setDate > '2020-01-01' then
+//        if MTGSetList.List[idx] = 'ZNR' then
+        if setDate >= '2019-10-04' then
           begin
-            data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', False);
+            data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
   //          MTGSetList.Dump(idx);
             MTGSet := TMTGSet.Create(data, 'uuid');
             cards += MTGSet.setTotalSetSize;
 //          MTGSet.DumpList;
-{
-            SList := MTGSet.ExtractImageList;
-            for img := 0 to SList.Count - 1 do
+
+            for img := 0 to MTGSet.Cards.Count - 1 do
               begin
-                MemoMessage(SList[img]);
+                MemoMessage(MTGSet.Cards[img] + ' -> ' + MTGSet.ImageID(img));
+                CreateCastleDataDirectoryIfMissing('scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality);
+                CacheImage('https://api.scryfall.com/cards/' + MTGSet.ImageID(img) + '?format=image&version=' + cardQuality,
+                  'scryfall/sets/images/' + MTGSetList.List[idx] + '/'  + cardQuality + '/'+ MTGSet.Cards[img] + '.jpg',
+                  True, True);
               end;
-            FreeAndNil(SList);
-}
+
             Inc(cnt);
             FreeAndNil(MTGSet);
             FreeAndNil(data);

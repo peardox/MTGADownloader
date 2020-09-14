@@ -1,7 +1,7 @@
 unit CacheFileUtils;
 
 {$mode objfpc}{$H+}
-// {$define debugMessages}
+ {$define debugMessages}
 interface
 
 uses
@@ -13,6 +13,7 @@ uses
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 function LoadCachedData(const FileName: String): TStream;
 function URIDirectoryExists(const Path: String): Boolean;
 function URIDirectoryCreate(const Url: String): Boolean;
@@ -106,6 +107,7 @@ end;
 procedure ReportProgress(const Download: TCastleDownload);
 begin
   {$if defined(debugMessages)}
+  {
   if Download.TotalBytes > 0 then
     begin
       if Download.DownloadedBytes < Download.TotalBytes then
@@ -115,12 +117,14 @@ begin
     end
   else
     MemoMessage(DownloadStatusToString(Download.Status) + ' - Downloaded '  + IntToStr(Download.DownloadedBytes) + ' of (UnKnown)')
+  }
   {$endif}
 end;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 var
   fDownload: TCastleDownload;
+  LastModified: String;
 begin
   EnableAbortButton(True);
   Result := nil;
@@ -147,15 +151,22 @@ begin
         sleep(100);
       end;
 
-      {$if defined(debugMessages)}
-      if UsingCache then
-        MemoMessage('Loaded from cache ' + URI)
-      else
-        MemoMessage('Downloaded ' + URI + ' HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
-      {$endif}
-
       if fDownload.Status = dsSuccess then
+        begin
         Result := fDownload.Contents;
+        if not(UsingCache) then
+          LastModified := fDownload.HttpResponseHeaders.Values['Last-Modified'];
+        {$if defined(debugMessages)}
+        if UsingCache then
+          MemoMessage('Loaded from cache ' + URI)
+        else
+          begin
+            MemoMessage('Downloaded : ' + URI);
+            MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+            MemoMessage('LastModified : ' + LastModified);
+          end;
+        {$endif}
+        end;
 
       except
         on E : Exception do
@@ -241,6 +252,51 @@ begin
 
   Result := data;
 end;
+
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
+var
+  data: TStream = nil;
+begin
+  if LoadFromCache then
+    begin
+      if URIFileExists('castle-data:/' + FileName) then
+        begin
+          data := LoadCachedData(FileName);
+        end
+      else
+        begin
+          data := DownloadNetworkFile(URI, [soForceMemoryStream]);
+          if not(data = nil) then
+            begin
+              {$if defined(debugMessages)}
+              MemoMessage('Saving to data' + PathDelim + FileName);
+              {$endif}
+              StreamSaveToFile(data, 'castle-data:/' + FileName);
+            end;
+        end;
+    end
+  else
+    begin
+      data := DownloadNetworkFile(URI, [soForceMemoryStream]);
+      if not(data = nil) then
+        begin
+          {$if defined(debugMessages)}
+          MemoMessage('Saving to data' + PathDelim + FileName);
+          {$endif}
+          StreamSaveToFile(data, 'castle-data:/' + FileName);
+        end
+      else
+        begin
+          data := LoadCachedData(FileName);
+        end;
+    end;
+
+  if FreeResult then
+    FreeAndNil(data);
+
+  Result := data;
+end;
+
 
 end.
 

@@ -59,7 +59,7 @@ const
   MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
   MTGSON_PRICES_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'large'; // normal / large
+  cardQuality = 'normal'; // normal / large
 
   UseCache = True; // Only set to True while developing
 

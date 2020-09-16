@@ -1,0 +1,43 @@
+===== 2XM - masters =====
+===== AJMP - starter =====
+===== AKR - masters =====
+===== ANB - starter =====
+===== C20 - commander =====
+===== CC1 - from_the_vault =====
+===== CMB1 - funny =====
+===== CMR - draft_innovation =====
+===== ELD - expansion =====
+===== FJMP - memorabilia =====
+===== FMB1 - masters =====
+===== GN2 - box =====
+===== HA1 - box =====
+===== HA2 - box =====
+===== HA3 - box =====
+===== IKO - expansion =====
+===== J20 - promo =====
+===== JMP - draft_innovation =====
+===== M21 - core =====
+===== MB1 - masters =====
+===== OC20 - memorabilia =====
+===== PELD - promo =====
+===== PF20 - promo =====
+===== PIKO - promo =====
+===== PLGS - promo =====
+===== PLIST - masters =====
+===== PM21 - promo =====
+===== PSLD - promo =====
+===== PTG - funny =====
+===== PTHB - promo =====
+===== SLD - box =====
+===== SLU - box =====
+===== SS3 - spellbook =====
+===== THB - expansion =====
+===== TSR - masters =====
+===== UND - funny =====
+===== ZNC - commander =====
+===== ZNE - masterpiece =====
+===== ZNR - expansion =====
+----------- END -----------
+Time : 20890ms
+Sets analysed : 39
+Sets cards : 6886

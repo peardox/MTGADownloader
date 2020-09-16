@@ -2,6 +2,7 @@ unit CacheFileUtils;
 
 {$mode objfpc}{$H+}
 // {$define debugMessages}
+
 interface
 
 uses
@@ -141,7 +142,7 @@ begin
       while fDownload.Status = dsDownloading do
       begin
         ReportProgress(fDownload);
-//        TriggerProcessMessages;
+        TriggerProcessMessages;
         ApplicationProperties._Update;
         if Abort then
           begin
@@ -261,10 +262,17 @@ begin
     begin
       if URIFileExists('castle-data:/' + FileName) then
         begin
-          data := LoadCachedData(FileName);
+          {$if defined(debugMessages)}
+          MemoMessage('Found cached copy of castle-data:/' + FileName);
+          {$endif}
+          if not(FreeResult) then
+            data := LoadCachedData(FileName);
         end
       else
         begin
+          {$if defined(debugMessages)}
+          MemoMessage('Cache miss - castle-data:/' + FileName);
+          {$endif}
           data := DownloadNetworkFile(URI, [soForceMemoryStream]);
           if not(data = nil) then
             begin
@@ -277,6 +285,9 @@ begin
     end
   else
     begin
+      {$if defined(debugMessages)}
+      MemoMessage('Forced download - castle-data:/' + FileName);
+      {$endif}
       data := DownloadNetworkFile(URI, [soForceMemoryStream]);
       if not(data = nil) then
         begin
@@ -287,6 +298,9 @@ begin
         end
       else
         begin
+          {$if defined(debugMessages)}
+          MemoMessage('Download fail - try cache - castle-data:/' + FileName);
+          {$endif}
           data := LoadCachedData(FileName);
         end;
     end;

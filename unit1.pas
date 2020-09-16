@@ -2,6 +2,7 @@ unit Unit1;
 
 {$mode objfpc}{$H+}
 // {$define usedecknet}
+{$define useLog}
 
 interface
 
@@ -12,7 +13,7 @@ uses
   {$ENDIF}
   ComCtrls, SVGUtils,
   CastleParameters, CastleClassUtils,
-  CastleControl, CastleLog, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
+  CastleControl, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
   ;
 
 type
@@ -71,7 +72,9 @@ procedure TriggerProcessMessages;
 
 implementation
 
-uses CacheFileUtils, AssetGatherers, MTGJsonObjects;
+uses
+  CastleLog,
+  CacheFileUtils, AssetGatherers, MTGJsonObjects;
 
 {$R *.lfm}
 
@@ -89,8 +92,11 @@ end;
 
 procedure MemoMessage(const msg: String);
 begin
-    Form1.Memo1.Lines.Add(msg);
-    Application.ProcessMessages;
+  {$ifdef useLog}
+  WriteLnLog(msg);
+  {$endif}
+  Form1.Memo1.Lines.Add(msg);
+  Application.ProcessMessages;
 end;
 
 
@@ -98,6 +104,9 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  {$ifdef useLog}
+  InitializeLog;
+  {$endif}
   Abort := False;
   Button2.Enabled := False;
   InitializeLog;
@@ -122,6 +131,9 @@ var
   cnt: Integer;
   cards: Integer;
   setDate: String;
+  setFullName: String;
+  setType: String;
+  setSize: String;
   imgMTGJsonID: String;
   imgScryID:  String;
   imgURI: String;
@@ -159,9 +171,14 @@ begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
         setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
+        setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
+        setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
+        setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
 //        if MTGSetList.List[idx] = 'ZNR' then
         if setDate >= '2019-10-04' then
           begin
+            MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
+              setType + ' : ' + setFullName + ' =====');
             data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
   //          MTGSetList.Dump(idx);
             MTGSet := TMTGSet.Create(data, 'uuid');
@@ -178,7 +195,7 @@ begin
                     imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;
                     imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
                     CreateCastleDataDirectoryIfMissing(imgPath);
-                    CacheImage(imgURI, imgFile, True, True);
+//                    CacheImage(imgURI, imgFile, True, True);
                   end
                 else
                   begin
@@ -233,6 +250,9 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
+  {$if defined(debugMessages)}
+  MemoMessage('Abort button clicked');
+  {$endif}
   Abort := True;
   Button2.Enabled := False;
   Button1.Enabled := True;

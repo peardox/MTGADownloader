@@ -1,0 +1,1806 @@
+Heap dump by heaptrc unit of /home/simon/src/MTGADownloader/download
+170063 memory blocks allocated : 45409749/45854848
+162601 memory blocks freed     : 44764425/45188168
+7462 unfreed memory blocks : 645324
+True heap size : 4849664
+True free heap : 2541824
+Should be : 2750280
+Call trace for block $00007F84CC0C2840 size 128
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C26E0 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0D3A0 size 57
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00C800 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00A100 size 46
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00A200 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0D280 size 51
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0D160 size 69
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0D040 size 55
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0CE00 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D33  BUTTON1CLICK,  line 499 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C2580 size 128
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C22C0 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0CCE0 size 57
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00D700 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00A300 size 46
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC008400 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0CBC0 size 51
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0CAA0 size 69
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C980 size 55
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C1A0 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468D0F  BUTTON1CLICK,  line 496 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0B1AC0 size 128
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84E0CF0480 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C620 size 57
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00BE00 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00B400 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00D300 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C500 size 51
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C2C0 size 69
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C3E0 size 55
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC075100 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468CEB  BUTTON1CLICK,  line 493 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CFB5C850 size 352
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $F0F0F0F0F0F0F0F0
+  $F0F0F0F0F0F0F0F0
+Call trace for block $00007F84CC0C2420 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71DD00 size 104
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0C080 size 53
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00A000 size 43
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0BF60 size 56
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71DF80 size 96
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C2160 size 123
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0BE40 size 72
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC009000 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0BD20 size 63
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC008F00 size 35
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00BA00 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0BC00 size 74
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0BAE0 size 61
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71DE40 size 84
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C1EA0 size 122
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B9C0 size 59
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B8A0 size 64
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC1DDC60 size 188
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00E600 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00C100 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B780 size 52
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC075D60 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CFB5C610 size 352
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $F0F0F0F0F0F0F0F0
+  $F0F0F0F0F0F0F0F0
+Call trace for block $00007F84CC0C2000 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E0C0 size 104
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B420 size 53
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00AC00 size 43
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B300 size 56
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E340 size 96
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C1D40 size 123
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B1E0 size 72
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00AB00 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0B0C0 size 63
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00AE00 size 35
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00A800 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0AFA0 size 74
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0AE80 size 61
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E200 size 84
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C1A80 size 122
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0AD60 size 59
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0AC40 size 64
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC1DDAC0 size 188
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00EC00 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00E000 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0AB20 size 52
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0768A0 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CFB5C3D0 size 352
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $F0F0F0F0F0F0F0F0
+  $F0F0F0F0F0F0F0F0
+Call trace for block $00007F84CC0C1BE0 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E480 size 104
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A7C0 size 53
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00B000 size 43
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A6A0 size 56
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E700 size 96
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C1920 size 123
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A580 size 72
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00B200 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A460 size 63
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00B300 size 35
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00C700 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A340 size 74
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A220 size 61
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E5C0 size 84
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC0C1660 size 122
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BBD0A100 size 59
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC06C220 size 64
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC1DD920 size 188
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00DA00 size 42
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC00E500 size 45
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC072400 size 52
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC077620 size 60
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CFB5C190 size 352
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $F0F0F0F0F0F0F0F0
+  $F0F0F0F0F0F0F0F0
+Call trace for block $00007F84CC0C17C0 size 144
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+  $000000000069E89E  SLOTCLICKED,  line 6089 of qt5/qtwidgets.pas
+  $00007F84E457A300
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84BB71E840 size 104
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICKED,  line 21 of include/buttoncontrol.inc
+  $0000000000435EBA
+  $00000000006015E9  WNDPROC,  line 5411 of include/wincontrol.inc
+  $000000000069D9E1  DELIVERMESSAGE,  line 5716 of qt5/qtwidgets.pas
+Call trace for block $00007F84CC073720 size 53
+  $00000000009D937B
+  $00000000009D97C7
+  $00000000009D9F99
+  $00000000009DA30E
+  $00000000009D0243  START,  line 372 of ../src/files/castledownload_url_http_fphttpclient.inc
+  $00000000009D3974  DOWNLOAD,  line 142 of ../src/files/castledownload_synchronous.inc
+  $00000000009D3A69  DOWNLOAD,  line 162 of ../src/files/castledownload_synchronous.inc
+  $00000000004678F0  CACHEDATA,  line 212 of unit1.pas
+  $0000000000468C75  BUTTON1CLICK,  line 477 of unit1.pas
+  $000000000060F837  CLICK,  line 2911 of include/control.inc
+  $000000000064D569  CLICK,  line 55 of include/buttoncontrol.inc
+  $000000000064DD5A  CLICK,  line 169 of include/buttons.inc
+  $000000000064D462  WMDEFAULTCLICK

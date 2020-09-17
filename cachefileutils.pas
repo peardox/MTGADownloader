@@ -168,12 +168,20 @@ begin
           end;
         {$endif}
 
-          if(fDownload.HttpResponseCode <> 200)  then
-            begin
-            MemoMessage('Error Downloading : ' + URI);
-            MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
-            end;
+        if not UsingCache then
+          begin
+            if(fDownload.HttpResponseCode <> 200)  then
+              begin
+              MemoMessage('Error Downloading : ' + URI);
+              MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+              end;
            end;
+        end
+      else
+        begin
+          MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+        end;
 
       except
         on E : Exception do

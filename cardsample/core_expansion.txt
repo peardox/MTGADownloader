@@ -1,0 +1,114 @@
+===== 10E (508) - core : Tenth Edition =====
+===== 2ED (302) - core : Unlimited Edition =====
+===== 3ED (306) - core : Revised Edition =====
+===== 4BB (378) - core : Fourth Edition Foreign Black Border =====
+===== 4ED (379) - core : Fourth Edition =====
+===== 5DN (165) - expansion : Fifth Dawn =====
+===== 5ED (460) - core : Fifth Edition =====
+===== 6ED (351) - core : Classic Sixth Edition =====
+===== 7ED (354) - core : Seventh Edition =====
+===== 8ED (361) - core : Eighth Edition =====
+===== 9ED (359) - core : Ninth Edition =====
+===== AER (197) - expansion : Aether Revolt =====
+===== AKH (287) - expansion : Amonkhet =====
+===== ALA (249) - expansion : Shards of Alara =====
+===== ALL (199) - expansion : Alliances =====
+===== APC (143) - expansion : Apocalypse =====
+===== ARB (145) - expansion : Alara Reborn =====
+===== ARN (92) - expansion : Arabian Nights =====
+===== ATQ (101) - expansion : Antiquities =====
+===== AVR (244) - expansion : Avacyn Restored =====
+===== BFZ (299) - expansion : Battle for Zendikar =====
+===== BNG (165) - expansion : Born of the Gods =====
+===== BOK (165) - expansion : Betrayers of Kamigawa =====
+===== CHK (307) - expansion : Champions of Kamigawa =====
+===== CON (145) - expansion : Conflux =====
+===== CSP (155) - expansion : Coldsnap =====
+===== DGM (156) - expansion : Dragon's Maze =====
+===== DIS (180) - expansion : Dissension =====
+===== DKA (158) - expansion : Dark Ascension =====
+===== DOM (280) - expansion : Dominaria =====
+===== DRK (122) - expansion : The Dark =====
+===== DST (165) - expansion : Darksteel =====
+===== DTK (264) - expansion : Dragons of Tarkir =====
+===== ELD (397) - expansion : Throne of Eldraine =====
+===== EMN (208) - expansion : Eldritch Moon =====
+===== EVE (180) - expansion : Eventide =====
+===== EXO (143) - expansion : Exodus =====
+===== FBB (307) - core : Foreign Black Border =====
+===== FEM (187) - expansion : Fallen Empires =====
+===== FRF (185) - expansion : Fate Reforged =====
+===== FUT (180) - expansion : Future Sight =====
+===== GPT (165) - expansion : Guildpact =====
+===== GRN (273) - expansion : Guilds of Ravnica =====
+===== GTC (249) - expansion : Gatecrash =====
+===== HML (140) - expansion : Homelands =====
+===== HOU (209) - expansion : Hour of Devastation =====
+===== ICE (383) - expansion : Ice Age =====
+===== IKO (388) - expansion : Ikoria: Lair of Behemoths =====
+===== INV (351) - expansion : Invasion =====
+===== ISD (264) - expansion : Innistrad =====
+===== JOU (165) - expansion : Journey into Nyx =====
+===== JUD (143) - expansion : Judgment =====
+===== KLD (278) - expansion : Kaladesh =====
+===== KTK (269) - expansion : Khans of Tarkir =====
+===== LEA (295) - core : Limited Edition Alpha =====
+===== LEB (302) - core : Limited Edition Beta =====
+===== LEG (310) - expansion : Legends =====
+===== LGN (145) - expansion : Legions =====
+===== LRW (301) - expansion : Lorwyn =====
+===== M10 (249) - core : Magic 2010 =====
+===== M11 (249) - core : Magic 2011 =====
+===== M12 (249) - core : Magic 2012 =====
+===== M13 (249) - core : Magic 2013 =====
+===== M14 (249) - core : Magic 2014 =====
+===== M15 (284) - core : Magic 2015 =====
+===== M19 (314) - core : Core Set 2019 =====
+===== M20 (345) - core : Core Set 2020 =====
+===== M21 (397) - core : Core Set 2021 =====
+===== MBS (155) - expansion : Mirrodin Besieged =====
+===== MIR (351) - expansion : Mirage =====
+===== MMQ (350) - expansion : Mercadian Masques =====
+===== MOR (150) - expansion : Morningtide =====
+===== MRD (306) - expansion : Mirrodin =====
+===== NEM (143) - expansion : Nemesis =====
+===== NPH (175) - expansion : New Phyrexia =====
+===== ODY (352) - expansion : Odyssey =====
+===== OGW (187) - expansion : Oath of the Gatewatch =====
+===== ONS (350) - expansion : Onslaught =====
+===== ORI (288) - core : Magic Origins =====
+===== PCY (144) - expansion : Prophecy =====
+===== PLC (165) - expansion : Planar Chaos =====
+===== PLS (146) - expansion : Planeshift =====
+===== RAV (306) - expansion : Ravnica: City of Guilds =====
+===== RIX (205) - expansion : Rivals of Ixalan =====
+===== RNA (273) - expansion : Ravnica Allegiance =====
+===== ROE (248) - expansion : Rise of the Eldrazi =====
+===== RTR (274) - expansion : Return to Ravnica =====
+===== SCG (143) - expansion : Scourge =====
+===== SHM (302) - expansion : Shadowmoor =====
+===== SOI (302) - expansion : Shadows over Innistrad =====
+===== SOK (165) - expansion : Saviors of Kamigawa =====
+===== SOM (249) - expansion : Scars of Mirrodin =====
+===== STH (143) - expansion : Stronghold =====
+===== SUM (306) - core : Summer Magic / Edgar =====
+===== THB (358) - expansion : Theros Beyond Death =====
+===== THS (249) - expansion : Theros =====
+===== TMP (350) - expansion : Tempest =====
+===== TOR (143) - expansion : Torment =====
+===== TSB (121) - expansion : Time Spiral Timeshifted =====
+===== TSP (301) - expansion : Time Spiral =====
+===== UDS (143) - expansion : Urza's Destiny =====
+===== ULG (143) - expansion : Urza's Legacy =====
+===== USG (356) - expansion : Urza's Saga =====
+===== VIS (167) - expansion : Visions =====
+===== WAR (311) - expansion : War of the Spark =====
+===== WTH (167) - expansion : Weatherlight =====
+===== WWK (145) - expansion : Worldwake =====
+===== XLN (289) - expansion : Ixalan =====
+===== ZEN (269) - expansion : Zendikar =====
+===== ZNR (392) - expansion : Zendikar Rising =====
+----------- END -----------
+Time : 103594ms
+Sets analysed : 110
+Sets cards : 27225

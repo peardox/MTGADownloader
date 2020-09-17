@@ -7,7 +7,7 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, StrUtils,
   {$IFDEF UNIX}
   // cthreads,
   {$ENDIF}
@@ -62,7 +62,9 @@ const
 
   cardQuality = 'normal'; // normal / large
 
-  UseCache = True; // Only set to True while developing
+  UseCache: Boolean = True; // Only set to True while developing
+  InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
+  InitialTypes: array [0 .. 1] of String = ('core', 'expansion');
 
 { Declare hooks for other units }
 
@@ -148,22 +150,14 @@ begin
   Memo1.Clear;
   Button1.Enabled := False;
 
-{
   MemoMessage('---------- SCRYFALL ----------');
 
   GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');
   GetScryfallIcons(SCRYFALL_SYMBOLOGY_URI, 'scryfall/symbols/icons', 'scryfall_symbology.json', 'svg_uri');
 
   MemoMessage('---------- MTGJSON ----------');
-
   SList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
-}
-
-{
-  MTGSet := TMTGSet.Create(MTGJSON_M21_URI, 'mtgjson/sets/json/set_M21.json', 'code');
-  MTGSet.DumpList;
-  FreeAndNil(MTGSet);
-}
+  SList.Free;
 
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
@@ -175,7 +169,9 @@ begin
         setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
         setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
 //        if MTGSetList.List[idx] = 'ZNR' then
-        if setDate >= '2019-10-04' then
+//        if setDate >= '2019-10-04' then
+//        if IndexStr(MTGSetList.List[idx], InitialSets) <> -1 then
+//        if IndexStr(SetType, InitialTypes) <> -1 then
           begin
             MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
               setType + ' : ' + setFullName + ' =====');
@@ -195,7 +191,7 @@ begin
                     imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;
                     imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
                     CreateCastleDataDirectoryIfMissing(imgPath);
-//                    CacheImage(imgURI, imgFile, True, True);
+                    CacheImage(imgURI, imgFile, True, True);
                   end
                 else
                   begin
@@ -240,11 +236,7 @@ begin
   Button1.Enabled := True;
   MemoMessage('Sets analysed : ' + IntToStr(cnt));
   MemoMessage('Sets cards : ' + IntToStr(cards));
-{
-  Memo1.Lines.BeginUpdate;
-  DumpList(SList);
-  Memo1.Lines.EndUpdate;
-}
+
   Button2.Enabled := False;
 end;
 

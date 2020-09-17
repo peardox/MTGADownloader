@@ -34,35 +34,10 @@ https://github.com/halaxa/json-machine
 					"tcgplayerProductId": "215338"
 				},
 
-===================================================================
-Downloaded : https://mtgjson.com/api/v5/SetList.json.gz
-HttpResponseCode : 200
-LastModified :  Wed, 09 Sep 2020 20:15:32 GMT
-Saving to data\mtgjson_setlist.json
-Downloaded : https://mtgjson.com/api/v5/ZNR.json.gz
-HttpResponseCode : 200
-LastModified :  Wed, 09 Sep 2020 20:15:35 GMT
-Saving to data\mtgjson/sets/json/set_ZNR.json
------------ END -----------
-Time : 1078ms
-Sets analysed : 1
-Sets cards : 259
-===================================================================
-Downloaded : https://mtgjson.com/api/v5/SetList.json.gz
-HttpResponseCode : 200
-LastModified :  Wed, 09 Sep 2020 23:05:57 GMT
-Saving to data\mtgjson_setlist.json
-Downloaded : https://mtgjson.com/api/v5/ZNR.json.gz
-HttpResponseCode : 200
-LastModified :  Wed, 09 Sep 2020 23:12:07 GMT
-Saving to data\mtgjson/sets/json/set_ZNR.json
------------ END -----------
-Time : 2735ms
-Sets analysed : 1
-Sets cards : 356
-===================================================================
+
 String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
 https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID
+https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_from_websites
 
 

@@ -171,7 +171,7 @@ begin
         setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
         setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
         Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx) + '/' + IntToStr(MTGSetList.List.Count) + ')';
-        if MTGSetList.List[idx] = 'ZNE' then
+//        if MTGSetList.List[idx] = 'ZNE' then
 //        if MTGSetList.List[idx] = 'ZNR' then
 //        if setDate >= '2019-10-04' then
 //        if IndexStr(MTGSetList.List[idx], InitialSets) <> -1 then

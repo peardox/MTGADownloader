@@ -180,6 +180,7 @@ begin
       else
         begin
           MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('ErrorMessage : ' + fDownload.ErrorMessage);
           MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
         end;
 
@@ -193,6 +194,11 @@ begin
                          E.ClassName + LineEnding +
                          E.Message);
             {$endif}
+            MemoMessage('Oops' + LineEnding +
+                        'Trying to download : ' + URI + LineEnding +
+                        'HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode) + LineEnding +
+                         E.ClassName + LineEnding +
+                         E.Message);
            end;
       end;
   finally

@@ -60,7 +60,7 @@ const
   MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
   MTGSON_PRICES_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'normal'; // normal / large
+  cardQuality = 'large'; // normal / large
 
   UseCache: Boolean = True; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
@@ -238,6 +238,13 @@ begin
   MemoMessage('Sets cards : ' + IntToStr(cards));
 
   Button2.Enabled := False;
+{
+  data := DownloadNetworkFile('https://noapi.peardox.co.uk/prices/prices.json.gz', [], False);
+  if not(data = nil) then
+    MemoMessage('OK');
+
+  FreeAndNil(data);
+}
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);

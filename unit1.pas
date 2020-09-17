@@ -141,6 +141,8 @@ var
   imgURI: String;
   imgPath: String;
   imgFile: String;
+  itime: Int64;
+  itott: Int64;
 begin
   Abort := False;
   Button2.Enabled := True;
@@ -149,7 +151,7 @@ begin
   ticks := CastleGetTickCount64;
   Memo1.Clear;
   Button1.Enabled := False;
-
+{
   MemoMessage('---------- SCRYFALL ----------');
 
   GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');
@@ -158,7 +160,7 @@ begin
   MemoMessage('---------- MTGJSON ----------');
   SList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
   SList.Free;
-
+}
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
     begin
@@ -168,6 +170,8 @@ begin
         setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
         setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
         setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
+        Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx) + '/' + IntToStr(MTGSetList.List.Count) + ')';
+        if MTGSetList.List[idx] = 'ZNE' then
 //        if MTGSetList.List[idx] = 'ZNR' then
 //        if setDate >= '2019-10-04' then
 //        if IndexStr(MTGSetList.List[idx], InitialSets) <> -1 then
@@ -181,10 +185,13 @@ begin
             cards += MTGSet.setTotalSetSize;
 //          MTGSet.DumpList;
 
+            itott := 0;
+
             for img := 0 to MTGSet.Cards.Count - 1 do
               begin
                 imgMTGJsonID := MTGSet.Cards[img];
                 imgScryID := MTGSet.ImageID(img);
+                itime := CastleGetTickCount64;
                 if not (imgScryID = EmptyStr) then
                   begin
                     imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
@@ -203,6 +210,24 @@ begin
                     MemoMessage(imgMTGJsonID);
                     MemoMessage('========================');
                   end;
+
+                itime := CastleGetTickCount64 - itime;
+                itott += itime;
+
+                Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
+                  ' - Image ' + '(' + IntToStr(img + 1) + '/' + IntToStr(MTGSet.Cards.Count) + ')' +
+                  ' Time : ' + FormatFloat('####0.00', (itime / 1000)) + 's' +
+                  ' Avg : ' + FormatFloat('####0.00', (itott / 1000) / (img + 1)) + 's' +
+                  ' Total : ' + FormatFloat('####0.00', (itott / 1000)) + 's';
+                {$ifdef useLog}
+                if img = (MTGSet.Cards.Count - 1) then
+                  WriteLnLog('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
+                    ' - Image ' + '(' + IntToStr(img + 1) + '/' + IntToStr(MTGSet.Cards.Count) + ')' +
+                    ' Time : ' + FormatFloat('####0.00', (itime / 1000)) + 's' +
+                    ' Avg : ' + FormatFloat('####0.00', (itott / 1000) / (img + 1)) + 's' +
+                    ' Total : ' + FormatFloat('####0.00', (itott / 1000)) + 's');
+                {$endif}
+
               end;
 
             Inc(cnt);

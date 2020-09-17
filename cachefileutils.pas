@@ -167,7 +167,13 @@ begin
             MemoMessage('LastModified : ' + LastModified);
           end;
         {$endif}
-        end;
+
+          if(fDownload.HttpResponseCode <> 200)  then
+            begin
+            MemoMessage('Error Downloading : ' + URI);
+            MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+            end;
+           end;
 
       except
         on E : Exception do

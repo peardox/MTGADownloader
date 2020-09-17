@@ -221,7 +221,7 @@ begin
                   ' Total : ' + FormatFloat('####0.00', (itott / 1000)) + 's';
                 {$ifdef useLog}
                 if img = (MTGSet.Cards.Count - 1) then
-                  WriteLnLog('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
+                  WriteLnLog('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
                     ' - Image ' + '(' + IntToStr(img + 1) + '/' + IntToStr(MTGSet.Cards.Count) + ')' +
                     ' Time : ' + FormatFloat('####0.00', (itime / 1000)) + 's' +
                     ' Avg : ' + FormatFloat('####0.00', (itott / 1000) / (img + 1)) + 's' +

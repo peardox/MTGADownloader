@@ -209,14 +209,12 @@ begin
               for i := 0 to URLList.Count - 1 do
                 begin
                   iconFilename := URIExcludeQuery(ExtractURIName(URLList.Strings[i]));
-                  if iconFilename = 'con.svg' then
-                    iconFilename := 'conflux.svg';
-                  svg := CacheData(URLList.Strings[i], Path + '/svg/' + iconFilename, True, False);
+                  svg := CacheData(URLList.Strings[i], Path + '/svg/ico_' + iconFilename, True, False);
                   if not(svg = nil) then
                     begin
-//                  if not(URIFileExists('castle-data:/' + Path + '/png/' + iconFilename + '.png')) then
-                      RasterizeSVG(URIToFilenameSafe('castle-data:/' + Path + '/png/' + iconFilename + '.png'), 512, svg);
-                    FreeAndNil(svg);
+                      if not(URIFileExists('castle-data:/' + Path + '/png/' + iconFilename + '.png')) then
+                        RasterizeSVG(URIToFilenameSafe('castle-data:/' + Path + '/png/img_' + iconFilename + '.png'), 512, svg);
+                      FreeAndNil(svg);
                     end
                   else
                     MemoMessage('***********' + URLList.Strings[i] + '***********');

@@ -85,7 +85,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="8">
+    <Exceptions Count="9">
       <Item1>
         <Name Value="EAbort"/>
         <Enabled Value="False"/>
@@ -116,6 +116,9 @@
         <Name Value="EStringListError"/>
         <Enabled Value="False"/>
       </Item8>
+      <Item9>
+        <Name Value="EImageCacheException"/>
+      </Item9>
     </Exceptions>
   </Debugging>
 </CONFIG>

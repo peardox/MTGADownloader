@@ -12,6 +12,8 @@ uses
 //  CastleURIUtils, CastleFilesUtils
 ;
 
+type EImageCacheException = Class(Exception);
+
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
@@ -300,6 +302,10 @@ begin
               MemoMessage('Saving to data' + PathDelim + FileName);
               {$endif}
               StreamSaveToFile(data, 'castle-data:/' + FileName);
+            end
+          else
+            begin
+              Raise EImageCacheException.Create('Bad download');
             end;
         end;
     end

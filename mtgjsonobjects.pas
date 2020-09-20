@@ -245,7 +245,7 @@ type
       procedure MapJsonCardArray(const Json: TJsonNode);
       function MapJsonIdentifiersObject(const Json: TJsonNode): TSetCardIdentifiersRecord;
       procedure MapJsonObject(const Json: TJsonNode);
-      function  MapJsonObject(const Json: TJsonNode; out Rec: TSetCardRecord): String;
+      function  MapJsonCardObject(const Json: TJsonNode; out Rec: TSetCardRecord): String;
       procedure MapJsonSetObject(const Json: TJsonNode);
       procedure ProcessListObjectDataObject(const Json: TJsonNode); override;
     public
@@ -254,6 +254,7 @@ type
       function Name(const idx: Integer): String;
       function Number(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
+      function CardType(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -794,22 +795,6 @@ begin
 }
   MapJsonSetObject(Json);
 end;
-{
-procedure TMTGSet.MapJsonCardArray(const Json: TJsonNode);
-var
-  idx: Integer;
-begin
-  MemoMessage('MapJsonCardArray ' + IntToStr(Json.Count));
-
-  for idx := 0 to Json.Count - 1 do
-    begin
-      if Node.Kind = nkObject then
-        MapJsonObject(Json.Child(idx));
-    end;
-
-  MemoMessage('----------- END CARDS -----------');
-end;
-}
 
 procedure TMTGSet.MapJsonCardArray(const Json: TJsonNode);
 var
@@ -817,15 +802,17 @@ var
   Rec: TSetCardRecord;
   Key: String;
 begin
-  FCards := TStringList.Create;
-  FCards.OwnsObjects := True;
-  FCards.Sorted := True;
-  FCards.Duplicates := dupError;
+  if FCards = nil then
+    begin
+      FCards := TStringList.Create;
+      FCards.OwnsObjects := True;
+      FCards.Sorted := True;
+      FCards.Duplicates := dupError;
+    end;
 
   for idx := 0 to Json.Count - 1 do
-//    idx := 0;
     begin
-      Key := MapJsonObject(Json.Child(idx), Rec);
+      Key := MapJsonCardObject(Json.Child(idx), Rec);
       try
         FCards.AddObject(Key, Rec);
       except
@@ -841,7 +828,7 @@ begin
 end;
 
 
-function TMTGSet.MapJsonObject(const Json: TJsonNode; out Rec: TSetCardRecord): String;
+function TMTGSet.MapJsonCardObject(const Json: TJsonNode; out Rec: TSetCardRecord): String;
 var
   Node: TJsonNode;
   Txt: String;
@@ -1181,6 +1168,13 @@ begin
             MemoMessage('TypeError for identifiers expected nkObject got ' + JSONKindToString(Node))
           else
             Rec.Fidentifiers := MapJsonIdentifiersObject(Node);
+        end;
+      'reverseRelated':
+        begin
+          if not(Node.Kind = nkArray) then
+            MemoMessage('TypeError for reverseRelated expected nkArray got ' + JSONKindToString(Node))
+          else
+            // Rec.FreverseRelated := MapJsonArray(Node); // *** FIXME ***
         end;
       'colorIndicator':
         begin
@@ -1571,6 +1565,18 @@ begin
   Result := URL;
 end;
 
+function TMTGSet.CardType(const idx: Integer): String;
+var
+  ctype: String;
+begin
+  ctype := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    ctype := TSetCardRecord(FCards.Objects[idx]).Ftype;
+
+  Result := ctype;
+end;
+
 function TMTGSet.ExtractImageList: TStringList;
 var
   URL: String;
@@ -1693,7 +1699,9 @@ begin
             MemoMessage('TypeError for tokens expected nkString got ' + JSONKindToString(Node))
           else
             begin
-              MapJsonArray(Node); // ToDo
+              MemoMessage('*** Set has ' + IntToStr(Node.Count) + ' tokens');
+              MapJsonCardArray(Node);
+//              MapJsonArray(Node); // ToDo
             end;
         end;
       'translations':

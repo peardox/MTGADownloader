@@ -58,7 +58,8 @@ const
   MTGJSON_DECKLIST_URI = 'https://decknet.co.uk/api/v5/DeckList.json.gz';
   {$endif}
   MTGJSON_M21_URI = 'https://mtgjson.com/api/v5/M21.json.gz';
-  MTGSON_PRICES_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
+  MTGSON_PRICES_ALL_fURI = 'https://api.peardox.co.uk/prices/prices.json.gz';
+  MTGSON_PRICES_PAPER_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
   cardQuality = 'large'; // normal / large
 
@@ -143,11 +144,13 @@ var
   imgFile: String;
   itime: Int64;
   itott: Int64;
+  imerr: Integer;
 begin
   Abort := False;
   Button2.Enabled := True;
   cnt := 0;
   cards := 0;
+  imerr := 0;
   ticks := CastleGetTickCount64;
   Memo1.Clear;
   Button1.Enabled := False;
@@ -173,6 +176,8 @@ begin
         Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
 //        if MTGSetList.List[idx] = 'ZNE' then
 //        if MTGSetList.List[idx] = 'ZNR' then
+//        if MTGSetList.List[idx] = 'CON' then
+//        if MTGSetList.List[idx] = 'RIX' then
 //        if setDate >= '2019-10-04' then
 //        if IndexStr(MTGSetList.List[idx], InitialSets) <> -1 then
 //        if IndexStr(SetType, InitialTypes) <> -1 then
@@ -180,13 +185,14 @@ begin
             MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
               setType + ' : ' + setFullName + ' =====');
             data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
-  //          MTGSetList.Dump(idx);
+//            MTGSetList.Dump(idx);
             MTGSet := TMTGSet.Create(data, 'uuid');
             cards += MTGSet.setTotalSetSize;
-//          MTGSet.DumpList;
+//            MTGSet.DumpList;
 
             itott := 0;
 
+//            MemoMessage('Image Count = ' + IntToStr(MTGSet.Cards.Count));
             for img := 0 to MTGSet.Cards.Count - 1 do
               begin
                 imgMTGJsonID := MTGSet.Cards[img];
@@ -195,10 +201,26 @@ begin
                 if not (imgScryID = EmptyStr) then
                   begin
                     imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
-                    imgPath := 'scryfall/sets/images/' + MTGSetList.List[idx] + '/' + cardQuality;
+                    imgPath := 'scryfall/sets/images/set_' + MTGSetList.List[idx] + '/' + cardQuality;
                     imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
                     CreateCastleDataDirectoryIfMissing(imgPath);
-                    CacheImage(imgURI, imgFile, True, True);
+                    try
+                      CacheImage(imgURI, imgFile, True, True);
+                    except
+                      on E: EImageCacheException do
+                        begin
+                          MemoMessage('====== Bad Download ======');
+                          MemoMessage('set  : ' + MTGSetList.List[idx]);
+                          MemoMessage('uuid : ' + imgMTGJsonID);
+                          MemoMessage('name : ' + MTGSet.Name(img));
+                          MemoMessage('type : ' + MTGSet.CardType(img));
+                          MemoMessage('num# : ' + MTGSet.Number(img));
+                          MemoMessage('rare : ' + MTGSet.Rarity(img));
+                          MemoMessage('scry : ' + imgScryID);
+                          MemoMessage('========================');
+                          Inc(imerr);
+                        end;
+                    end;
                   end
                 else
                   begin
@@ -261,6 +283,7 @@ begin
   Button1.Enabled := True;
   MemoMessage('Sets analysed : ' + IntToStr(cnt));
   MemoMessage('Sets cards : ' + IntToStr(cards));
+  MemoMessage('Img errors : ' + IntToStr(imerr));
 
   Button2.Enabled := False;
 {

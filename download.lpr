@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, castle_components, Unit1, AssetGatherers, CacheFileUtils;
+  Forms, castle_components, Unit1, AssetGatherers, CacheFileUtils, mtgJsonSetObjects;
 
 {$R *.res}
 

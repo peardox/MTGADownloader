@@ -61,7 +61,7 @@ const
   MTGSON_PRICES_ALL_fURI = 'https://api.peardox.co.uk/prices/prices.json.gz';
   MTGSON_PRICES_PAPER_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'large'; // normal / large
+  cardQuality = 'normal'; // normal / large
 
   UseCache: Boolean = True; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
@@ -77,7 +77,8 @@ implementation
 
 uses
   CastleLog,
-  CacheFileUtils, AssetGatherers, MTGJsonObjects;
+  CacheFileUtils, AssetGatherers,
+  MTGJsonObjects, MTGJsonDeckObjects, MTGJsonSetObjects;
 
 {$R *.lfm}
 
@@ -126,6 +127,7 @@ var
   data: TStream = nil;
   ticks: Int64;
   SList: TStringList;
+  MTGPriceList: TMTGPriceList;
   MTGSet: TMTGSet;
   MTGSetList: TMTGSetList;
   MTGDeckList: TMTGDeckList;
@@ -145,6 +147,7 @@ var
   itime: Int64;
   itott: Int64;
   imerr: Integer;
+  txt: String;
 begin
   Abort := False;
   Button2.Enabled := True;
@@ -164,6 +167,11 @@ begin
   SList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
   SList.Free;
 }
+
+ MTGPriceList := TMTGPriceList.Create('https://api.peardox.co.uk/prices/json/sets/paper.ZNR.json.gz', 'mtgjson_pricelist.json');
+ MTGPriceList.Free;
+
+//  MemoMessage('"uuid","cardname","setcode","cardtype","cardnum","side","rarity","scryfall"');
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
     begin
@@ -175,24 +183,31 @@ begin
         setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
         Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
 //        if MTGSetList.List[idx] = 'ZNE' then
-//        if MTGSetList.List[idx] = 'ZNR' then
-//        if MTGSetList.List[idx] = 'CON' then
-//        if MTGSetList.List[idx] = 'RIX' then
-//        if setDate >= '2019-10-04' then
-//        if IndexStr(MTGSetList.List[idx], InitialSets) <> -1 then
-//        if IndexStr(SetType, InitialTypes) <> -1 then
+        if MTGSetList.List[idx] = 'skipAllSets' then
           begin
+{
             MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
               setType + ' : ' + setFullName + ' =====');
+}
             data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
-//            MTGSetList.Dump(idx);
             MTGSet := TMTGSet.Create(data, 'uuid');
-            cards += MTGSet.setTotalSetSize;
-//            MTGSet.DumpList;
-
+            cards += MTGSet.Cards.Count; // MTGSet.setTotalSetSize;
+{
             itott := 0;
-
-//            MemoMessage('Image Count = ' + IntToStr(MTGSet.Cards.Count));
+            for img := 0 to MTGSet.Cards.Count - 1 do
+              begin
+                txt := '"' + MTGSet.Cards[img] + '"' +
+                  ',"' + MTGSet.Name(img) + '"' +
+                  ',"' + MTGSetList.List[idx] + '"' +
+                  ',"' + MTGSet.CardType(img) + '"' +
+                  ',"' + MTGSet.Number(img) + '"' +
+                  ',"' + MTGSet.Side(img) + '"' +
+                  ',"' + MTGSet.Rarity(img) + '"' +
+                  ',"' + MTGSet.ImageID(img) + '"';
+//                MemoMessage(txt);
+              end;
+}
+{
             for img := 0 to MTGSet.Cards.Count - 1 do
               begin
                 imgMTGJsonID := MTGSet.Cards[img];
@@ -251,10 +266,11 @@ begin
                 {$endif}
 
               end;
-
+}
             Inc(cnt);
             FreeAndNil(MTGSet);
             FreeAndNil(data);
+
             Application.ProcessMessages;
           end;
         if Abort then
@@ -277,14 +293,15 @@ begin
 //  MTGDeckList.DumpList;
   FreeAndNil(MTGDeckList);
 }
-  MemoMessage('----------- END -----------');
+//  MemoMessage('----------- END -----------');
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
   Button1.Enabled := True;
+{
   MemoMessage('Sets analysed : ' + IntToStr(cnt));
   MemoMessage('Sets cards : ' + IntToStr(cards));
   MemoMessage('Img errors : ' + IntToStr(imerr));
-
+}
   Button2.Enabled := False;
 {
   data := DownloadNetworkFile('https://noapi.peardox.co.uk/prices/prices.json.gz', [], False);

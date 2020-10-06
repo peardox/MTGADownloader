@@ -129,7 +129,7 @@ var
   fDownload: TCastleDownload;
   LastModified: String;
 begin
-  EnableAbortButton(True);
+//  EnableAbortButton(True);
   Result := nil;
 
   fDownload := TCastleDownload.Create(nil);
@@ -148,7 +148,7 @@ begin
         ApplicationProperties._Update;
         if Abort then
           begin
-            EnableAbortButton(False);
+//            EnableAbortButton(False);
             break;
           end;
         sleep(100);
@@ -204,7 +204,7 @@ begin
            end;
       end;
   finally
-    Abort := False;
+//    Abort := False;
     if(Result = nil) then
       fDownload.Contents.Free;
     fDownload.OwnsContents := False;

@@ -5,46 +5,39 @@ unit DownloadQueue;
 interface
 
 uses
-  Classes, SysUtils;
-
-implementation
-  uses CastleClassUtils;
+  Classes, SysUtils,
+  {$ifndef VER3_0} OpenSSLSockets, {$endif}
+  CastleDownload;
 
 type
-
-  TDownloadObjectQueue = class(TCastleObjectQueue)
+  TDownloadQueue = class(TObject)
   private
+    FHeadObj: PDownloadItem;
+    FTailObj: PDownloadItem;
   public
   end;
 
-  TDownloadObjectItem = class(TObject)
+  PDownloadItem = ^TDownloadItem;
+  TDownloadItem = class(TCastleDownload)
   private
-    FURI: String;
-    FSaveAs: String;
-    FCompleted: Boolean;
-    FRetries: Integer;
-    FTickStamp: Int64;
-    FElapsed: Int64;
-    FDownload: TCastleDownload;
+    FNextObj: PDownloadItem;
+    FPrevObj: PDownloadItem;
   public
-    property URI: String read FURI write FURI;
-    property SaveAs: String read FSaveAs write FSaveAs;
-    property Elapsed: Int64 read FElapsed write FElapsed;
   end;
+
+implementation
+{ Notes / ToDo
+
+  LinkedList - Ref https://www.pascal-programming.info/articles/linkedlists.php
+  FileSetDate on cache - https://www.freepascal.org/docs-html/rtl/sysutils/filesetdate.html
+  Use TURI to check for domain restrictions - https://www.freepascal.org/docs-html/current/fcl/uriparser/turi.html
+
+}
 
 { TDownloadObjectQueue ------------------------------------------------------ }
 
 { TDownloadItem ------------------------------------------------------------- }
 
-function TCastleObjectQueue.GetCapacity: Integer;
-begin
-  Result := List.Capacity;
-end;
-
-procedure TCastleObjectQueue.SetCapacity(const Value: Integer);
-begin
-  List.Capacity := Value;
-end;
 
 end.
 

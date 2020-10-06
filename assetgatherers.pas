@@ -20,11 +20,6 @@ uses
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils, CastleClassUtils
   ;
 
-function JSONKindToString(Node: TJsonNode): string;
-begin
-  result := GetEnumName(TypeInfo(TJsonNodeKind), ord(Node.&Kind));
-end;
-
 function FetchScryfallSvgUri(const Json: TJsonNode; const FetchField: String): String;
 var
   Node: TJsonNode;

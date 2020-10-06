@@ -29,16 +29,6 @@ begin
   Inc(fCount);
 end;
 
-function JSONKindToString(Node: TJsonNode): string;
-begin
-  result := GetEnumName(TypeInfo(TJsonNodeKind), ord(Node.&Kind));
-end;
-
-function JSONKindAsString(Node: TJsonNodeKind): string;
-begin
-  result := GetEnumName(TypeInfo(TJsonNodeKind), ord(Node));
-end;
-
 function json_create_schema(Json: TJsonNode; var Keys: TStringList): Boolean;
 var
   CurrentNode: TJsonNode;
@@ -50,10 +40,10 @@ begin
   ChangedFlag := false;
   for CurrentNode in Json do
     begin
-      dataType := CurrentNode.Kind; // JSONKindAsString();
+      dataType := CurrentNode.Kind;
       if not Keys.Find(CurrentNode.Name, idx) then
         begin
-          MemoMessage('=> ' + CurrentNode.Name + ' (' + JSONKindAsString(dataType) + ')');
+          MemoMessage('=> ' + CurrentNode.Name + ' (' + dataType.KindAsString + ')');
           oJson := TJsonObject.Create;
           oJson.Kind := dataType;
           oJson.Count := 1;
@@ -68,7 +58,7 @@ begin
                // nkNull can upgrade to anything
               if oJson.Kind = nkNull then
                 begin
-                  MemoMessage(CurrentNode.Name + ' type changed from ' + JSONKindAsString(oJson.Kind) + ' to ' + JSONKindAsString(dataType));
+                  MemoMessage(CurrentNode.Name + ' type changed from ' + oJson.Kind.KindAsString + ' to ' + dataType.KindAsString);
                   ChangedFlag := True;
                   oJson.Kind := dataType;
                   oJson.TypeUpgrade := True
@@ -76,7 +66,7 @@ begin
               // nkBool can upgrade to nkNumber, nkString or nkArray
               else if ((oJson.Kind = nkBool) and ((dataType = nkNumber) or (dataType = nkString) or (dataType = nkArray))) then
                 begin
-                  MemoMessage(CurrentNode.Name + ' type changed from ' + JSONKindAsString(oJson.Kind) + ' to ' + JSONKindAsString(dataType));
+                  MemoMessage(CurrentNode.Name + ' type changed from ' + oJson.Kind.KindAsString + ' to ' + dataType.KindAsString);
                   ChangedFlag := True;
                   oJson.Kind := dataType;
                   oJson.TypeUpgrade := True
@@ -84,7 +74,7 @@ begin
               // nkNumber can upgrade to nkString or nkArray
               else if ((oJson.Kind = nkNumber) and ((dataType = nkString) or (dataType = nkArray))) then
                 begin
-                  MemoMessage(CurrentNode.Name + ' type changed from ' + JSONKindAsString(oJson.Kind) + ' to ' + JSONKindAsString(dataType));
+                  MemoMessage(CurrentNode.Name + ' type changed from ' + oJson.Kind.KindAsString + ' to ' + dataType.KindAsString);
                   ChangedFlag := True;
                   oJson.Kind := dataType;
                   oJson.TypeUpgrade := True
@@ -95,7 +85,7 @@ begin
                     begin
                       ChangedFlag := True;
                       MemoMessage(CurrentNode.Name + ' type mismatch ' +
-                        ' marked as ' + JSONKindAsString(oJson.Kind) + ' found ' + JSONKindAsString(dataType))
+                        ' marked as ' + oJson.Kind.KindAsString + ' found ' + dataType.KindAsString)
                     end;
                 end;
             end;
@@ -117,7 +107,7 @@ begin
     begin
       oJson := Keys.Objects[idx] as TJsonObject;
       MemoMessage(IntToStr(idx) + ' : ' + Keys[idx] +
-        ' (' + JSONKindAsString(oJson.Kind) + ') = ' + IntToStr(oJson.Count));
+        ' (' + oJson.Kind.KindAsString + ') = ' + IntToStr(oJson.Count));
     end;
   MemoMessage('============================');
 end;

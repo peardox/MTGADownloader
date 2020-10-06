@@ -41,15 +41,15 @@ begin
             {$ifdef useprototype}
             MemoMessage(Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      begin' + LineEnding +
             '        MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ');' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ');' + LineEnding +
             '      end;' + LineEnding +
             '  end;');
             {$else}
-            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + JSONKindToString(Node));
+            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
             {$endif}
           end;
       end;
@@ -71,60 +71,60 @@ begin
         begin
           if not(Node.Kind = nkNumber) then
             begin
-              MemoMessage('TypeError for baseSetSize expected nkNumber got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for baseSetSize expected nkNumber got ' + Node.KindAsString);
             end;
         end;
       'code':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString);
             end;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString);
             end;
         end;
       'releaseDate':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for releaseDate expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for releaseDate expected nkString got ' + Node.KindAsString);
             end;
         end;
       'totalSetSize':
         begin
           if not(Node.Kind = nkNumber) then
             begin
-              MemoMessage('TypeError for totalSetSize expected nkNumber got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for totalSetSize expected nkNumber got ' + Node.KindAsString);
             end;
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString);
             end;
         end;
       'parentCode':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for parentCode expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for parentCode expected nkString got ' + Node.KindAsString);
             end;
         end;
       else
           begin
             MemoMessage(Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      begin' + LineEnding +
             '        MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ');' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ');' + LineEnding +
             '      end;' + LineEnding +
             '  end;');
           end;
@@ -143,46 +143,46 @@ begin
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString);
             end;
         end;
       'fileName':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for fileName expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for fileName expected nkString got ' + Node.KindAsString);
             end;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString);
             end;
         end;
       'releaseDate':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for releaseDate expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for releaseDate expected nkString got ' + Node.KindAsString);
             end;
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
             begin
-              MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node));
+              MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString);
             end;
         end;
       else
           begin
             MemoMessage(Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      begin' + LineEnding +
             '        MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ');' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ');' + LineEnding +
             '      end;' + LineEnding +
             '  end;');
           end;
@@ -203,7 +203,7 @@ begin
       {$ifdef useprototype}
       if First then
         begin
-          MemoMessage('=>' + Node.Name + ' - ' + JSONKindToString(Node));
+          MemoMessage('=>' + Node.Name + ' - ' + Node.KindAsString);
           MapJsonSetListObject(Node);
 //          MapJsonDeckListObject(Node);
         end;
@@ -227,7 +227,7 @@ begin
       {$ifdef useprototype}
       if First then
         begin
-          MemoMessage('->' + Node.Name + ' - ' + JSONKindToString(Node));
+          MemoMessage('->' + Node.Name + ' - ' + Node.KindAsString);
           if Node.Name = 'cards' then
             begin
 //              MapJsonSetObject(Node.AsArray);
@@ -252,7 +252,7 @@ begin
       Json.LoadFromStream(Data);
       for Node in Json do
         begin
-          MemoMessage(Node.Name + ' - ' + JSONKindToString(Node));
+          MemoMessage(Node.Name + ' - ' + Node.KindAsString);
           if ((Node.Name = 'data') and (Node.Kind = nkArray)) then
             begin
               ProcessMTGListObject(Node);
@@ -283,7 +283,7 @@ begin
       Json.LoadFromStream(Data);
       for Node in Json do
         begin
-          MemoMessage(Node.Name + ' - ' + JSONKindToString(Node));
+          MemoMessage(Node.Name + ' - ' + Node.KindAsString);
           if ((Node.Name = 'data') and (Node.Kind = nkObject)) then
             begin
               ProcessMTGJsonSetObject(Node);

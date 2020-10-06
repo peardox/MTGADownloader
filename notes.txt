@@ -16,6 +16,10 @@ large       - 672 ×  936 - JPG
 normal      - 488 ×  680 - JPG
 small       -  46 ×  204 - JPG
 
+https://www.mtgboxsim.com/
+
+Misty Rainforest
+
 Parse huge json
 https://github.com/halaxa/json-machine
 
@@ -40,4 +44,14 @@ String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secu
 https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID
 https://developer.apple.com/documentation/foundation/url_loading_system/downloading_files_from_websites
 
+====== Bad Download ======
+set  : ZNR
+uuid : 796793b4-7005-5ea5-99ae-87d2734990f9
+name : Cat
+type : Token Creature — Cat
+num# : 2
+rare : 
+scry : 3420d897-5d8c-4ba1-985c-48ea793e9901
+========================
 
+https://api.scryfall.com/cards/3420d897-5d8c-4ba1-985c-48ea793e9901

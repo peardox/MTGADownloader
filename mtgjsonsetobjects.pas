@@ -88,6 +88,7 @@ type
     FmanaCost: String;
     Fname: String;
     Fnumber: String;
+    ForiginalReleaseDate: String;
     ForiginalText: String;
     ForiginalType: String;
     Fpower: String;
@@ -136,6 +137,7 @@ type
     property setManaCost: String read FmanaCost write FmanaCost;
     property setName: String read Fname write Fname;
     property setNumber: String read Fnumber write Fnumber;
+    property setOriginalReleaseDate: String read ForiginalReleaseDate write ForiginalReleaseDate;
     property setOriginalText: String read ForiginalText write ForiginalText;
     property setOriginalType: String read ForiginalType write ForiginalType;
     property setPower: String read Fpower write Fpower;
@@ -208,6 +210,7 @@ type
       function Side(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
       function CardType(const idx: Integer): String;
+      function CardLayout(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -299,7 +302,7 @@ begin
       if Node.Name = FKey then
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             Key := Node.AsString;
         end;
@@ -307,62 +310,62 @@ begin
       'baseSetSize':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for baseSetSize expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for baseSetSize expected nkNumber got ' + Node.KindAsString)
           else
             Rec.setBaseSetSize := Trunc(Node.AsNumber);
         end;
       'code':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             Rec.setCode := Node.AsString;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString)
           else
             Rec.setName := Node.AsString;
         end;
       'releaseDate':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for releaseDate expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for releaseDate expected nkString got ' + Node.KindAsString)
           else
             Rec.setReleaseDate := Node.AsString;
         end;
       'totalSetSize':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for totalSetSize expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for totalSetSize expected nkNumber got ' + Node.KindAsString)
           else
             Rec.setTotalSetSize := Trunc(Node.AsNumber);
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString)
           else
             Rec.setType := Node.AsString;
         end;
       'isPartialPreview':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + Node.KindAsString)
           else
             Rec.setIsPartialPreview := Node.AsBoolean;
         end;
       'parentCode':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for parentCode expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for parentCode expected nkString got ' + Node.KindAsString)
           else
             Rec.setParentCode := Node.AsString;
         end;
       else
           begin
-            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + JSONKindToString(Node));
+            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
           end;
       end;
     end;
@@ -413,8 +416,6 @@ begin
     MemoMessage('setIsPartialPreview: False');
   MemoMessage('===============================');
 end;
-
-{ TMTGDeckList ===============================================================}
 
 { TMTGSet ====================================================================}
 
@@ -486,7 +487,7 @@ begin
       if Node.Name = FKey then
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             begin
             Key := Node.AsString;
@@ -498,448 +499,455 @@ begin
       'artist':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for artist expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for artist expected nkString got ' + Node.KindAsString)
           else
             Rec.Fartist := Node.AsString;
         end;
       'borderColor':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for borderColor expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for borderColor expected nkString got ' + Node.KindAsString)
           else
             Rec.FborderColor := Node.AsString;
         end;
       'convertedManaCost':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for convertedManaCost expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for convertedManaCost expected nkNumber got ' + Node.KindAsString)
           else
             Rec.FconvertedManaCost := Trunc(Node.AsNumber);
         end;
       'flavorText':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for flavorText expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for flavorText expected nkString got ' + Node.KindAsString)
           else
             Rec.FflavorText := Node.AsString;
         end;
       'frameVersion':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for frameVersion expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for frameVersion expected nkString got ' + Node.KindAsString)
           else
             Rec.FframeVersion := Node.AsString;
         end;
       'hasFoil':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for hasFoil expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for hasFoil expected nkBool got ' + Node.KindAsString)
           else
             Rec.FhasFoil := Node.AsBoolean;
         end;
       'hasNonFoil':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for hasNonFoil expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for hasNonFoil expected nkBool got ' + Node.KindAsString)
           else
             Rec.FhasNonFoil := Node.AsBoolean;
         end;
       'isStarter':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isStarter expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isStarter expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisStarter := Node.AsBoolean;
         end;
       'layout':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for layout expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for layout expected nkString got ' + Node.KindAsString)
           else
             Rec.Flayout := Node.AsString;
         end;
       'manaCost':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for manaCost expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for manaCost expected nkString got ' + Node.KindAsString)
           else
             Rec.FmanaCost := Node.AsString;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString)
           else
             Rec.Fname := Node.AsString;
         end;
       'number':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for number expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for number expected nkString got ' + Node.KindAsString)
           else
             Rec.Fnumber := Node.AsString;
+        end;
+      'originalReleaseDate':
+        begin
+          if not(Node.Kind = nkString) then
+            MemoMessage('TypeError for originalReleaseDate expected nkString got ' + Node.KindAsString)
+          else
+            Rec.ForiginalReleaseDate := Node.AsString;
         end;
       'originalText':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for originalText expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for originalText expected nkString got ' + Node.KindAsString)
           else
             Rec.ForiginalText := Node.AsString;
         end;
       'originalType':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for originalType expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for originalType expected nkString got ' + Node.KindAsString)
           else
             Rec.ForiginalType := Node.AsString;
         end;
       'power':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for power expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for power expected nkString got ' + Node.KindAsString)
           else
             Rec.Fpower := Node.AsString;
         end;
       'rarity':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for rarity expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for rarity expected nkString got ' + Node.KindAsString)
           else
             Rec.Frarity := Node.AsString;
         end;
       'setCode':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for setCode expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for setCode expected nkString got ' + Node.KindAsString)
           else
             Rec.FsetCode := Node.AsString;
         end;
       'text':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for text expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for text expected nkString got ' + Node.KindAsString)
           else
             Rec.Ftext := Node.AsString;
         end;
       'toughness':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for toughness expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for toughness expected nkString got ' + Node.KindAsString)
           else
             Rec.Ftoughness := Node.AsString;
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString)
           else
             Rec.Ftype := Node.AsString;
         end;
       'uuid':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for uuid expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for uuid expected nkString got ' + Node.KindAsString)
           else
             Rec.Fuuid := Node.AsString;
         end;
       'edhrecRank':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for edhrecRank expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for edhrecRank expected nkNumber got ' + Node.KindAsString)
           else
             Rec.FedhrecRank := Trunc(Node.AsNumber);
         end;
       'isReprint':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isReprint expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isReprint expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisReprint := Node.AsBoolean;
         end;
       'loyalty':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for loyalty expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for loyalty expected nkString got ' + Node.KindAsString)
           else
             Rec.Floyalty := Node.AsString;
         end;
       'isPromo':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isPromo expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isPromo expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisPromo := Node.AsBoolean;
         end;
       'faceConvertedManaCost':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for faceConvertedManaCost expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for faceConvertedManaCost expected nkNumber got ' + Node.KindAsString)
           else
             Rec.FfaceConvertedManaCost := Trunc(Node.AsNumber);
         end;
       'faceName':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for faceName expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for faceName expected nkString got ' + Node.KindAsString)
           else
             Rec.FfaceName := Node.AsString;
         end;
       'side':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for side expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for side expected nkString got ' + Node.KindAsString)
           else
             Rec.Fside := Node.AsString;
         end;
       'isStorySpotlight':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isStorySpotlight expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isStorySpotlight expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisStorySpotlight := Node.AsBoolean;
         end;
       'watermark':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for watermark expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for watermark expected nkString got ' + Node.KindAsString)
           else
             Rec.Fwatermark := Node.AsString;
         end;
       'isAlternative':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isAlternative expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isAlternative expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisAlternative := Node.AsBoolean;
         end;
       'isFullArt':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isFullArt expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isFullArt expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisFullArt := Node.AsBoolean;
         end;
       'flavorName':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for flavorName expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for flavorName expected nkString got ' + Node.KindAsString)
           else
             Rec.FflavorName := Node.AsString;
         end;
       'isOnlineOnly':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isOnlineOnly expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isOnlineOnly expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisOnlineOnly := Node.AsBoolean;
         end;
       'isOversized':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isOversized expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isOversized expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisOversized := Node.AsBoolean;
         end;
       'isTextless':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isTextless expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isTextless expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisTextless := Node.AsBoolean;
         end;
       'asciiName':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for asciiName expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for asciiName expected nkString got ' + Node.KindAsString)
           else
             Rec.FasciiName := Node.AsString;
         end;
       'isTimeshifted':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isTimeshifted expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isTimeshifted expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisTimeshifted := Node.AsBoolean;
         end;
       'hand':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for hand expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for hand expected nkString got ' + Node.KindAsString)
           else
             Rec.Fhand := Node.AsString;
         end;
       'life':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for life expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for life expected nkString got ' + Node.KindAsString)
           else
             Rec.Flife := Node.AsString;
         end;
       'hasAlternativeDeckLimit':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for hasAlternativeDeckLimit expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for hasAlternativeDeckLimit expected nkBool got ' + Node.KindAsString)
           else
             Rec.FhasAlternativeDeckLimit := Node.AsBoolean;
         end;
       'duelDeck':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for duelDeck expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for duelDeck expected nkString got ' + Node.KindAsString)
           else
             Rec.FduelDeck := Node.AsString;
         end;
       'isReserved':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isReserved expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isReserved expected nkBool got ' + Node.KindAsString)
           else
             Rec.FisReserved := Node.AsBoolean;
         end;
       'hasContentWarning':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for hasContentWarning expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for hasContentWarning expected nkBool got ' + Node.KindAsString)
           else
             Rec.FhasContentWarning := Node.AsBoolean;
         end;
       'identifiers':
         begin
           if not(Node.Kind = nkObject) then
-            MemoMessage('TypeError for identifiers expected nkObject got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for identifiers expected nkObject got ' + Node.KindAsString)
           else
             Rec.Fidentifiers := MapJsonIdentifiersObject(Node);
         end;
       'reverseRelated':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for reverseRelated expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for reverseRelated expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FreverseRelated := MapJsonArray(Node); // *** FIXME ***
         end;
       'colorIndicator':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for colorIndicator expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for colorIndicator expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FcolorIndicator := MapJsonArray(Node); // *** FIXME ***
         end;
       'otherFaceIds':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for otherFaceIds expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for otherFaceIds expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FotherFaceIds := MapJsonArray(Node); // *** FIXME ***
         end;
       'availability':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for availability expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for availability expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Favailability := MapJsonObject(Node); // *** FIXME ***
         end;
       'colorIdentity':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for colorIdentity expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for colorIdentity expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FcolorIdentity := MapJsonObject(Node); // *** FIXME ***
         end;
       'colors':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for colors expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for colors expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fcolors := MapJsonObject(Node); // *** FIXME ***
         end;
       'foreignData':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for foreignData expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for foreignData expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FforeignData := MapJsonObject(Node); // *** FIXME ***
         end;
       'legalities':
         begin
           if not(Node.Kind = nkObject) then
-            MemoMessage('TypeError for legalities expected nkObject got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for legalities expected nkObject got ' + Node.KindAsString)
           else
             // Rec.Flegalities := MapJsonObject(Node); // *** FIXME ***
         end;
       'printings':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for printings expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for printings expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fprintings := MapJsonObject(Node); // *** FIXME ***
         end;
       'purchaseUrls':
         begin
           if not(Node.Kind = nkObject) then
-            MemoMessage('TypeError for purchaseUrls expected nkObject got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for purchaseUrls expected nkObject got ' + Node.KindAsString)
           else
             // Rec.FpurchaseUrls := MapJsonObject(Node); // *** FIXME ***
         end;
       'rulings':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for rulings expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for rulings expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Frulings := MapJsonObject(Node); // *** FIXME ***
         end;
       'subtypes':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for subtypes expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for subtypes expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fsubtypes := MapJsonObject(Node); // *** FIXME ***
         end;
       'supertypes':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for supertypes expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for supertypes expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fsupertypes := MapJsonObject(Node); // *** FIXME ***
         end;
       'types':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for types expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for types expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Ftypes := MapJsonObject(Node); // *** FIXME ***
         end;
       'keywords':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for keywords expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for keywords expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fkeywords := MapJsonArray(Node); // *** FIXME ***
         end;
       'frameEffects':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for frameEffects expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for frameEffects expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FframeEffects := MapJsonArray(Node); // *** FIXME ***
         end;
       'promoTypes':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for promoTypes expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for promoTypes expected nkArray got ' + Node.KindAsString)
           else
             // Rec.FpromoTypes := MapJsonArray(Node); // *** FIXME ***
         end;
       'variations':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for variations expected nkArray got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for variations expected nkArray got ' + Node.KindAsString)
           else
             // Rec.Fvariations := MapJsonArray(Node); // *** FIXME ***
         end;
       'leadershipSkills':
         begin
           if not(Node.Kind = nkObject) then
-            MemoMessage('TypeError for leadershipSkills expected nkObject got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for leadershipSkills expected nkObject got ' + Node.KindAsString)
           else
             // Rec.FleadershipSkills := MapJsonObject(Node); // *** FIXME ***
         end;
@@ -947,10 +955,10 @@ begin
           begin
             Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
               Txt += '      Rec.F' + Node.Name + ' := Node.AsString;' + LineEnding
@@ -1023,91 +1031,91 @@ begin
       'cardKingdomId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for cardKingdomId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for cardKingdomId expected nkString got ' + Node.KindAsString)
           else
             Rec.FcardKingdomId := Node.AsString;
         end;
       'mcmId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mcmId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mcmId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmcmId := Node.AsString;
         end;
       'mcmMetaId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mcmMetaId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mcmMetaId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmcmMetaId := Node.AsString;
         end;
       'mtgjsonV4Id':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mtgjsonV4Id expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mtgjsonV4Id expected nkString got ' + Node.KindAsString)
           else
             Rec.FmtgjsonV4Id := Node.AsString;
         end;
       'scryfallId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for scryfallId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for scryfallId expected nkString got ' + Node.KindAsString)
           else
             Rec.FscryfallId := Node.AsString;
         end;
       'scryfallIllustrationId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for scryfallIllustrationId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for scryfallIllustrationId expected nkString got ' + Node.KindAsString)
           else
             Rec.FscryfallIllustrationId := Node.AsString;
         end;
       'scryfallOracleId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for scryfallOracleId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for scryfallOracleId expected nkString got ' + Node.KindAsString)
           else
             Rec.FscryfallOracleId := Node.AsString;
         end;
       'tcgplayerProductId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for tcgplayerProductId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for tcgplayerProductId expected nkString got ' + Node.KindAsString)
           else
             Rec.FtcgplayerProductId := Node.AsString;
         end;
       'cardKingdomFoilId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for cardKingdomFoilId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for cardKingdomFoilId expected nkString got ' + Node.KindAsString)
           else
             Rec.FcardKingdomFoilId := Node.AsString;
         end;
       'mtgoId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mtgoId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mtgoId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmtgoId := Node.AsString;
         end;
       'multiverseId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for multiverseId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for multiverseId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmultiverseId := Node.AsString;
         end;
       'mtgArenaId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mtgArenaId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mtgArenaId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmtgArenaId := Node.AsString;
         end;
       'mtgoFoilId':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mtgoFoilId expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mtgoFoilId expected nkString got ' + Node.KindAsString)
           else
             Rec.FmtgoFoilId := Node.AsString;
         end;
@@ -1115,10 +1123,10 @@ begin
           begin
             Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
               Txt += '      Rec.F' + Node.Name + ' := Node.AsString;' + LineEnding
@@ -1231,6 +1239,18 @@ begin
   Result := Ret;
 end;
 
+function TMTGSet.CardLayout(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).Flayout;
+
+  Result := Ret;
+end;
+
 function TMTGSet.ExtractImageList: TStringList;
 var
   URL: String;
@@ -1269,7 +1289,7 @@ begin
       'dummyForPrototype':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + Node.KindAsString)
           else
             FisPartialPreview := Node.AsBoolean;
         end;
@@ -1277,10 +1297,10 @@ begin
           begin
             Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
               Txt += '      Rec.F' + Node.Name + ' := Node.AsString;' + LineEnding
@@ -1330,7 +1350,7 @@ begin
       'booster':
         begin
           if not(Node.Kind = nkObject) then
-            MemoMessage('TypeError for booster expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for booster expected nkString got ' + Node.KindAsString)
           else
             begin
             //
@@ -1341,7 +1361,7 @@ begin
       'cards':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for cards expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for cards expected nkString got ' + Node.KindAsString)
           else
             begin
               MapJsonCardArray(Node, False);
@@ -1350,7 +1370,7 @@ begin
       'tokens':
         begin
           if not(Node.Kind = nkArray) then
-            MemoMessage('TypeError for tokens expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for tokens expected nkString got ' + Node.KindAsString)
           else
             begin
               MapJsonCardArray(Node, True);
@@ -1359,7 +1379,7 @@ begin
       'translations':
         begin
           if not(Node.Kind = nkObject) then
-              MemoMessage('TypeError for translations expected nkString got ' + JSONKindToString(Node))
+              MemoMessage('TypeError for translations expected nkString got ' + Node.KindAsString)
           else
             begin
             //  MapJsonObject(Node); // ToDo
@@ -1368,126 +1388,126 @@ begin
       'baseSetSize':
         begin
           if not(Node.Kind = nkNumber) then
-              MemoMessage('TypeError for baseSetSize expected nkNumber got ' + JSONKindToString(Node))
+              MemoMessage('TypeError for baseSetSize expected nkNumber got ' + Node.KindAsString)
           else
             FbaseSetSize := Trunc(Node.AsNumber);
         end;
       'block':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for block expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for block expected nkString got ' + Node.KindAsString)
           else
             Fblock := Node.AsString;
         end;
       'code':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             Fcode := Node.AsString;
         end;
       'isFoilOnly':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isFoilOnly expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isFoilOnly expected nkBool got ' + Node.KindAsString)
           else
             FisFoilOnly := Node.AsBoolean;
         end;
       'isOnlineOnly':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isOnlineOnly expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isOnlineOnly expected nkBool got ' + Node.KindAsString)
           else
             FisOnlineOnly := Node.AsBoolean;
         end;
       'keyruneCode':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for keyruneCode expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for keyruneCode expected nkString got ' + Node.KindAsString)
           else
             FkeyruneCode := Node.AsString;
         end;
       'mtgoCode':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mtgoCode expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mtgoCode expected nkString got ' + Node.KindAsString)
           else
             FmtgoCode := Node.AsString;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString)
           else
             Fname := Node.AsString;
         end;
       'releaseDate':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for releaseDate expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for releaseDate expected nkString got ' + Node.KindAsString)
           else
             FreleaseDate := Node.AsString;
         end;
       'tcgplayerGroupId':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for tcgplayerGroupId expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for tcgplayerGroupId expected nkNumber got ' + Node.KindAsString)
           else
             FtcgplayerGroupId := Trunc(Node.AsNumber);
         end;
       'totalSetSize':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for totalSetSize expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for totalSetSize expected nkNumber got ' + Node.KindAsString)
           else
             FtotalSetSize := Trunc(Node.AsNumber);
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString)
           else
             Ftype := Node.AsString;
         end;
       'mcmId':
         begin
           if not(Node.Kind = nkNumber) then
-            MemoMessage('TypeError for mcmId expected nkNumber got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mcmId expected nkNumber got ' + Node.KindAsString)
           else
             FmcmId := Trunc(Node.AsNumber);
         end;
       'mcmName':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for mcmName expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for mcmName expected nkString got ' + Node.KindAsString)
           else
             FmcmName := Node.AsString;
         end;
       'isNonFoilOnly':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isNonFoilOnly expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isNonFoilOnly expected nkBool got ' + Node.KindAsString)
           else
             FisNonFoilOnly := Node.AsBoolean;
         end;
       'isForeignOnly':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isForeignOnly expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isForeignOnly expected nkBool got ' + Node.KindAsString)
           else
             FisForeignOnly := Node.AsBoolean;
         end;
       'parentCode':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for parentCode expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for parentCode expected nkString got ' + Node.KindAsString)
           else
             FparentCode := Node.AsString;
         end;
       'isPartialPreview':
         begin
           if not(Node.Kind = nkBool) then
-            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for isPartialPreview expected nkBool got ' + Node.KindAsString)
           else
             FisPartialPreview := Node.AsBoolean;
         end;
@@ -1495,10 +1515,10 @@ begin
           begin
             Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
               Txt += '      F' + Node.Name + ' := Node.AsString;' + LineEnding
@@ -1581,7 +1601,6 @@ begin
   else
     MemoMessage('Failed creating ' + Path);
 end;
-
 
 end.
 

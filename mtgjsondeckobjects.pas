@@ -46,6 +46,8 @@ implementation
 
 uses Unit1, CacheFileUtils;
 
+{ TMTGDeckList ===============================================================}
+
 destructor TMTGDeckList.Destroy;
 begin
   FreeAndNil(FList);
@@ -93,7 +95,7 @@ begin
       if Node.Name = FKey then
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             Key := Node.AsString;
         end;
@@ -101,41 +103,41 @@ begin
       'code':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for code expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for code expected nkString got ' + Node.KindAsString)
           else
             Rec.deckCode := Node.AsString;
         end;
       'name':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString)
           else
             Rec.deckName := Node.AsString;
         end;
       'fileName':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for name expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for name expected nkString got ' + Node.KindAsString)
           else
             Rec.deckFileName := Node.AsString;
         end;
       'releaseDate':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for releaseDate expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for releaseDate expected nkString got ' + Node.KindAsString)
           else
             Rec.deckReleaseDate := Node.AsString;
         end;
       'type':
         begin
           if not(Node.Kind = nkString) then
-            MemoMessage('TypeError for type expected nkString got ' + JSONKindToString(Node))
+            MemoMessage('TypeError for type expected nkString got ' + Node.KindAsString)
           else
             Rec.deckType := Node.AsString;
         end;
       else
           begin
-            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + JSONKindToString(Node));
+            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
           end;
       end;
     end;

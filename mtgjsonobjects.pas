@@ -28,18 +28,6 @@ type
     published
   end;
 
-  TMTGPriceList = class(TMTGList)
-    private
-      fNext: Boolean;
-    protected
-      procedure ProcessList(Stream: TStream); override;
-      procedure ProcessListObjectDataObject(const Json: TJsonNode); override;
-      procedure MapJsonObject(const Json: TJsonNode); override;
-    public
-    published
-  end;
-
-  function JSONKindToString(Node: TJsonNode): string;
   function UppercaseFirstChar(s: String): String;
   function WriteMemberDeclaration(Node: TJsonNode): String;
   function WritePropertyDeclaration(Prefix: String; Node: TJsonNode): String;
@@ -48,11 +36,6 @@ implementation
 
 uses
   unit1, Typinfo, CacheFileUtils;
-
-function JSONKindToString(Node: TJsonNode): string;
-begin
-  result := GetEnumName(TypeInfo(TJsonNodeKind), ord(Node.&Kind));
-end;
 
 { TMTGList ===================================================================}
 
@@ -104,7 +87,7 @@ begin
         for Node in Json do
           begin
             if ClassName = 'TMTGList' then
-              MemoMessage(Node.Name + ' - ' + JSONKindToString(Node));
+              MemoMessage(Node.Name + ' - ' + Node.KindAsString);
             if (Node.Name = 'data') then
               begin
                 if (Node.Kind = nkArray) then
@@ -140,7 +123,7 @@ begin
       if First then
         begin
           if ClassName = 'TMTGList' then
-            MemoMessage('=>' + Node.Name + ' - ' + JSONKindToString(Node));
+            MemoMessage('=>' + Node.Name + ' - ' + Node.KindAsString);
           MapJsonObject(Node);
         end;
       First := False;
@@ -196,10 +179,10 @@ begin
           begin
             Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
             '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
+            '    if not(Node.Kind = ' + Node.KindAsString + ') then' + LineEnding +
             '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
+              Node.Name + ' expected '  + Node.KindAsString +
+              ' got ' + Chr(39) + ' + Node.KindAsString' + ')' + LineEnding +
             '    else' + LineEnding;
             if Node.Kind = nkString then
               Txt += '      F' + Node.Name + ' := Node.AsString;' + LineEnding
@@ -244,139 +227,7 @@ begin
   // Dummy
 end;
 
-{ TMTGPriceList ==============================================================}
-
-procedure TMTGPriceList.ProcessList(Stream: TStream);
-var
-  Json: TJsonNode;
-  Node: TJsonNode;
-begin
-  fNext := False;
-  if ClassName = 'TMTGPriceList' then
-    MemoMessage('TMTGPriceList.ProcessList');
-  Json := TJsonNode.Create;
-  try
-    try
-        Json.LoadFromStream(Stream);
-        for Node in Json do
-          begin
-            if ClassName = 'TMTGTMTGPriceListList' then
-              MemoMessage(Node.Name + ' - ' + JSONKindToString(Node));
-            if (Node.Name = 'data') then
-              begin
-                if (Node.Kind = nkObject) then
-                  begin
-                    if not fNext then
-                      begin
-                        ProcessListObjectDataObject(Node);
-                        fNext := True;
-                      end;
-                  end
-                else
-                  MemoMessage('PANIC = The world has ended - not an Object');
-              end;
-          end;
-      except
-        on E : Exception do
-          begin
-            MemoMessage('Oops' + LineEnding +
-                         E.ClassName + LineEnding +
-                         E.Message);
-           end;
-      end;
-  finally
-    FreeAndNil(Json);
-  end;
-end;
-
-procedure TMTGPriceList.ProcessListObjectDataObject(const Json: TJsonNode);
-begin
-  if ClassName = 'TMTGPriceList' then
-    MemoMessage('ProcessListObjectDataObject');
-  MapJsonObject(Json);
-end;
-
-procedure TMTGPriceList.MapJsonObject(const Json: TJsonNode);
-var
-  Node: TJsonNode;
-  Txt: String;
-  Ext: String;
-  propdec: String;
-  membdec: String;
-begin
-  Ext := '';
-  propdec := '';
-  membdec := '';
-
-  MemoMessage('--------------- members ---------------');
-  for Node in Json do
-    begin
-      if Node.Kind = nkObject then
-        begin
-          Ext += Node.Name + ' -> Object' + LineEnding;
-          continue;
-        end;
-      if Node.Kind = nkArray then
-        begin
-          Ext += Node.Name + ' -> Array' + LineEnding;
-          continue;
-        end;
-      case Node.Name of
-      'dummyForPrototype':
-        begin
-          if not(Node.Kind = nkString) then
-            begin
-              MemoMessage('TypeError');
-            end;
-        end;
-      else
-          begin
-            Txt := Chr(39) + Node.Name + Chr(39) + ':' + LineEnding +
-            '  begin' + LineEnding +
-            '    if not(Node.Kind = ' + JSONKindToString(Node) + ') then' + LineEnding +
-            '      MemoMessage(' + Chr(39) +  'TypeError for ' +
-              Node.Name + ' expected '  + JSONKindToString(Node) +
-              ' got ' + Chr(39) + ' + JSONKindToString(Node)' + ')' + LineEnding +
-            '    else' + LineEnding;
-            if Node.Kind = nkString then
-              Txt += '      F' + Node.Name + ' := Node.AsString;' + LineEnding
-            else if Node.Kind = nkNumber then
-              Txt += '      F' + Node.Name + ' := Trunc(Node.AsNumber);' + LineEnding
-            else if Node.Kind = nkBool then
-              Txt += '      F' + Node.Name + ' := Node.AsBoolean;' + LineEnding
-            else if Node.Kind = nkObject then
-              Txt += '      // Rec.F' + Node.Name + ' := MapJsonObject(Node); // *** FIXME ***' + LineEnding
-            else if Node.Kind = nkArray then
-              Txt += '      // Rec.F' + Node.Name + ' := MapJsonArray(Node); // *** FIXME ***' + LineEnding
-            else
-              Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
-            Txt += '  end;';
-            MemoMessage(Txt);
-
-            propdec += WritePropertyDeclaration('set', Node);
-            membdec += WriteMemberDeclaration(Node);
-          end;
-      end;
-    end;
-  if not(Ext = EmptyStr) then
-    MemoMessage('====================' + LineEnding +
-      'Unhandled (ToDo)' + LineEnding +
-      '====================' + LineEnding +
-      Ext);
-  if not(membdec = EmptyStr) then
-    MemoMessage('====================' + LineEnding +
-      'Members' + LineEnding +
-      '====================' + LineEnding +
-      membdec);
-  if not(propdec = EmptyStr) then
-    MemoMessage('====================' + LineEnding +
-      'Properties' + LineEnding +
-      '====================' + LineEnding +
-      propdec);
-  MemoMessage('--------------- members ---------------');
-end;
-
-{ ============================================================================}
+{ Support Functions ==========================================================}
 
 function UppercaseFirstChar(s: String): String;
 var

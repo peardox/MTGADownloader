@@ -12,7 +12,7 @@ uses
   // cthreads,
   {$ENDIF}
   ComCtrls, SVGUtils,
-  CastleParameters, CastleClassUtils,
+  CastleParameters, CastleClassUtils, CastleDownload,
   CastleControl, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
   ;
 
@@ -23,12 +23,20 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
     Memo1: TMemo;
     Panel1: TPanel;
     Panel2: TPanel;
+    Panel3: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button3SetCaption;
   private
   public
   end;
@@ -61,7 +69,7 @@ const
   MTGSON_PRICES_ALL_fURI = 'https://api.peardox.co.uk/prices/prices.json.gz';
   MTGSON_PRICES_PAPER_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'normal'; // normal / large
+  cardQuality = 'large'; // normal / large
 
   UseCache: Boolean = True; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
@@ -69,16 +77,20 @@ const
 
 { Declare hooks for other units }
 
-procedure EnableAbortButton(Status: Boolean);
 procedure MemoMessage(const msg: String);
 procedure TriggerProcessMessages;
+procedure ExportUUIDs(const FileName: String; const UseCache: Boolean = True);
+procedure ExportSetUUIDs(const setCode: String; const OutFile: TTextWriter; const UseCache: Boolean = True);
+procedure ExportImages(const UseCache: Boolean = True);
+procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
 
 implementation
 
 uses
-  CastleLog,
-  CacheFileUtils, AssetGatherers,
-  MTGJsonObjects, MTGJsonDeckObjects, MTGJsonSetObjects;
+  CastleLog, fpjson,
+  CacheFileUtils,
+  AssetGatherers,
+  MTGJsonObjects, MTGJsonDeckObjects, MTGJsonSetObjects, MTGJsonPriceObjects;
 
 {$R *.lfm}
 
@@ -87,11 +99,6 @@ uses
 procedure TriggerProcessMessages;
 begin
   Application.ProcessMessages;
-end;
-
-procedure EnableAbortButton(Status: Boolean);
-begin
-  Form1.Button2.Enabled := Status;
 end;
 
 procedure MemoMessage(const msg: String);
@@ -103,6 +110,181 @@ begin
   Application.ProcessMessages;
 end;
 
+procedure ExportSetUUIDs(const setCode: String; const OutFile: TTextWriter; const UseCache: Boolean = True);
+var
+  data: TStream;
+  MTGSet: TMTGSet;
+  idx: Integer;
+  txt: String;
+begin
+  data := GetMTGJsonSetJson(setCode, 'mtgjson/sets/json', UseCache);
+  MTGSet := TMTGSet.Create(data, 'uuid');
+  try
+    for idx := 0 to MTGSet.Cards.Count - 1 do
+      begin
+        txt := '"' + StringToJSONString(MTGSet.Cards[idx]) + '"' +
+          ',"' + StringToJSONString(MTGSet.Name(idx)) + '"' +
+          ',"' + StringToJSONString(SetCode) + '"' +
+          ',"' + StringToJSONString(MTGSet.CardType(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.CardLayout(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.Number(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.Side(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.Rarity(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.ImageID(idx)) + '"';
+        OutFile.WriteLn(txt);
+      end;
+  finally
+    FreeAndNil(MTGSet);
+    FreeAndNil(data);
+  end;
+end;
+
+procedure ExportUUIDs(const FileName: String; const UseCache: Boolean = True);
+var
+  MTGSetList: TMTGSetList;
+  OutFile: TTextWriter;
+  ticks: Int64;
+  idx: Integer;
+begin
+  Form1.Button3.Enabled := False;
+  Form1.Button2.Enabled := True;
+  Form1.Button1.Enabled := False;
+  ticks := CastleGetTickCount64;
+  OutFile := TTextWriter.Create(FileName);
+  try
+    OutFile.WriteLn('"uuid","cardname","setcode","cardtype","cardlayout","cardnum","side","rarity","scryfall"');
+    MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+    try
+      if not (MTGSetList.List = nil) then
+        begin
+        for idx := 0 to MTGSetList.List.Count -1 do
+          begin
+            ExportSetUUIDs(MTGSetList.List[idx], OutFile, UseCache);
+            Application.ProcessMessages;
+            if Abort then
+              begin
+                Break;
+              end;
+          end;
+        end;
+    finally
+      FreeAndNil(MTGSetList);
+    end;
+  finally
+    FreeAndNil(OutFile);
+  end;
+  ticks := CastleGetTickCount64 - ticks;
+  MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
+  Form1.Button3.Enabled := True;
+  Form1.Button2.Enabled := False;
+  Form1.Button1.Enabled := True;
+end;
+
+procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
+var
+  data: TStream;
+  MTGSet: TMTGSet;
+  idx: Integer;
+  itime: Int64;
+  itott: Int64;
+  imerr: Integer;
+  imgMTGJsonID: String;
+  imgScryID:  String;
+  imgURI: String;
+  imgPath: String;
+  imgFile: String;
+begin
+  itott := 0;
+  imerr := 0;
+  data := GetMTGJsonSetJson(setCode, 'mtgjson/sets/json', UseCache);
+  MTGSet := TMTGSet.Create(data, 'uuid');
+  try
+    for idx := 0 to MTGSet.Cards.Count - 1 do
+      begin
+        imgMTGJsonID := MTGSet.Cards[idx];
+        imgScryID := MTGSet.ImageID(idx);
+        itime := CastleGetTickCount64;
+        if not (imgScryID = EmptyStr) then
+          begin
+            imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
+            imgPath := 'scryfall/sets/images/set_' + SetCode + '/' + cardQuality;
+            imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
+            CreateCastleDataDirectoryIfMissing(imgPath);
+            try
+              CacheImage(imgURI, imgFile, True, True);
+            except
+              on E: EImageCacheException do
+                begin
+                  MemoMessage('====== Bad Download ======');
+                  MemoMessage('set  : ' + SetCode);
+                  MemoMessage('uuid : ' + imgMTGJsonID);
+                  MemoMessage('name : ' + MTGSet.Name(idx));
+                  MemoMessage('type : ' + MTGSet.CardType(idx));
+                  MemoMessage('num# : ' + MTGSet.Number(idx));
+                  MemoMessage('rare : ' + MTGSet.Rarity(idx));
+                  MemoMessage('scry : ' + imgScryID);
+                  MemoMessage('========================');
+                  Inc(imerr);
+                end;
+            end;
+          end
+        else
+          begin
+            MemoMessage('====== Bad Record ======');
+            MemoMessage(SetCode);
+            MemoMessage(MTGSet.Name(idx));
+            MemoMessage(MTGSet.Number(idx));
+            MemoMessage(MTGSet.Rarity(idx));
+            MemoMessage(imgMTGJsonID);
+            MemoMessage('========================');
+          end;
+
+        itime := CastleGetTickCount64 - itime;
+        itott += itime;
+      end;
+  finally
+    FreeAndNil(MTGSet);
+    FreeAndNil(data);
+  end;
+end;
+
+procedure ExportImages(const UseCache: Boolean = True);
+var
+  MTGSetList: TMTGSetList;
+  ticks: Int64;
+  idx: Integer;
+begin
+  Form1.Button3.Enabled := False;
+  Form1.Button2.Enabled := True;
+  Form1.Button1.Enabled := False;
+  ticks := CastleGetTickCount64;
+
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+  try
+    if not (MTGSetList.List = nil) then
+      begin
+      for idx := 0 to MTGSetList.List.Count -1 do
+        begin
+          ExportSetImages(MTGSetList.List[idx], UseCache);
+          Form1.Caption := 'Set = ' + MTGSetList.List[idx] + '(' +
+            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
+          Application.ProcessMessages;
+          if Abort then
+            begin
+              Break;
+            end;
+        end;
+      end;
+  finally
+    FreeAndNil(MTGSetList);
+  end;
+
+  ticks := CastleGetTickCount64 - ticks;
+  MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
+  Form1.Button3.Enabled := True;
+  Form1.Button2.Enabled := False;
+  Form1.Button1.Enabled := True;
+end;
 
 { TForm1 }
 
@@ -120,6 +302,7 @@ begin
   Form1.Position:= poScreenCenter;
   MemoMessage('ApplicationConfig = ' + ApplicationConfig(''));
   MemoMessage('ApplicationData = ' + ApplicationData(''));
+  Button3SetCaption;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -167,24 +350,40 @@ begin
   SList := GetMTGJsonEnumList(MTGJSON_ENUMS_URI, 'mtgjson_enums.json');
   SList.Free;
 }
-
+{
  MTGPriceList := TMTGPriceList.Create('https://api.peardox.co.uk/prices/json/sets/paper.ZNR.json.gz', 'mtgjson_pricelist.json');
  MTGPriceList.Free;
 
-//  MemoMessage('"uuid","cardname","setcode","cardtype","cardnum","side","rarity","scryfall"');
-  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+ if not (MTGSetList.List = nil) then
+   begin
+    for idx := 0 to MTGSetList.List.Count -1 do
+      begin
+        data := GetMTGJsonPriceJson(MTGSetList.List[idx], 'mtgjson/prices/json', UseCache);
+        FreeAndNil(data);
+        if Abort then
+          begin
+            break;
+          end;
+      end;
+   end;
+ FreeAndNil(MTGSetList);
+}
+
+MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
-        setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
-        setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
-        setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
-        setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
-        Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
-//        if MTGSetList.List[idx] = 'ZNE' then
-        if MTGSetList.List[idx] = 'skipAllSets' then
+//        if MTGSetList.List[idx] = 'MZNR' then
+//        if not(MTGSetList.List[idx] = 'MZNR') then
+//        if MTGSetList.List[idx] = 'skipAllSets' then
           begin
+          setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
+          setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
+          setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
+          setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
+          Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
 {
             MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
               setType + ' : ' + setFullName + ' =====');
@@ -192,80 +391,8 @@ begin
             data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
             MTGSet := TMTGSet.Create(data, 'uuid');
             cards += MTGSet.Cards.Count; // MTGSet.setTotalSetSize;
+
 {
-            itott := 0;
-            for img := 0 to MTGSet.Cards.Count - 1 do
-              begin
-                txt := '"' + MTGSet.Cards[img] + '"' +
-                  ',"' + MTGSet.Name(img) + '"' +
-                  ',"' + MTGSetList.List[idx] + '"' +
-                  ',"' + MTGSet.CardType(img) + '"' +
-                  ',"' + MTGSet.Number(img) + '"' +
-                  ',"' + MTGSet.Side(img) + '"' +
-                  ',"' + MTGSet.Rarity(img) + '"' +
-                  ',"' + MTGSet.ImageID(img) + '"';
-//                MemoMessage(txt);
-              end;
-}
-{
-            for img := 0 to MTGSet.Cards.Count - 1 do
-              begin
-                imgMTGJsonID := MTGSet.Cards[img];
-                imgScryID := MTGSet.ImageID(img);
-                itime := CastleGetTickCount64;
-                if not (imgScryID = EmptyStr) then
-                  begin
-                    imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
-                    imgPath := 'scryfall/sets/images/set_' + MTGSetList.List[idx] + '/' + cardQuality;
-                    imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
-                    CreateCastleDataDirectoryIfMissing(imgPath);
-                    try
-                      CacheImage(imgURI, imgFile, True, True);
-                    except
-                      on E: EImageCacheException do
-                        begin
-                          MemoMessage('====== Bad Download ======');
-                          MemoMessage('set  : ' + MTGSetList.List[idx]);
-                          MemoMessage('uuid : ' + imgMTGJsonID);
-                          MemoMessage('name : ' + MTGSet.Name(img));
-                          MemoMessage('type : ' + MTGSet.CardType(img));
-                          MemoMessage('num# : ' + MTGSet.Number(img));
-                          MemoMessage('rare : ' + MTGSet.Rarity(img));
-                          MemoMessage('scry : ' + imgScryID);
-                          MemoMessage('========================');
-                          Inc(imerr);
-                        end;
-                    end;
-                  end
-                else
-                  begin
-                    MemoMessage('====== Bad Record ======');
-                    MemoMessage(MTGSetList.List[idx]);
-                    MemoMessage(MTGSet.Name(img));
-                    MemoMessage(MTGSet.Number(img));
-                    MemoMessage(MTGSet.Rarity(img));
-                    MemoMessage(imgMTGJsonID);
-                    MemoMessage('========================');
-                  end;
-
-                itime := CastleGetTickCount64 - itime;
-                itott += itime;
-
-                Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
-                  ' - Image ' + '(' + IntToStr(img + 1) + '/' + IntToStr(MTGSet.Cards.Count) + ')' +
-                  ' Time : ' + FormatFloat('####0.00', (itime / 1000)) + 's' +
-                  ' Avg : ' + FormatFloat('####0.00', (itott / 1000) / (img + 1)) + 's' +
-                  ' Total : ' + FormatFloat('####0.00', (itott / 1000)) + 's';
-                {$ifdef useLog}
-                if img = (MTGSet.Cards.Count - 1) then
-                  WriteLnLog('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
-                    ' - Image ' + '(' + IntToStr(img + 1) + '/' + IntToStr(MTGSet.Cards.Count) + ')' +
-                    ' Time : ' + FormatFloat('####0.00', (itime / 1000)) + 's' +
-                    ' Avg : ' + FormatFloat('####0.00', (itott / 1000) / (img + 1)) + 's' +
-                    ' Total : ' + FormatFloat('####0.00', (itott / 1000)) + 's');
-                {$endif}
-
-              end;
 }
             Inc(cnt);
             FreeAndNil(MTGSet);
@@ -320,6 +447,30 @@ begin
   Abort := True;
   Button2.Enabled := False;
   Button1.Enabled := True;
+end;
+
+procedure TForm1.Button3SetCaption;
+begin
+  if UseCache then
+    Button3.Caption := 'Use Cache'
+  else
+    Button3.Caption := 'Download';
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  UseCache := not UseCache;
+  Button3SetCaption;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  ExportUUIDs('castle-data:/uuids.csv');
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  ExportImages();
 end;
 
 end.

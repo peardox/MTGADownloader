@@ -64,7 +64,7 @@ begin
     Exit;
   end;
 
-  if HasOption('r', 'rebuild') then begin
+  if HasOption('i', 'images') then begin
     MemoMessage('Fetching images...');
     ExportImages(True);
     Terminate;

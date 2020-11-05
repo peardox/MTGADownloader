@@ -42,7 +42,7 @@ const
 
   cardQuality = 'large'; // normal / large
 
-  UseCache: Boolean = True; // Only set to True while developing
+  UseCache: Boolean = False; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
   InitialTypes: array [0 .. 1] of String = ('core', 'expansion');
 
@@ -52,6 +52,7 @@ procedure ExportUUIDs(const FileName: String; const UseCache: Boolean = True);
 procedure ExportSetUUIDs(const setCode: String; const OutFile: TTextWriter; const UseCache: Boolean = True);
 procedure ExportImages(const UseCache: Boolean = True);
 procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
+procedure GetSets(const UseCache: Boolean = True);
 
 implementation
 
@@ -208,5 +209,92 @@ begin
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
 end;
+
+procedure GetSets(const UseCache: Boolean = True);
+var
+  data: TStream = nil;
+  ticks: Int64;
+//  SList: TStringList;
+//  MTGPriceList: TMTGPriceList;
+  MTGSet: TMTGSet;
+  MTGSetList: TMTGSetList;
+//  MTGDeckList: TMTGDeckList;
+  idx: Integer;
+//  img: Integer;
+  cnt: Integer;
+  cards: Integer;
+//  setDate: String;
+//  setFullName: String;
+//  setType: String;
+//  setSize: String;
+//  imgMTGJsonID: String;
+//  imgScryID:  String;
+//  imgURI: String;
+//  imgPath: String;
+//  imgFile: String;
+//  itime: Int64;
+//  itott: Int64;
+//  imerr: Integer;
+//  txt: String;
+begin
+  cnt := 0;
+  cards := 0;
+//  imerr := 0;
+  ticks := CastleGetTickCount64;
+
+MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+  if not (MTGSetList.List = nil) then
+    begin
+    for idx := 0 to MTGSetList.List.Count -1 do
+      begin
+        if MTGSetList.List[idx] = 'ZNR' then
+//        if not(MTGSetList.List[idx] = 'MZNR') then
+          begin
+{
+          setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
+          setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
+          setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
+          setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
+}
+          MemoMessage('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')');
+          data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
+          MTGSet := TMTGSet.Create(data, 'uuid');
+          cards += MTGSet.Cards.Count; // MTGSet.setTotalSetSize;
+          Inc(cnt);
+          FreeAndNil(MTGSet);
+          FreeAndNil(data);
+          end;
+      end;
+    end;
+  FreeAndNil(MTGSetList);
+
+{
+  MTGDeckList := TMTGDeckList.Create(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', 'fileName');
+  for idx := 0 to MTGDeckList.List.Count -1 do
+    begin
+//      MemoMessage('Key: ' + MTGDeckList.List[idx]);
+      data := GetMTGJsonDeckJson(MTGDeckList.List[idx], 'mtgjson/decks/json');
+      FreeAndNil(data);
+    end;
+//  MTGDeckList.DumpList;
+  FreeAndNil(MTGDeckList);
+}
+//  MemoMessage('----------- END -----------');
+  ticks := CastleGetTickCount64 - ticks;
+  MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
+{
+  MemoMessage('Sets analysed : ' + IntToStr(cnt));
+  MemoMessage('Sets cards : ' + IntToStr(cards));
+  MemoMessage('Img errors : ' + IntToStr(imerr));
+}
+{
+  data := DownloadNetworkFile('https://noapi.peardox.co.uk/prices/prices.json.gz', [], False);
+  if not(data = nil) then
+    MemoMessage('OK');
+
+  FreeAndNil(data);
+}
+end;
+
 
 end.

@@ -53,6 +53,12 @@ begin
     Exit;
   end;
 
+  if HasOption('r', 'rebuild') then begin
+    GetSets(False);
+    Terminate;
+    Exit;
+  end;
+
   { add your program here }
 
 //  MemoMessage('ApplicationConfig = ' + ApplicationConfig(''));

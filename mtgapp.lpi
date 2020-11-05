@@ -51,6 +51,11 @@
       <OtherUnitFiles Value="openssl"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+      </Debugging>
+    </Linking>
     <Other>
       <CustomOptions Value="-dcgeapp"/>
       <OtherDefines Count="1">

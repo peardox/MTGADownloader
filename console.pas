@@ -40,7 +40,7 @@ const
   MTGSON_PRICES_ALL_fURI = 'https://api.peardox.co.uk/prices/prices.json.gz';
   MTGSON_PRICES_PAPER_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'large'; // normal / large
+  cardQuality = 'png'; // normal / large / png
 
   UseCache: Boolean = False; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
@@ -143,7 +143,10 @@ begin
           begin
             imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
             imgPath := 'scryfall/sets/images/set_' + SetCode + '/' + cardQuality;
-            imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
+            if(cardQuality = 'png') then
+              imgFile := imgPath + '/'+ imgMTGJsonID + '.png'
+            else
+              imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
             CreateCastleDataDirectoryIfMissing(imgPath);
             try
               CacheImage(imgURI, imgFile, True, True);

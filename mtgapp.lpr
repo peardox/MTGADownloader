@@ -1,11 +1,12 @@
 program mtgapp;
 
 {$mode objfpc}{$H+}
+{$define hackmode}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Classes, SysUtils, CustApp,
   Console,
   CastleParameters, CastleClassUtils, CastleDownload,
@@ -32,17 +33,20 @@ var
 { TMTGApp }
 
 procedure TMTGApp.DoRun;
+{$ifndef hackmode}
 var
   ErrorMsg: String;
+{$endif}
 begin
+{$ifndef hackmode}
   // quick check parameters
-  ErrorMsg:=CheckOptions('h', 'help');
+  ErrorMsg:=CheckOptions('h', 'help','r','rebuild');
   if ErrorMsg<>'' then begin
     ShowException(Exception.Create(ErrorMsg));
     Terminate;
     Exit;
   end;
-
+{$endif}
   // parse parameters
   if HasOption('h', 'help') then begin
     WriteHelp;
@@ -54,7 +58,15 @@ begin
   end;
 
   if HasOption('r', 'rebuild') then begin
+    MemoMessage('Rebuilding...');
     GetSets(False);
+    Terminate;
+    Exit;
+  end;
+
+  if HasOption('r', 'rebuild') then begin
+    MemoMessage('Fetching images...');
+    ExportImages(True);
     Terminate;
     Exit;
   end;

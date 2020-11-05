@@ -22,7 +22,12 @@ type
 
 implementation
 
-uses unit1;
+uses
+{$ifndef cgeapp}
+  Unit1
+{$else}
+, CacheFileUtils;
+{$endif}
 
 procedure TJsonObject.IncCount;
 begin

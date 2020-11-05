@@ -17,6 +17,16 @@ type
     FtotalSetSize: Integer;
     Ftype: String;
     FparentCode: String;
+    FkeyruneCode: String;
+    FmtgoCode: String;
+    FmcmName: String;
+    Fblock: String;
+    FmcmId: Integer;
+    FtcgplayerGroupId: Integer;
+    FisFoilOnly: Boolean;
+    FisNonFoilOnly: Boolean;
+    FisOnlineOnly: Boolean;
+    FisForeignOnly: Boolean;
     FisPartialPreview: Boolean;
   published
     property setBaseSetSize: Integer read FbaseSetSize write FbaseSetSize;
@@ -26,7 +36,17 @@ type
     property setTotalSetSize: Integer read FtotalSetSize write FtotalSetSize;
     property setType: String read Ftype write Ftype;
     property setParentCode: String read FparentCode write FparentCode;
-    property SetIsPartialPreview: Boolean read FisPartialPreview write FisPartialPreview;
+    property setIsPartialPreview: Boolean read FisPartialPreview write FisPartialPreview;
+    property setKeyruneCode: String read FkeyruneCode write FkeyruneCode;
+    property setMtgoCode: String read FmtgoCode write FmtgoCode;
+    property setMcmName: String read FmcmName write FmcmName;
+    property setBlock: String read Fblock write Fblock;
+    property setMcmId: Integer read FmcmId write FmcmId;
+    property setTcgplayerGroupId: Integer read FtcgplayerGroupId write FtcgplayerGroupId;
+    property setIsFoilOnly: Boolean read FisFoilOnly write FisFoilOnly;
+    property setIsNonFoilOnly: Boolean read FisNonFoilOnly write FisNonFoilOnly;
+    property setIsOnlineOnly: Boolean read FisOnlineOnly write FisOnlineOnly;
+    property setIsForeignOnly: Boolean read FisForeignOnly write FisForeignOnly;
   end;
 
   TMTGSetList = class(TMTGList)
@@ -243,7 +263,11 @@ const
 
 implementation
 
-uses Unit1, CacheFileUtils;
+uses 
+{$ifndef cgeapp}
+  Unit1,
+{$endif}
+CacheFileUtils;
 
 { TSetCardRecord =============================================================}
 
@@ -356,6 +380,105 @@ begin
           else
             Rec.setIsPartialPreview := Node.AsBoolean;
         end;
+      'translations':
+        begin
+          if not(Node.Kind = nkObject) then
+              MemoMessage('TypeError for translations expected nkObject got ' + Node.KindAsString)
+          else
+            begin
+            //  MapJsonObject(Node); // ToDo
+            end;
+        end;
+      'keyruneCode':
+        begin
+          if not(Node.Kind = nkString) then
+              MemoMessage('TypeError for keyruneCode expected nkString got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setKeyruneCode := Node.AsString;
+            end;
+        end;
+      'mtgoCode':
+        begin
+          if not(Node.Kind = nkString) then
+              MemoMessage('TypeError for mtgoCode expected nkString got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setMtgoCode := Node.AsString;
+            end;
+        end;
+      'mcmName':
+        begin
+          if not(Node.Kind = nkString) then
+              MemoMessage('TypeError for mcmName expected nkString got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setMcmName := Node.AsString;
+            end;
+        end;
+      'block':
+        begin
+          if not(Node.Kind = nkString) then
+              MemoMessage('TypeError for block expected nkString got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setBlock := Node.AsString;
+            end;
+        end;
+      'mcmId':
+        begin
+          if not(Node.Kind = nkNumber) then
+              MemoMessage('TypeError for mcmId expected nkNumber got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setMcmId := Trunc(Node.AsNumber);
+            end;
+        end;
+      'tcgplayerGroupId':
+        begin
+          if not(Node.Kind = nkNumber) then
+              MemoMessage('TypeError for tcgplayerGroupId expected nkNumber got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setTcgplayerGroupId := Trunc(Node.AsNumber);
+            end;
+        end;
+      'isFoilOnly':
+        begin
+          if not(Node.Kind = nkBool) then
+              MemoMessage('TypeError for isFoilOnly expected nkBool got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setIsFoilOnly := Node.AsBoolean;
+            end;
+        end;
+      'isNonFoilOnly':
+        begin
+          if not(Node.Kind = nkBool) then
+              MemoMessage('TypeError for isNonFoilOnly expected nkBool got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setIsNonFoilOnly := Node.AsBoolean;
+            end;
+        end;
+      'isOnlineOnly':
+        begin
+          if not(Node.Kind = nkBool) then
+              MemoMessage('TypeError for isOnlineOnly expected nkBool got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setIsOnlineOnly := Node.AsBoolean;
+            end;
+        end;
+      'isForeignOnly':
+        begin
+          if not(Node.Kind = nkBool) then
+              MemoMessage('TypeError for isForeignOnly expected nkBool got ' + Node.KindAsString)
+          else
+            begin
+              Rec.setIsForeignOnly := Node.AsBoolean;
+            end;
+        end;
       'parentCode':
         begin
           if not(Node.Kind = nkString) then
@@ -365,7 +488,7 @@ begin
         end;
       else
           begin
-            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
+            MemoMessage('(MapJsonObject) Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
           end;
       end;
     end;

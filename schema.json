@@ -1,0 +1,994 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Cards",
+    "definitions": {
+        "Cards": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/Data"
+                },
+                "meta": {
+                    "$ref": "#/definitions/Meta"
+                }
+            },
+            "required": [
+                "data",
+                "meta"
+            ],
+            "title": "Cards"
+        },
+        "Data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "baseSetSize": {
+                    "type": "integer"
+                },
+                "booster": {
+                    "$ref": "#/definitions/DataBooster"
+                },
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Card"
+                    }
+                },
+                "code": {
+                    "$ref": "#/definitions/Code"
+                },
+                "isFoilOnly": {
+                    "type": "boolean"
+                },
+                "isOnlineOnly": {
+                    "type": "boolean"
+                },
+                "keyruneCode": {
+                    "$ref": "#/definitions/Code"
+                },
+                "mcmId": {
+                    "type": "integer"
+                },
+                "mcmName": {
+                    "type": "string"
+                },
+                "mtgoCode": {
+                    "$ref": "#/definitions/Code"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "releaseDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "tcgplayerGroupId": {
+                    "type": "integer"
+                },
+                "tokens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Token"
+                    }
+                },
+                "totalSetSize": {
+                    "type": "integer"
+                },
+                "translations": {
+                    "$ref": "#/definitions/Translations"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "baseSetSize",
+                "booster",
+                "cards",
+                "code",
+                "isFoilOnly",
+                "isOnlineOnly",
+                "keyruneCode",
+                "mcmId",
+                "mcmName",
+                "mtgoCode",
+                "name",
+                "releaseDate",
+                "tcgplayerGroupId",
+                "tokens",
+                "totalSetSize",
+                "translations",
+                "type"
+            ],
+            "title": "Data"
+        },
+        "DataBooster": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "default": {
+                    "$ref": "#/definitions/Default"
+                }
+            },
+            "required": [
+                "default"
+            ],
+            "title": "DataBooster"
+        },
+        "Default": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "boosters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BoosterElement"
+                    }
+                },
+                "boostersTotalWeight": {
+                    "type": "integer"
+                },
+                "sheets": {
+                    "$ref": "#/definitions/Sheets"
+                }
+            },
+            "required": [
+                "boosters",
+                "boostersTotalWeight",
+                "sheets"
+            ],
+            "title": "Default"
+        },
+        "BoosterElement": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "contents": {
+                    "$ref": "#/definitions/Contents"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "contents",
+                "weight"
+            ],
+            "title": "BoosterElement"
+        },
+        "Contents": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "basic": {
+                    "type": "integer"
+                },
+                "common": {
+                    "type": "integer"
+                },
+                "rareMythic": {
+                    "type": "integer"
+                },
+                "uncommon": {
+                    "type": "integer"
+                },
+                "foil": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "basic",
+                "common",
+                "rareMythic",
+                "uncommon"
+            ],
+            "title": "Contents"
+        },
+        "Sheets": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "basic": {
+                    "$ref": "#/definitions/Basic"
+                },
+                "common": {
+                    "$ref": "#/definitions/Common"
+                },
+                "foil": {
+                    "$ref": "#/definitions/Basic"
+                },
+                "rareMythic": {
+                    "$ref": "#/definitions/Basic"
+                },
+                "uncommon": {
+                    "$ref": "#/definitions/Basic"
+                }
+            },
+            "required": [
+                "basic",
+                "common",
+                "foil",
+                "rareMythic",
+                "uncommon"
+            ],
+            "title": "Sheets"
+        },
+        "Basic": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cards": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "foil": {
+                    "type": "boolean"
+                },
+                "totalWeight": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cards",
+                "foil",
+                "totalWeight"
+            ],
+            "title": "Basic"
+        },
+        "Common": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "balanceColors": {
+                    "type": "boolean"
+                },
+                "cards": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "foil": {
+                    "type": "boolean"
+                },
+                "totalWeight": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "balanceColors",
+                "cards",
+                "foil",
+                "totalWeight"
+            ],
+            "title": "Common"
+        },
+        "Card": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "artist": {
+                    "type": "string"
+                },
+                "availability": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Availability"
+                    }
+                },
+                "borderColor": {
+                    "$ref": "#/definitions/BorderColor"
+                },
+                "colorIdentity": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Color"
+                    }
+                },
+                "colors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Color"
+                    }
+                },
+                "convertedManaCost": {
+                    "type": "integer"
+                },
+                "edhrecRank": {
+                    "type": "integer"
+                },
+                "foreignData": {
+                    "type": "array",
+                    "items": {}
+                },
+                "frameVersion": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "hasFoil": {
+                    "type": "boolean"
+                },
+                "hasNonFoil": {
+                    "type": "boolean"
+                },
+                "identifiers": {
+                    "$ref": "#/definitions/CardIdentifiers"
+                },
+                "layout": {
+                    "$ref": "#/definitions/CardLayout"
+                },
+                "legalities": {
+                    "$ref": "#/definitions/Legalities"
+                },
+                "manaCost": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "originalText": {
+                    "type": "string"
+                },
+                "originalType": {
+                    "type": "string"
+                },
+                "power": {
+                    "type": "string"
+                },
+                "printings": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "purchaseUrls": {
+                    "$ref": "#/definitions/PurchaseUrls"
+                },
+                "rarity": {
+                    "$ref": "#/definitions/Rarity"
+                },
+                "rulings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Ruling"
+                    }
+                },
+                "setCode": {
+                    "$ref": "#/definitions/Code"
+                },
+                "subtypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "supertypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Supertype"
+                    }
+                },
+                "text": {
+                    "type": "string"
+                },
+                "toughness": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CardType"
+                    }
+                },
+                "uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "flavorText": {
+                    "type": "string"
+                },
+                "faceName": {
+                    "type": "string"
+                },
+                "frameEffects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FrameEffect"
+                    }
+                },
+                "isStarter": {
+                    "type": "boolean"
+                },
+                "otherFaceIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "promoTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PromoType"
+                    }
+                },
+                "side": {
+                    "$ref": "#/definitions/Side"
+                },
+                "variations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "leadershipSkills": {
+                    "$ref": "#/definitions/LeadershipSkills"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "isPromo": {
+                    "type": "boolean"
+                },
+                "watermark": {
+                    "type": "string"
+                },
+                "isReprint": {
+                    "type": "boolean"
+                },
+                "isFullArt": {
+                    "type": "boolean"
+                },
+                "loyalty": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "isStorySpotlight": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "artist",
+                "availability",
+                "borderColor",
+                "colorIdentity",
+                "colors",
+                "convertedManaCost",
+                "foreignData",
+                "frameVersion",
+                "hasFoil",
+                "hasNonFoil",
+                "identifiers",
+                "layout",
+                "legalities",
+                "name",
+                "number",
+                "printings",
+                "purchaseUrls",
+                "rarity",
+                "rulings",
+                "setCode",
+                "subtypes",
+                "supertypes",
+                "type",
+                "types",
+                "uuid"
+            ],
+            "title": "Card"
+        },
+        "CardIdentifiers": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cardKingdomFoilId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "cardKingdomId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "mcmId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "mcmMetaId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "mtgArenaId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "mtgjsonV4Id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "mtgoId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "multiverseId": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "scryfallId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "scryfallIllustrationId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "scryfallOracleId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "tcgplayerProductId": {
+                    "type": "string",
+                    "format": "integer"
+                }
+            },
+            "required": [
+                "mtgjsonV4Id",
+                "scryfallId",
+                "scryfallIllustrationId",
+                "scryfallOracleId"
+            ],
+            "title": "CardIdentifiers"
+        },
+        "LeadershipSkills": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "brawl": {
+                    "type": "boolean"
+                },
+                "commander": {
+                    "type": "boolean"
+                },
+                "oathbreaker": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "brawl",
+                "commander",
+                "oathbreaker"
+            ],
+            "title": "LeadershipSkills"
+        },
+        "Legalities": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "brawl": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "commander": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "duel": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "future": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "historic": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "legacy": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "modern": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "pioneer": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "standard": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "vintage": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "pauper": {
+                    "$ref": "#/definitions/Brawl"
+                },
+                "penny": {
+                    "$ref": "#/definitions/Brawl"
+                }
+            },
+            "required": [
+                "brawl",
+                "commander",
+                "duel",
+                "future",
+                "historic",
+                "legacy",
+                "modern",
+                "pioneer",
+                "standard",
+                "vintage"
+            ],
+            "title": "Legalities"
+        },
+        "PurchaseUrls": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cardKingdom": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "cardKingdomFoil": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "cardmarket": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "tcgplayer": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                }
+            },
+            "required": [],
+            "title": "PurchaseUrls"
+        },
+        "Ruling": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "text": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "text"
+            ],
+            "title": "Ruling"
+        },
+        "Token": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "artist": {
+                    "type": "string"
+                },
+                "availability": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Availability"
+                    }
+                },
+                "borderColor": {
+                    "$ref": "#/definitions/BorderColor"
+                },
+                "colorIdentity": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Color"
+                    }
+                },
+                "colors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Color"
+                    }
+                },
+                "frameVersion": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "hasFoil": {
+                    "type": "boolean"
+                },
+                "hasNonFoil": {
+                    "type": "boolean"
+                },
+                "identifiers": {
+                    "$ref": "#/definitions/TokenIdentifiers"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "layout": {
+                    "$ref": "#/definitions/TokenLayout"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "power": {
+                    "type": "string"
+                },
+                "reverseRelated": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "setCode": {
+                    "$ref": "#/definitions/SetCode"
+                },
+                "subtypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "supertypes": {
+                    "type": "array",
+                    "items": {}
+                },
+                "text": {
+                    "type": "string"
+                },
+                "toughness": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TokenType"
+                    }
+                },
+                "uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "isReprint": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "artist",
+                "availability",
+                "borderColor",
+                "colorIdentity",
+                "colors",
+                "frameVersion",
+                "hasFoil",
+                "hasNonFoil",
+                "identifiers",
+                "layout",
+                "name",
+                "number",
+                "reverseRelated",
+                "setCode",
+                "subtypes",
+                "supertypes",
+                "type",
+                "types",
+                "uuid"
+            ],
+            "title": "Token"
+        },
+        "TokenIdentifiers": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "mtgjsonV4Id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "scryfallId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "scryfallIllustrationId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "scryfallOracleId": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "mtgjsonV4Id",
+                "scryfallId",
+                "scryfallIllustrationId",
+                "scryfallOracleId"
+            ],
+            "title": "TokenIdentifiers"
+        },
+        "Translations": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "Translations"
+        },
+        "Meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "version"
+            ],
+            "title": "Meta"
+        },
+        "Availability": {
+            "type": "string",
+            "enum": [
+                "arena",
+                "mtgo",
+                "paper"
+            ],
+            "title": "Availability"
+        },
+        "BorderColor": {
+            "type": "string",
+            "enum": [
+                "black",
+                "borderless"
+            ],
+            "title": "BorderColor"
+        },
+        "Color": {
+            "type": "string",
+            "enum": [
+                "B",
+                "G",
+                "R",
+                "W",
+                "U"
+            ],
+            "title": "Color"
+        },
+        "FrameEffect": {
+            "type": "string",
+            "enum": [
+                "extendedart",
+                "legendary",
+                "showcase",
+                "inverted",
+                "fullart"
+            ],
+            "title": "FrameEffect"
+        },
+        "CardLayout": {
+            "type": "string",
+            "enum": [
+                "normal",
+                "modal_dfc"
+            ],
+            "title": "CardLayout"
+        },
+        "Brawl": {
+            "type": "string",
+            "enum": [
+                "Legal"
+            ],
+            "title": "Brawl"
+        },
+        "PromoType": {
+            "type": "string",
+            "enum": [
+                "boosterfun",
+                "promopack",
+                "bundle",
+                "buyabox"
+            ],
+            "title": "PromoType"
+        },
+        "Rarity": {
+            "type": "string",
+            "enum": [
+                "uncommon",
+                "common",
+                "mythic",
+                "rare"
+            ],
+            "title": "Rarity"
+        },
+        "Code": {
+            "type": "string",
+            "enum": [
+                "ZNR"
+            ],
+            "title": "Code"
+        },
+        "Side": {
+            "type": "string",
+            "enum": [
+                "b",
+                "a"
+            ],
+            "title": "Side"
+        },
+        "Supertype": {
+            "type": "string",
+            "enum": [
+                "Legendary",
+                "Basic"
+            ],
+            "title": "Supertype"
+        },
+        "CardType": {
+            "type": "string",
+            "enum": [
+                "Creature",
+                "Sorcery",
+                "Land",
+                "Instant",
+                "Enchantment",
+                "Artifact",
+                "Planeswalker"
+            ],
+            "title": "CardType"
+        },
+        "TokenLayout": {
+            "type": "string",
+            "enum": [
+                "token"
+            ],
+            "title": "TokenLayout"
+        },
+        "SetCode": {
+            "type": "string",
+            "enum": [
+                "TZNR"
+            ],
+            "title": "SetCode"
+        },
+        "TokenType": {
+            "type": "string",
+            "enum": [
+                "Token",
+                "Creature",
+                "Artifact"
+            ],
+            "title": "TokenType"
+        }
+    }
+}

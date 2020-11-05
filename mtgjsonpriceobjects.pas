@@ -28,7 +28,10 @@ const
 implementation
 
 uses
-  unit1, CacheFileUtils;
+{$ifndef cgeapp}
+  Unit1,
+{$endif}
+CacheFileUtils;
 
 { TMTGPriceList ==============================================================}
 

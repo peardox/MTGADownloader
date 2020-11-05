@@ -7,20 +7,22 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, StrUtils,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  ComCtrls,
   {$IFDEF UNIX}
   // cthreads,
   {$ENDIF}
-  ComCtrls, SVGUtils,
+//  CastleControl,
+  StrUtils, SVGUtils,
   CastleParameters, CastleClassUtils, CastleDownload,
-  CastleControl, CastleTimeUtils, CastleURIUtils, CastleFilesUtils
+  CastleTimeUtils, CastleURIUtils, CastleFilesUtils
   ;
 
 type
 
-  { TForm1 }
+  { TMTGApp }
 
-  TForm1 = class(TForm)
+  TMTGApp = class(TForm)
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -42,7 +44,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  MTGApp: TMTGApp;
   Abort: Boolean;
 
 const
@@ -106,7 +108,7 @@ begin
   {$ifdef useLog}
   WriteLnLog(msg);
   {$endif}
-  Form1.Memo1.Lines.Add(msg);
+  MTGApp.Memo1.Lines.Add(msg);
   Application.ProcessMessages;
 end;
 
@@ -146,9 +148,9 @@ var
   ticks: Int64;
   idx: Integer;
 begin
-  Form1.Button3.Enabled := False;
-  Form1.Button2.Enabled := True;
-  Form1.Button1.Enabled := False;
+  MTGApp.Button3.Enabled := False;
+  MTGApp.Button2.Enabled := True;
+  MTGApp.Button1.Enabled := False;
   ticks := CastleGetTickCount64;
   OutFile := TTextWriter.Create(FileName);
   try
@@ -175,9 +177,9 @@ begin
   end;
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
-  Form1.Button3.Enabled := True;
-  Form1.Button2.Enabled := False;
-  Form1.Button1.Enabled := True;
+  MTGApp.Button3.Enabled := True;
+  MTGApp.Button2.Enabled := False;
+  MTGApp.Button1.Enabled := True;
 end;
 
 procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
@@ -254,9 +256,9 @@ var
   ticks: Int64;
   idx: Integer;
 begin
-  Form1.Button3.Enabled := False;
-  Form1.Button2.Enabled := True;
-  Form1.Button1.Enabled := False;
+  MTGApp.Button3.Enabled := False;
+  MTGApp.Button2.Enabled := True;
+  MTGApp.Button1.Enabled := False;
   ticks := CastleGetTickCount64;
 
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
@@ -266,7 +268,7 @@ begin
       for idx := 0 to MTGSetList.List.Count -1 do
         begin
           ExportSetImages(MTGSetList.List[idx], UseCache);
-          Form1.Caption := 'Set = ' + MTGSetList.List[idx] + '(' +
+          MTGApp.Caption := 'Set = ' + MTGSetList.List[idx] + '(' +
             IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
           Application.ProcessMessages;
           if Abort then
@@ -281,14 +283,14 @@ begin
 
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
-  Form1.Button3.Enabled := True;
-  Form1.Button2.Enabled := False;
-  Form1.Button1.Enabled := True;
+  MTGApp.Button3.Enabled := True;
+  MTGApp.Button2.Enabled := False;
+  MTGApp.Button1.Enabled := True;
 end;
 
-{ TForm1 }
+{ TMTGApp }
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMTGApp.FormCreate(Sender: TObject);
 begin
   {$ifdef useLog}
   InitializeLog;
@@ -297,15 +299,15 @@ begin
   Button2.Enabled := False;
   InitializeLog;
   Memo1.Clear;
-  Form1.Width := 800;
-  Form1.Height := 600;
-  Form1.Position:= poScreenCenter;
+  MTGApp.Width := 800;
+  MTGApp.Height := 600;
+  MTGApp.Position:= poScreenCenter;
   MemoMessage('ApplicationConfig = ' + ApplicationConfig(''));
   MemoMessage('ApplicationData = ' + ApplicationData(''));
   Button3SetCaption;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TMTGApp.Button1Click(Sender: TObject);
 var
   data: TStream = nil;
   ticks: Int64;
@@ -376,7 +378,7 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
 //        if MTGSetList.List[idx] = 'MZNR' then
-//        if not(MTGSetList.List[idx] = 'MZNR') then
+        if not(MTGSetList.List[idx] = 'MZNR') then
 //        if MTGSetList.List[idx] = 'skipAllSets' then
           begin
           setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
@@ -384,6 +386,7 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
           setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
           setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
           Caption := 'Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')';
+          MemoMessage('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')');
 {
             MemoMessage('===== ' + MTGSetList.List[idx] + ' (' + setSize + ') - ' +
               setType + ' : ' + setFullName + ' =====');
@@ -439,7 +442,7 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
 }
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TMTGApp.Button2Click(Sender: TObject);
 begin
   {$if defined(debugMessages)}
   MemoMessage('Abort button clicked');
@@ -449,7 +452,7 @@ begin
   Button1.Enabled := True;
 end;
 
-procedure TForm1.Button3SetCaption;
+procedure TMTGApp.Button3SetCaption;
 begin
   if UseCache then
     Button3.Caption := 'Use Cache'
@@ -457,18 +460,20 @@ begin
     Button3.Caption := 'Download';
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TMTGApp.Button3Click(Sender: TObject);
 begin
   UseCache := not UseCache;
   Button3SetCaption;
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TMTGApp.Button4Click(Sender: TObject);
 begin
+  MemoMessage('Start Exporting');
   ExportUUIDs('castle-data:/uuids.csv');
+  MemoMessage('Finished Exporting');
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TMTGApp.Button5Click(Sender: TObject);
 begin
   ExportImages();
 end;

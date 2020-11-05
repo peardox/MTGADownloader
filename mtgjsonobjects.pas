@@ -35,7 +35,10 @@ type
 implementation
 
 uses
-  unit1, Typinfo, CacheFileUtils;
+{$ifndef cgeapp}
+  Unit1,
+{$endif}
+ Typinfo, CacheFileUtils;
 
 { TMTGList ===================================================================}
 

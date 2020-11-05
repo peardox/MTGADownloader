@@ -44,7 +44,11 @@ const
 
 implementation
 
-uses Unit1, CacheFileUtils;
+uses 
+{$ifndef cgeapp}
+  Unit1,
+{$endif}
+CacheFileUtils;
 
 { TMTGDeckList ===============================================================}
 
@@ -137,7 +141,7 @@ begin
         end;
       else
           begin
-            MemoMessage('Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
+            MemoMessage('(MapJsonDeckObject) Unhandled node : ' + Node.Name + ' - ' + Node.KindAsString);
           end;
       end;
     end;

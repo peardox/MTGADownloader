@@ -14,8 +14,10 @@ procedure DumpList(EnumList: TStringList);
 implementation
 
 uses
-  Unit1, CacheFileUtils,
-  Dialogs,
+{$ifndef cgeapp}
+  Unit1, Dialogs,
+{$endif}
+  CacheFileUtils,
   JsonTools, TypInfo,
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils, CastleClassUtils
   ;
@@ -77,9 +79,16 @@ begin
     except
       on E : Exception do
         begin
+{$ifdef cgeapp}
+          MemoMessage('Oops' + LineEnding +
+                       E.ClassName + LineEnding +
+                       E.Message);
+{$else}
+        
           ShowMessage('Oops' + LineEnding +
                        E.ClassName + LineEnding +
                        E.Message);
+{$endif}
          end;
     end;
   finally
@@ -158,9 +167,16 @@ begin
     except
       on E : Exception do
         begin
+{$ifdef cgeapp}
+          MemoMessage('Oops' + LineEnding +
+                       E.ClassName + LineEnding +
+                       E.Message);
+{$else}
+        
           ShowMessage('Oops' + LineEnding +
                        E.ClassName + LineEnding +
                        E.Message);
+{$endif}
          end;
     end;
   finally

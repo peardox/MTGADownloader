@@ -22,16 +22,30 @@ function URIDirectoryExists(const Path: String): Boolean;
 function URIDirectoryCreate(const Url: String): Boolean;
 function URIExcludeQuery(const Url: String): String;
 function CreateCastleDataDirectoryIfMissing(const SubDir: String): Boolean;
+{$ifdef cgeapp}
+procedure MemoMessage(const msg: String);
+{$endif}
 
 implementation
 
 uses
-  Unit1, // To communicate with main form
-  Dialogs, // ShowMessage
+{$ifndef cgeapp}
+  Unit1, Dialogs,
+{$endif}
   JsonTools, TypInfo,
   CastleFilesUtils, CastleURIUtils,
   CastleApplicationProperties { A work-around }
   ;
+
+{$ifdef cgeapp}
+procedure MemoMessage(const msg: String);
+begin
+  {$ifdef useLog}
+  WriteLnLog(msg);
+  {$endif}
+  WriteLn(msg);
+end;
+{$endif}
 
 function DownloadStatusToString(Status: TDownloadStatus): string;
 begin
@@ -144,13 +158,17 @@ begin
       while fDownload.Status = dsDownloading do
       begin
         ReportProgress(fDownload);
+{$ifndef cgeapp}
         TriggerProcessMessages;
+{$endif}
         ApplicationProperties._Update;
+{$ifndef cgeapp}
         if Abort then
           begin
 //            EnableAbortButton(False);
             break;
           end;
+{$endif}
         sleep(100);
       end;
 

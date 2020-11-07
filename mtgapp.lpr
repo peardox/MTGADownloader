@@ -11,7 +11,7 @@ uses
   Console,
   CastleParameters, CastleClassUtils, CastleDownload,
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils,
-  CastleLog, fpjson, 
+  CastleLog, fpjson, AssetGatherers,
   CacheFileUtils;
 
 type
@@ -75,6 +75,14 @@ begin
     MemoMessage('Fetching UUIDs...');
     ExportUUIDs('castle-data:/uuids.csv');
     MemoMessage('Finished Exporting');
+    Terminate;
+    Exit;
+  end;
+
+  if HasOption('s', 'acryfall') then begin
+    MemoMessage('Fetching Scryfall data...');
+    GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');
+    GetScryfallIcons(SCRYFALL_SYMBOLOGY_URI, 'scryfall/symbols/icons', 'scryfall_symbology.json', 'svg_uri');
     Terminate;
     Exit;
   end;

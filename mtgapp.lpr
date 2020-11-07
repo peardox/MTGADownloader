@@ -71,6 +71,14 @@ begin
     Exit;
   end;
 
+  if HasOption('u', 'uuids') then begin
+    MemoMessage('Fetching UUIDs...');
+    ExportUUIDs('castle-data:/uuids.csv');
+    MemoMessage('Finished Exporting');
+    Terminate;
+    Exit;
+  end;
+
   { add your program here }
 
 //  MemoMessage('ApplicationConfig = ' + ApplicationConfig(''));

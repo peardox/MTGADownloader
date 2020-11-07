@@ -40,7 +40,7 @@ const
   MTGSON_PRICES_ALL_fURI = 'https://api.peardox.co.uk/prices/prices.json.gz';
   MTGSON_PRICES_PAPER_URI = 'https://api.peardox.co.uk/prices/prices.json.gz';
 
-  cardQuality = 'png'; // normal / large / png
+  cardQuality = 'large'; // normal / large / png
 
   UseCache: Boolean = False; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');

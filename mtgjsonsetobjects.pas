@@ -470,13 +470,20 @@ begin
               Rec.setIsOnlineOnly := Node.AsBoolean;
             end;
         end;
+      'mcmIdExtras':
+        begin
+          if not(Node.Kind = nkNumber) then
+            MemoMessage('TypeError for mcmIdExtras expected nkNumber got ' + Node.KindAsString)
+        // sbdev  else
+        // sbdev    FmcmIdExtras := Trunc(Node.AsNumber);
+        end;
       'isForeignOnly':
         begin
           if not(Node.Kind = nkBool) then
               MemoMessage('TypeError for isForeignOnly expected nkBool got ' + Node.KindAsString)
           else
             begin
-              Rec.setIsForeignOnly := Node.AsBoolean;
+               Rec.setIsForeignOnly := Node.AsBoolean;
             end;
         end;
       'parentCode':
@@ -1612,6 +1619,13 @@ begin
             MemoMessage('TypeError for isNonFoilOnly expected nkBool got ' + Node.KindAsString)
           else
             FisNonFoilOnly := Node.AsBoolean;
+        end;
+      'mcmIdExtras':
+        begin
+          if not(Node.Kind = nkNumber) then
+            MemoMessage('TypeError for mcmIdExtras expected nkNumber got ' + Node.KindAsString)
+      // sbdev    else
+      // sbdev      FmcmIdExtras := Trunc(Node.AsNumber);
         end;
       'isForeignOnly':
         begin

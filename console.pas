@@ -250,8 +250,8 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
-        if MTGSetList.List[idx] = 'ZNR' then
-//        if not(MTGSetList.List[idx] = 'MZNR') then
+//        if MTGSetList.List[idx] = 'ZNR' then
+        if not(MTGSetList.List[idx] = 'MZNR') then
           begin
 {
           setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;

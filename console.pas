@@ -76,6 +76,7 @@ begin
           ',"' + StringToJSONString(MTGSet.Number(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Side(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Rarity(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.FrameVersion(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.ImageID(idx)) + '"';
         OutFile.WriteLn(txt);
       end;
@@ -95,14 +96,17 @@ begin
   ticks := CastleGetTickCount64;
   OutFile := TTextWriter.Create(FileName);
   try
-    OutFile.WriteLn('"uuid","cardname","setcode","cardtype","cardlayout","cardnum","side","rarity","scryfall"');
+    OutFile.WriteLn('"uuid","cardname","setcode","cardtype","cardlayout","cardnum","side","rarity","frameversion","scryfall"');
     MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
     try
       if not (MTGSetList.List = nil) then
         begin
         for idx := 0 to MTGSetList.List.Count -1 do
           begin
-            ExportSetUUIDs(MTGSetList.List[idx], OutFile, UseCache);
+            if not(MTGSetList.List[idx] = 'MZNR') then
+              begin
+                ExportSetUUIDs(MTGSetList.List[idx], OutFile, UseCache);
+              end;
           end;
         end;
     finally

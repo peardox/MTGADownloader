@@ -231,6 +231,7 @@ type
       function Rarity(const idx: Integer): String;
       function CardType(const idx: Integer): String;
       function CardLayout(const idx: Integer): String;
+      function FrameVersion(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -1377,6 +1378,18 @@ begin
 
   if((idx >= 0) and (idx < FCards.Count)) then
     Ret := TSetCardRecord(FCards.Objects[idx]).Flayout;
+
+  Result := Ret;
+end;
+
+function TMTGSet.FrameVersion(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).FframeVersion;
 
   Result := Ret;
 end;

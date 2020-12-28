@@ -226,6 +226,7 @@ type
       function ExtractImageList: TStringList;
       function ImageID(const idx: Integer): String;
       function Name(const idx: Integer): String;
+      function ShortName(const idx: Integer): String;
       function Number(const idx: Integer): String;
       function Side(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
@@ -1309,6 +1310,18 @@ begin
   Result := Ret;
 end;
 
+function TMTGSet.ArenaID(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FmtgArenaId;
+
+  Result := Ret;
+end;
+
 function TMTGSet.Name(const idx: Integer): String;
 var
   Ret: String;
@@ -1317,6 +1330,26 @@ begin
 
   if((idx >= 0) and (idx < FCards.Count)) then
     Ret := TSetCardRecord(FCards.Objects[idx]).Fname;
+
+  Result := Ret;
+end;
+
+function TMTGSet.ShortName(const idx: Integer): String;
+var
+  Ret: String;
+  Pos: Integer;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    begin
+    Ret := TSetCardRecord(FCards.Objects[idx]).Fname;
+    pos := Ret.IndexOf(' //', 1);
+    if Pos > 2 then
+      begin
+        Ret := Ret.SubString(0, Pos - 1);
+      end;
+    end;
 
   Result := Ret;
 end;

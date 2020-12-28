@@ -230,6 +230,7 @@ type
       function Number(const idx: Integer): String;
       function Side(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
+      function ArenaID(const idx: Integer): String;
       function CardType(const idx: Integer): String;
       function CardLayout(const idx: Integer): String;
       function FrameVersion(const idx: Integer): String;

@@ -27,17 +27,22 @@
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="castle_base"/>
+        <PackageName Value="BGRABitmapPack"/>
       </Item1>
       <Item2>
-        <PackageName Value="BGRABitmapPack4NoGUI"/>
+        <PackageName Value="castle_base"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="1">
+    <Units Count="2">
       <Unit0>
         <Filename Value="mtgapp.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
+      <Unit1>
+        <Filename Value="cachefileutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CacheFileUtils"/>
+      </Unit1>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

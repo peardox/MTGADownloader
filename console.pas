@@ -196,7 +196,9 @@ var
   MTGSetList: TMTGSetList;
   ticks: Int64;
   idx: Integer;
+  fcnt: Integer;
 begin
+  fcnt := 0;
   ticks := CastleGetTickCount64;
 
   MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
@@ -205,9 +207,13 @@ begin
       begin
       for idx := 0 to MTGSetList.List.Count -1 do
         begin
+          newFiles := 0;
           ExportSetImages(MTGSetList.List[idx], UseCache);
+          if newFiles > 0 then
           MemoMessage('Set = ' + MTGSetList.List[idx] + '(' +
-            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')');
+            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')') +
+            ' New = ' + IntToStr(newFiles);
+          fcnt += newFiles;
         end;
       end;
   finally
@@ -216,6 +222,7 @@ begin
 
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
+  MemoMessage('New Images : ' + IntToStr(fcnt));
 end;
 
 procedure GetSets(const UseCache: Boolean = True);

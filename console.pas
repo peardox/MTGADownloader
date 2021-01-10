@@ -211,8 +211,8 @@ begin
           ExportSetImages(MTGSetList.List[idx], UseCache);
           if newFiles > 0 then
           MemoMessage('Set = ' + MTGSetList.List[idx] + '(' +
-            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')') +
-            ' New = ' + IntToStr(newFiles);
+            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
+            ' New = ' + IntToStr(newFiles));
           fcnt += newFiles;
         end;
       end;

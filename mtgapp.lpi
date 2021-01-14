@@ -33,7 +33,7 @@
         <PackageName Value="castle_base"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="mtgapp.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -43,6 +43,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="CacheFileUtils"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="mtgjsonsetobjects.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="mtgJsonSetObjects"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

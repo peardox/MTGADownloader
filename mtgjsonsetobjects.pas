@@ -1339,16 +1339,21 @@ function TMTGSet.ShortName(const idx: Integer): String;
 var
   Ret: String;
   Pos: Integer;
+  side: String;
 begin
   Ret := EmptyStr;
+  Side := Side(idx);
 
   if((idx >= 0) and (idx < FCards.Count)) then
     begin
     Ret := TSetCardRecord(FCards.Objects[idx]).Fname;
-    pos := Ret.IndexOf(' //', 1);
+    pos := Ret.IndexOf(' // ', 1);
     if Pos > 2 then
       begin
-        Ret := Ret.SubString(0, Pos - 1);
+        if (Side = 'a') then
+          Ret := Ret.SubString(0, Pos)
+        else
+          Ret := Ret.SubString(Pos + 5);
       end;
     end;
 

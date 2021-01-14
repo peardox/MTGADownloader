@@ -1347,17 +1347,17 @@ begin
   if((idx >= 0) and (idx < FCards.Count)) then
     begin
     Ret := TSetCardRecord(FCards.Objects[idx]).Fname;
-    pos := Ret.IndexOf(' // ', 1);
+    pos := Ret.IndexOf('//', 1);
     if Pos > 2 then
       begin
         if (ASide = 'a') then
           Ret := Ret.SubString(0, Pos)
         else
-          Ret := Ret.SubString(Pos + 5);
+          Ret := Ret.SubString(Pos + 2);
       end;
     end;
 
-  Result := Ret;
+  Result := Ret.Trim(' ');
 end;
 
 function TMTGSet.Number(const idx: Integer): String;

@@ -1339,10 +1339,10 @@ function TMTGSet.ShortName(const idx: Integer): String;
 var
   Ret: String;
   Pos: Integer;
-  side: String;
+  ASide: String;
 begin
   Ret := EmptyStr;
-  Side := Side(idx);
+  ASide := Side(idx);
 
   if((idx >= 0) and (idx < FCards.Count)) then
     begin
@@ -1350,7 +1350,7 @@ begin
     pos := Ret.IndexOf(' // ', 1);
     if Pos > 2 then
       begin
-        if (Side = 'a') then
+        if (ASide = 'a') then
           Ret := Ret.SubString(0, Pos)
         else
           Ret := Ret.SubString(Pos + 5);

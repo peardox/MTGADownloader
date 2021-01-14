@@ -207,13 +207,16 @@ begin
       begin
       for idx := 0 to MTGSetList.List.Count -1 do
         begin
-          newFiles := 0;
-          ExportSetImages(MTGSetList.List[idx], UseCache);
-          if newFiles > 0 then
-          MemoMessage('Set = ' + MTGSetList.List[idx] + '(' +
-            IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
-            ' New = ' + IntToStr(newFiles));
-          fcnt += newFiles;
+          if not(MTGSetList.List[idx] = 'MZNR') then
+            begin
+              newFiles := 0;
+              ExportSetImages(MTGSetList.List[idx], UseCache);
+              if newFiles > 0 then
+              MemoMessage('Set = ' + MTGSetList.List[idx] + '(' +
+                IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +
+                ' New = ' + IntToStr(newFiles));
+              fcnt += newFiles;
+            end;
         end;
       end;
   finally

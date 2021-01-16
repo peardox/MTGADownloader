@@ -180,7 +180,7 @@ begin
               if(imgFace = 'front') then
                 CacheImage(imgURI, imgFile, True, True)
               else
-                CacheImage(imgURI, imgFile, True, True, True);
+                CacheImage(imgURI, imgFile, True, True); // , True);
             except
               on E: EImageCacheException do
                 begin

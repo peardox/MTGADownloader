@@ -18,7 +18,7 @@ var newFiles: Integer;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
-function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean): TStream;
 function LoadCachedData(const FileName: String): TStream;
 function URIDirectoryExists(const Path: String): Boolean;
 function URIDirectoryCreate(const Url: String): Boolean;
@@ -296,11 +296,11 @@ begin
   Result := data;
 end;
 
-function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean): TStream;
 var
   data: TStream = nil;
 begin
-  if LoadFromCache then
+  if LoadFromCache and not(ForceRefresh) then
     begin
       if URIFileExists('castle-data:/' + FileName) then
         begin
@@ -322,6 +322,7 @@ begin
               MemoMessage('Saving to data' + PathDelim + FileName);
               {$endif}
               StreamSaveToFile(data, 'castle-data:/' + FileName);
+              Inc(newFiles);
             end
           else
             begin

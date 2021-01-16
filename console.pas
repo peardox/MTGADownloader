@@ -45,6 +45,11 @@ const
   UseCache: Boolean = False; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
   InitialTypes: array [0 .. 1] of String = ('core', 'expansion');
+  DFCTypes: array [0 .. 4] of String = ('modal_dfc',
+                'transform',
+                'double_sided',
+                'art_series',
+                'double_faced_token');
 
 { Declare hooks for other units }
 
@@ -133,6 +138,10 @@ var
   imgURI: String;
   imgPath: String;
   imgFile: String;
+  imgFace: String;
+  imgSide: String;
+  imgLayout: String;
+  elm: Integer;
 begin
   itott := 0;
   imerr := 0;
@@ -143,10 +152,24 @@ begin
       begin
         imgMTGJsonID := MTGSet.Cards[idx];
         imgScryID := MTGSet.ImageID(idx);
+        imgLayout := MTGSet.CardLayout(idx);
+        imgSide := MTGSet.Side(idx);
+        imgFace := 'front';
+        if not(imgSide = 'a') then
+          begin
+            for elm :=Low(DFCTypes) to High(DFCTypes) do
+              begin
+                if imgLayout = DFCTypes[elm] then
+                  begin
+                    imgFace := 'back';
+                    break;
+                  end;
+              end;
+          end;
         itime := CastleGetTickCount64;
         if not (imgScryID = EmptyStr) then
           begin
-            imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality;
+            imgURI := 'https://api.scryfall.com/cards/' + imgScryID + '?format=image&version=' + cardQuality  + '&face=' + imgFace;
             imgPath := 'scryfall/sets/images/set_' + SetCode + '/' + cardQuality;
             if(cardQuality = 'png') then
               imgFile := imgPath + '/'+ imgMTGJsonID + '.png'
@@ -154,7 +177,10 @@ begin
               imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
             CreateCastleDataDirectoryIfMissing(imgPath);
             try
-              CacheImage(imgURI, imgFile, True, True);
+              if(imgFace := 'front') then
+                CacheImage(imgURI, imgFile, True, True)
+              else
+                CacheImage(imgURI, imgFile, True, True, True);
             except
               on E: EImageCacheException do
                 begin

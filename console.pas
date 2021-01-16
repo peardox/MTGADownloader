@@ -177,7 +177,7 @@ begin
               imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
             CreateCastleDataDirectoryIfMissing(imgPath);
             try
-              if(imgFace := 'front') then
+              if(imgFace = 'front') then
                 CacheImage(imgURI, imgFile, True, True)
               else
                 CacheImage(imgURI, imgFile, True, True, True);

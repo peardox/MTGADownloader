@@ -153,6 +153,10 @@ begin
         imgMTGJsonID := MTGSet.Cards[idx];
         imgScryID := MTGSet.ImageID(idx);
         imgLayout := MTGSet.CardLayout(idx);
+        if setCode = 'AZNR' then
+          begin
+            imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
+          end;
         imgSide := MTGSet.Side(idx);
         imgFace := 'front';
         if not(imgSide = 'a') then

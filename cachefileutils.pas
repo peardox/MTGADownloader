@@ -18,7 +18,7 @@ var newFiles: Integer;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
-function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean): TStream;
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean = True): TStream;
 function LoadCachedData(const FileName: String): TStream;
 function URIDirectoryExists(const Path: String): Boolean;
 function URIDirectoryCreate(const Url: String): Boolean;
@@ -296,7 +296,7 @@ begin
   Result := data;
 end;
 
-function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean): TStream;
+function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean = True): TStream;
 var
   data: TStream = nil;
 begin

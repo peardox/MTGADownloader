@@ -67,18 +67,25 @@ var
   MTGSet: TMTGSet;
   idx: Integer;
   txt: String;
+  imgLayout: String;
 begin
   data := GetMTGJsonSetJson(setCode, 'mtgjson/sets/json', UseCache);
   MTGSet := TMTGSet.Create(data, 'uuid');
   try
     for idx := 0 to MTGSet.Cards.Count - 1 do
       begin
+        imgLayout := MTGSet.CardLayout(idx);
+        if setCode = 'AZNR' then
+          begin
+            imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
+          end;
+
         txt := '"' + StringToJSONString(MTGSet.Cards[idx]) + '"' +
           ',"' + StringToJSONString(MTGSet.Name(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.ShortName(idx)) + '"' +
           ',"' + StringToJSONString(SetCode) + '"' +
           ',"' + StringToJSONString(MTGSet.CardType(idx)) + '"' +
-          ',"' + StringToJSONString(MTGSet.CardLayout(idx)) + '"' +
+          ',"' + StringToJSONString(imgLayout) + '"' +
           ',"' + StringToJSONString(MTGSet.Number(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Side(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Rarity(idx)) + '"' +

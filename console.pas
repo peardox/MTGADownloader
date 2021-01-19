@@ -75,9 +75,15 @@ begin
     for idx := 0 to MTGSet.Cards.Count - 1 do
       begin
         imgLayout := MTGSet.CardLayout(idx);
+{
         if setCode = 'AZNR' then
           begin
             imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
+          end;
+}
+        if (setCode = 'MZNR') and (MTGSet.ShortName(idx) <> 'Base Race') then
+          begin
+            imgLayout := 'double_faced_token'; // MTGJson Hack - layout marked as incorrectly as token
           end;
 
         txt := '"' + StringToJSONString(MTGSet.Cards[idx]) + '"' +
@@ -116,7 +122,7 @@ begin
         begin
         for idx := 0 to MTGSetList.List.Count -1 do
           begin
-            if not(MTGSetList.List[idx] = 'MZNR') then
+            if not(MTGSetList.List[idx] = 'MZNRdummy') then
               begin
                 ExportSetUUIDs(MTGSetList.List[idx], OutFile, UseCache);
               end;
@@ -160,9 +166,15 @@ begin
         imgMTGJsonID := MTGSet.Cards[idx];
         imgScryID := MTGSet.ImageID(idx);
         imgLayout := MTGSet.CardLayout(idx);
+{
         if setCode = 'AZNR' then
           begin
             imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
+          end;
+}
+        if (setCode = 'MZNR') and (MTGSet.ShortName(idx) <> 'Base Race') then
+          begin
+            imgLayout := 'double_faced_token'; // MTGJson Hack - layout marked as incorrectly as token
           end;
         imgSide := MTGSet.Side(idx);
         imgFace := 'front';
@@ -244,7 +256,7 @@ begin
       begin
       for idx := 0 to MTGSetList.List.Count -1 do
         begin
-          if not(MTGSetList.List[idx] = 'MZNR') then
+          if not(MTGSetList.List[idx] = 'MZNRdummy') then
             begin
               newFiles := 0;
               ExportSetImages(MTGSetList.List[idx], UseCache);
@@ -303,7 +315,7 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
 //        if MTGSetList.List[idx] = 'ZNR' then
-        if not(MTGSetList.List[idx] = 'MZNR') then
+        if not(MTGSetList.List[idx] = 'MZNRdummy') then
           begin
 {
           setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;

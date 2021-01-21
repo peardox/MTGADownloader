@@ -8,7 +8,10 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, SysUtils, Interfaces,
+  Classes, SysUtils,
+  {$IFDEF WINDOWS}
+  Interfaces,
+  {$ENDIF}
   CastleParameters, CastleClassUtils, CastleDownload,
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils,
   CastleLog, fpjson,

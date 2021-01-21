@@ -79,6 +79,16 @@ begin
     Exit;
   end;
 
+  if HasOption('t', 'test') then begin
+    MemoMessage('LongInt = ' + IntToStr(SizeOf(LongInt)));
+    MemoMessage('Testing download...');
+//    MemoMessage('Time : ' + DownloadHeadersNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front'));
+    DirectDownloadNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front');
+    MemoMessage('Finished test');
+    Terminate;
+    Exit;
+  end;
+
   if HasOption('s', 'acryfall') then begin
     MemoMessage('Fetching Scryfall data...');
     GetScryfallIcons(SCRYFALL_SETS_URI, 'scryfall/sets/icons', 'scryfall_sets.json', 'icon_svg_uri');

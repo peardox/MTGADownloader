@@ -17,6 +17,8 @@ type EImageCacheException = Class(Exception);
 var newFiles: Integer;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
+function DirectDownloadNetworkFile(const URI: String): TStream;
+function DownloadHeadersNetworkFile(const URI: String): String;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean = False): TStream;
 function LoadCachedData(const FileName: String): TStream;
@@ -226,6 +228,158 @@ begin
   finally
 //    Abort := False;
     if(Result = nil) then
+      fDownload.Contents.Free;
+    fDownload.OwnsContents := False;
+    FreeAndNil(fDownload);
+  end;
+end;
+
+function DirectDownloadNetworkFile(const URI: String): TStream;
+var
+  fDownload: TCastleDownload;
+  LastModified: String;
+  idx: Integer;
+begin
+//  EnableAbortButton(True);
+  Result := nil;
+
+  fDownload := TCastleDownload.Create(nil);
+  fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
+  fDownload.Url := URI;
+  fDownload.OwnsContents := True;
+
+  fDownload.Start;
+  try
+    try
+      while fDownload.Status = dsDownloading do
+      begin
+        ReportProgress(fDownload);
+{$ifndef cgeapp}
+        TriggerProcessMessages;
+{$endif}
+        ApplicationProperties._Update;
+{$ifndef cgeapp}
+        if Abort then
+          begin
+//            EnableAbortButton(False);
+            break;
+          end;
+{$endif}
+        sleep(100);
+      end;
+
+      if fDownload.Status = dsSuccess then
+        begin
+        Result := fDownload.Contents;
+        MemoMessage('Size : ' + IntToStr(fDownload.Contents.Size));
+        MemoMessage('URL : ' + fDownload.URL);
+        for idx := 0 to fDownload.HttpResponseHeaders.Count - 1 do
+          MemoMessage(fDownload.HttpResponseHeaders.Strings[idx]);
+        {$if defined(debugMessages)}
+          MemoMessage('Downloaded : ' + URI);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+          MemoMessage('LastModified : ' + LastModified);
+        {$endif}
+
+        if(fDownload.HttpResponseCode <> 200)  then
+          begin
+          MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+          end;
+        end
+      else
+        begin
+          MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('ErrorMessage : ' + fDownload.ErrorMessage);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+        end;
+
+      except
+        on E : Exception do
+          begin
+            {$if defined(debugMessages)}
+            MemoMessage('Oops' + LineEnding +
+                        'Trying to download : ' + URI + LineEnding +
+                        'HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode) + LineEnding +
+                         E.ClassName + LineEnding +
+                         E.Message);
+            {$endif}
+            MemoMessage('Oops' + LineEnding +
+                        'Trying to download : ' + URI + LineEnding +
+                        'HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode) + LineEnding +
+                         E.ClassName + LineEnding +
+                         E.Message);
+           end;
+      end;
+  finally
+    if(Result = nil) then
+      fDownload.Contents.Free;
+    fDownload.OwnsContents := False;
+    FreeAndNil(fDownload);
+  end;
+end;
+
+function DownloadHeadersNetworkFile(const URI: String): String;
+var
+  fDownload: TCastleDownload;
+  LastModified: String;
+  idx: Integer;
+begin
+//  EnableAbortButton(True);
+  Result := EmptyStr;
+
+  fDownload := TCastleDownload.Create(nil);
+  fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
+  fDownload.Url := URI;
+  fDownload.OwnsContents := True;
+  fDownload.HttpMethod := hmHead;
+
+  fDownload.Start;
+  try
+    try
+      while fDownload.Status = dsDownloading do
+      begin
+        ReportProgress(fDownload);
+{$ifndef cgeapp}
+        TriggerProcessMessages;
+{$endif}
+        ApplicationProperties._Update;
+        sleep(100);
+      end;
+
+      if fDownload.Status = dsSuccess then
+        begin
+        Result := fDownload.HttpResponseHeaders.Values['X-Bz-Upload-Timestamp'];
+        MemoMessage('Size : ' + IntToStr(fDownload.Contents.Size));
+        MemoMessage('URL : ' + fDownload.URL);
+        for idx := 0 to fDownload.HttpResponseHeaders.Count - 1 do
+          MemoMessage(fDownload.HttpResponseHeaders.Strings[idx]);
+
+        if(fDownload.HttpResponseCode <> 200)  then
+          begin
+          MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+          end;
+        end
+      else
+        begin
+          MemoMessage('Error Downloading : ' + URI);
+          MemoMessage('ErrorMessage : ' + fDownload.ErrorMessage);
+          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+        end;
+
+      except
+        on E : Exception do
+          begin
+            MemoMessage('Oops' + LineEnding +
+                        'Trying to download : ' + URI + LineEnding +
+                        'HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode) + LineEnding +
+                         E.ClassName + LineEnding +
+                         E.Message);
+           end;
+      end;
+  finally
+    if(fDownload.Contents = nil) then
       fDownload.Contents.Free;
     fDownload.OwnsContents := False;
     FreeAndNil(fDownload);

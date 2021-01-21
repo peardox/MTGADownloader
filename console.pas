@@ -8,7 +8,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, SysUtils,
+  Classes, SysUtils, Interfaces,
   CastleParameters, CastleClassUtils, CastleDownload,
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils,
   CastleLog, fpjson,
@@ -75,12 +75,6 @@ begin
     for idx := 0 to MTGSet.Cards.Count - 1 do
       begin
         imgLayout := MTGSet.CardLayout(idx);
-{
-        if setCode = 'AZNR' then
-          begin
-            imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
-          end;
-}
         if (setCode = 'MZNR') and (MTGSet.ShortName(idx) <> 'Base Race') then
           begin
             imgLayout := 'double_faced_token'; // MTGJson Hack - layout marked as incorrectly as token
@@ -155,6 +149,7 @@ var
   imgSide: String;
   imgLayout: String;
   elm: Integer;
+  isPartialPreview: Boolean;
 begin
   itott := 0;
   imerr := 0;
@@ -166,12 +161,7 @@ begin
         imgMTGJsonID := MTGSet.Cards[idx];
         imgScryID := MTGSet.ImageID(idx);
         imgLayout := MTGSet.CardLayout(idx);
-{
-        if setCode = 'AZNR' then
-          begin
-            imgLayout := 'art_series'; // MTGJson Hack - layout marked as incorrectly as token
-          end;
-}
+        isPartialPreview := MTGSet.setIsPartialPreview;
         if (setCode = 'MZNR') and (MTGSet.ShortName(idx) <> 'Base Race') then
           begin
             imgLayout := 'double_faced_token'; // MTGJson Hack - layout marked as incorrectly as token
@@ -200,10 +190,13 @@ begin
               imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
             CreateCastleDataDirectoryIfMissing(imgPath);
             try
-              if(imgFace = 'front') then
-                CacheImage(imgURI, imgFile, True, True)
+              if isPartialPreview then
+                CacheImage(imgURI, imgFile, True, True, True)
               else
-                CacheImage(imgURI, imgFile, True, True); // , True);
+                if imgFace = 'back' then
+                  CacheImage(imgURI, imgFile, True, True, True)
+                else
+                  CacheImage(imgURI, imgFile, True, True);
             except
               on E: EImageCacheException do
                 begin
@@ -281,32 +274,15 @@ procedure GetSets(const UseCache: Boolean = True);
 var
   data: TStream = nil;
   ticks: Int64;
-//  SList: TStringList;
-//  MTGPriceList: TMTGPriceList;
   MTGSet: TMTGSet;
   MTGSetList: TMTGSetList;
-//  MTGDeckList: TMTGDeckList;
   idx: Integer;
-//  img: Integer;
   cnt: Integer;
   cards: Integer;
-//  setDate: String;
-//  setFullName: String;
-//  setType: String;
-//  setSize: String;
-//  imgMTGJsonID: String;
-//  imgScryID:  String;
-//  imgURI: String;
-//  imgPath: String;
-//  imgFile: String;
-//  itime: Int64;
-//  itott: Int64;
-//  imerr: Integer;
-//  txt: String;
+  isPartialPreview: Boolean;
 begin
   cnt := 0;
   cards := 0;
-//  imerr := 0;
   ticks := CastleGetTickCount64;
 
 MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
@@ -314,16 +290,13 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
       begin
-//        if MTGSetList.List[idx] = 'ZNR' then
         if not(MTGSetList.List[idx] = 'MZNRdummy') then
           begin
-{
-          setDate := TSetListRecord(MTGSetList.List.Objects[idx]).setReleaseDate;
-          setFullName := TSetListRecord(MTGSetList.List.Objects[idx]).setName;
-          setType := TSetListRecord(MTGSetList.List.Objects[idx]).setType;
-          setSize := IntToStr(TSetListRecord(MTGSetList.List.Objects[idx]).setTotalSetSize);
-}
-          MemoMessage('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')');
+          isPartialPreview := TSetListRecord(MTGSetList.List.Objects[idx]).setIsPartialPreview;
+          if isPartialPreview then
+            MemoMessage('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ') [Preview]')
+          else
+            MemoMessage('Set = ' + MTGSetList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')');
           data := GetMTGJsonSetJson(MTGSetList.List[idx], 'mtgjson/sets/json', UseCache);
           MTGSet := TMTGSet.Create(data, 'uuid');
           cards += MTGSet.Cards.Count; // MTGSet.setTotalSetSize;

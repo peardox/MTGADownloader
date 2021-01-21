@@ -196,10 +196,7 @@ begin
               if isPartialPreview then
                 CacheImage(imgURI, imgFile, True, True, True)
               else
-                if imgFace = 'back' then
-                  CacheImage(imgURI, imgFile, True, True, True)
-                else
-                  CacheImage(imgURI, imgFile, True, True);
+                CacheImage(imgURI, imgFile, True, True);
             except
               on E: EImageCacheException do
                 begin

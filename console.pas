@@ -58,8 +58,8 @@ const
 
 procedure ExportUUIDs(const FileName: String; const UseCache: Boolean = True);
 procedure ExportSetUUIDs(const setCode: String; const OutFile: TTextWriter; const UseCache: Boolean = True);
-procedure ExportImages(const UseCache: Boolean = True);
-procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
+procedure ExportImages(const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
+procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
 procedure GetSets(const UseCache: Boolean = True);
 
 implementation
@@ -135,7 +135,7 @@ begin
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
 end;
 
-procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True);
+procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
 var
   data: TStream;
   MTGSet: TMTGSet;
@@ -193,7 +193,7 @@ begin
               imgFile := imgPath + '/'+ imgMTGJsonID + '.jpg';
             CreateCastleDataDirectoryIfMissing(imgPath);
             try
-              if isPartialPreview then
+              if isPartialPreview and reloadSpoilers then
                 CacheImage(imgURI, imgFile, True, True, True)
               else
                 CacheImage(imgURI, imgFile, True, True);
@@ -233,7 +233,7 @@ begin
   end;
 end;
 
-procedure ExportImages(const UseCache: Boolean = True);
+procedure ExportImages(const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
 var
   MTGSetList: TMTGSetList;
   ticks: Int64;
@@ -252,7 +252,7 @@ begin
           if not(MTGSetList.List[idx] = 'MZNRdummy') then
             begin
               newFiles := 0;
-              ExportSetImages(MTGSetList.List[idx], UseCache);
+              ExportSetImages(MTGSetList.List[idx], UseCache, reloadSpoilers);
               if newFiles > 0 then
               MemoMessage('Set = ' + MTGSetList.List[idx] + '(' +
                 IntToStr(idx + 1) + '/' + IntToStr(MTGSetList.List.Count) + ')' +

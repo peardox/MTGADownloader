@@ -66,7 +66,7 @@ begin
 
   if HasOption('i', 'images') then begin
     MemoMessage('Fetching images...');
-    ExportImages(True);
+    ExportImages(True, False);
     Terminate;
     Exit;
   end;
@@ -82,8 +82,10 @@ begin
   if HasOption('t', 'test') then begin
     MemoMessage('LongInt = ' + IntToStr(SizeOf(LongInt)));
     MemoMessage('Testing download...');
+//    MemoMessage('Time : ' + DownloadHeadersNetworkFile('https://decknet.co.uk/data/scryfall/sets/images/set_KHM/large/e079879b-0a43-52fe-b93d-1af4bb8808f4.jpg'));
+    DirectDownloadNetworkFile('https://decknet.co.uk/data/scryfall/sets/images/set_KHM/large/e079879b-0a43-52fe-b93d-1af4bb8808f4.jpg');
 //    MemoMessage('Time : ' + DownloadHeadersNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front'));
-    DirectDownloadNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front');
+//    DirectDownloadNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front');
     MemoMessage('Finished test');
     Terminate;
     Exit;

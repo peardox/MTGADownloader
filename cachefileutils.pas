@@ -273,6 +273,7 @@ begin
         Result := fDownload.Contents;
         MemoMessage('Size : ' + IntToStr(fDownload.Contents.Size));
         MemoMessage('URL : ' + fDownload.URL);
+        MemoMessage('Final URL : ' + fDownload.FinalUrl);
         for idx := 0 to fDownload.HttpResponseHeaders.Count - 1 do
           MemoMessage(fDownload.HttpResponseHeaders.Strings[idx]);
         {$if defined(debugMessages)}
@@ -352,6 +353,7 @@ begin
         Result := fDownload.HttpResponseHeaders.Values['X-Bz-Upload-Timestamp'];
         MemoMessage('Size : ' + IntToStr(fDownload.Contents.Size));
         MemoMessage('URL : ' + fDownload.URL);
+        MemoMessage('Final URL : ' + fDownload.FinalUrl);
         for idx := 0 to fDownload.HttpResponseHeaders.Count - 1 do
           MemoMessage(fDownload.HttpResponseHeaders.Strings[idx]);
 

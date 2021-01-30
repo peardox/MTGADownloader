@@ -48,11 +48,9 @@ const
   UseCache: Boolean = False; // Only set to True while developing
   InitialSets: array [0 .. 4] of String = ('ELD', 'IKO', 'THB', 'M21', 'ZNR');
   InitialTypes: array [0 .. 1] of String = ('core', 'expansion');
-  DFCTypes: array [0 .. 4] of String = ('modal_dfc',
-                'transform',
-                'double_sided',
-                'art_series',
-                'double_faced_token');
+  DFCTypes: array [0 .. 4] of String = ('modal_dfc', 'transform', 'double_sided',
+       'art_series', 'double_faced_token');
+
 
 { Declare hooks for other units }
 
@@ -92,8 +90,15 @@ begin
           ',"' + StringToJSONString(MTGSet.Number(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Side(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Rarity(idx)) + '"' +
-          ',"' + StringToJSONString(MTGSet.ArenaID(idx)) + '"' +
-          ',"' + StringToJSONString(MTGSet.ImageID(idx)) + '"';
+          ',' + IntToStr(MTGSet.ArenaID(idx)) +
+          ',"' + StringToJSONString(MTGSet.ImageID(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.FrameEffects(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.PromoTypes(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.Colors(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.ColorIdentity(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.ColorIndicator(idx)) + '"' +
+          ',' + BoolToStr(MTGSet.hasFoil(idx), True) +
+          ',' + BoolToStr(MTGSet.hasNonFoil(idx), True);
         OutFile.WriteLn(txt);
       end;
   finally
@@ -112,7 +117,7 @@ begin
   ticks := CastleGetTickCount64;
   OutFile := TTextWriter.Create(FileName);
   try
-    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall"');
+    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall","FrameEffects","PromoTypes","Colors","ColorIdentity","ColorIndicator","hasFoil","hasNonFoil"');
     MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
     try
       if not (MTGSetList.List = nil) then

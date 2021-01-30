@@ -5,9 +5,29 @@ unit mtgJsonSetObjects;
 interface
 
 uses
-  Classes, SysUtils, JsonTools, MTGJsonObjects;
+  Classes, SysUtils, JsonTools, MTGJsonObjects, Typinfo;
 
 type
+  TPromoTypes = (arenaleague, boosterfun, boxtopper, brawldeck, bundle, buyabox,
+       convention, datestamped, draftweekend, duels, event, fnm, gameday,
+       gateway, giftbox, godzillaseries, instore, intropack, jpwalker,
+       judgegift, league, mediainsert, openhouse, planeswalkerstamped,
+       playerrewards, premiereshop, prerelease, promopack, promostamped,
+       release, setpromo, themepack, tourney, wizardsplaynetwork);
+  TPromoTypeSet = Set of TPromoTypes;
+
+  TFrameEffects = (colorshifted, companion, compasslanddfc, devoid, draft,
+       extendedart, fullart, inverted, legendary, miracle, mooneldrazidfc,
+       nyxborn, nyxtouched, originpwdfc, showcase, sunmoondfc, tombstone,
+       waxingandwaningmoondfc);
+  TFrameEffectsSet = Set of TFrameEffects;
+
+  TDFCTypes = (modal_dfc, transform, double_sided, art_series, double_faced_token);
+  TDFCTypesSet = Set of TDFCTypes;
+
+  TMTGColor = (W, U, B, R, G);
+  TMTGColorSet = Set of TMTGColor;
+
   TSetListRecord = class(TPersistent)
   private
     FbaseSetSize: Integer;
@@ -101,6 +121,11 @@ type
     FconvertedManaCost: Integer;
     FflavorText: String;
     FframeVersion: String;
+    FframeEffects: TFrameEffectsSet;
+    FColorIndicator: TMTGColorSet;
+    FColorIdentity: TMTGColorSet;
+    FColors: TMTGColorSet;
+    FPromoTypes: TPromoTypeSet;
     FhasFoil: Boolean;
     FhasNonFoil: Boolean;
     FisStarter: Boolean;
@@ -225,15 +250,22 @@ type
     public
       function ExtractImageList: TStringList;
       function ImageID(const idx: Integer): String;
+      function hasFoil(const idx: Integer): Boolean;
+      function hasNonFoil(const idx: Integer): Boolean;
       function Name(const idx: Integer): String;
       function ShortName(const idx: Integer): String;
       function Number(const idx: Integer): String;
       function Side(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
-      function ArenaID(const idx: Integer): String;
+      function ArenaID(const idx: Integer): Integer;
       function CardType(const idx: Integer): String;
       function CardLayout(const idx: Integer): String;
       function FrameVersion(const idx: Integer): String;
+      function FrameEffects(const idx: Integer): String;
+      function PromoTypes(const idx: Integer): String;
+      function Colors(const idx: Integer): String;
+      function ColorIdentity(const idx: Integer): String;
+      function ColorIndicator(const idx: Integer): String;
       destructor Destroy; override;
       procedure DumpList; override;
     published
@@ -607,10 +639,16 @@ var
   propdec: String;
   membdec: String;
   Key: String;
+  Enumeration: TJsonNode;
+  felist: TFrameEffectsSet;
+  fe: TFrameEffects;
+  ptlist: TPromoTypeSet;
+  pt: TPromoTypes;
+  ce: TMTGColor;
+  celist: TMTGColorSet;
 begin
   Key := '';
   Rec := TSetCardRecord.Create;
-
   Ext := '';
   propdec := '';
   membdec := '';
@@ -963,7 +1001,23 @@ begin
           if not(Node.Kind = nkArray) then
             MemoMessage('TypeError for colorIndicator expected nkArray got ' + Node.KindAsString)
           else
-            // Rec.FcolorIndicator := MapJsonArray(Node); // *** FIXME ***
+            begin
+              celist := [];
+              for Enumeration in Node do
+                begin
+                  if not(Enumeration.Kind = nkString) then
+                    MemoMessage('TypeError for ColorIndicator value expected nkString got ' + Enumeration.KindAsString)
+                  else
+                    begin
+                      ce := TMTGColor(GetEnumValue(TypeInfo(TMTGColor), Enumeration.AsString));
+                      if not(ord(ce) = -1) then
+                        begin
+                          Include(celist, ce);
+                        end;
+                    end;
+                end;
+              Rec.FColorIndicator := celist;
+            end;
         end;
       'otherFaceIds':
         begin
@@ -984,14 +1038,46 @@ begin
           if not(Node.Kind = nkArray) then
             MemoMessage('TypeError for colorIdentity expected nkArray got ' + Node.KindAsString)
           else
-            // Rec.FcolorIdentity := MapJsonObject(Node); // *** FIXME ***
+            begin
+              celist := [];
+              for Enumeration in Node do
+                begin
+                  if not(Enumeration.Kind = nkString) then
+                    MemoMessage('TypeError for ColorIdentity value expected nkString got ' + Enumeration.KindAsString)
+                  else
+                    begin
+                      ce := TMTGColor(GetEnumValue(TypeInfo(TMTGColor), Enumeration.AsString));
+                      if not(ord(ce) = -1) then
+                        begin
+                          Include(celist, ce);
+                        end;
+                    end;
+                end;
+              Rec.FColorIdentity := celist;
+            end;
         end;
       'colors':
         begin
           if not(Node.Kind = nkArray) then
             MemoMessage('TypeError for colors expected nkArray got ' + Node.KindAsString)
           else
-            // Rec.Fcolors := MapJsonObject(Node); // *** FIXME ***
+            begin
+              celist := [];
+              for Enumeration in Node do
+                begin
+                  if not(Enumeration.Kind = nkString) then
+                    MemoMessage('TypeError for colors value expected nkString got ' + Enumeration.KindAsString)
+                  else
+                    begin
+                      ce := TMTGColor(GetEnumValue(TypeInfo(TMTGColor), Enumeration.AsString));
+                      if not(ord(ce) = -1) then
+                        begin
+                          Include(celist, ce);
+                        end;
+                    end;
+                end;
+              Rec.FColors := celist;
+            end;
         end;
       'foreignData':
         begin
@@ -1061,14 +1147,46 @@ begin
           if not(Node.Kind = nkArray) then
             MemoMessage('TypeError for frameEffects expected nkArray got ' + Node.KindAsString)
           else
-            // Rec.FframeEffects := MapJsonArray(Node); // *** FIXME ***
+            begin
+              felist := [];
+              for Enumeration in Node do
+                begin
+                  if not(Enumeration.Kind = nkString) then
+                    MemoMessage('TypeError for frameEffects value expected nkString got ' + Enumeration.KindAsString)
+                  else
+                    begin
+                      fe := TFrameEffects(GetEnumValue(TypeInfo(TFrameEffects), Enumeration.AsString));
+                      if not(ord(fe) = -1) then
+                        begin
+                          Include(felist, fe);
+                        end;
+                    end;
+                end;
+              Rec.FframeEffects := felist;
+            end;
         end;
       'promoTypes':
         begin
           if not(Node.Kind = nkArray) then
             MemoMessage('TypeError for promoTypes expected nkArray got ' + Node.KindAsString)
           else
-            // Rec.FpromoTypes := MapJsonArray(Node); // *** FIXME ***
+            begin
+              ptlist:= [];
+              for Enumeration in Node do
+                begin
+                  if not(Enumeration.Kind = nkString) then
+                    MemoMessage('TypeError for promoTypes value expected nkString got ' + Enumeration.KindAsString)
+                  else
+                    begin
+                      pt := TPromoTypes(GetEnumValue(TypeInfo(TPromoTypes), Enumeration.AsString));
+                      if not(ord(pt) = -1) then
+                        begin
+                          Include(ptlist, pt);
+                        end;
+                    end;
+                end;
+              Rec.FPromoTypes := ptlist;
+            end;
         end;
       'variations':
         begin
@@ -1311,14 +1429,158 @@ begin
   Result := Ret;
 end;
 
-function TMTGSet.ArenaID(const idx: Integer): String;
+function TMTGSet.FrameEffects(const idx: Integer): String;
 var
+  felist: TFrameEffectsSet;
+  fe: TFrameEffects;
   Ret: String;
+  s: String;
 begin
   Ret := EmptyStr;
 
   if((idx >= 0) and (idx < FCards.Count)) then
-    Ret := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FmtgArenaId;
+    felist := TSetCardRecord(FCards.Objects[idx]).FframeEffects;
+
+  for fe in felist do
+    begin
+      if Length(Ret) > 0 then
+        Ret += ',';
+      s := GetEnumName(TypeInfo(TFrameEffects), ord(fe));
+//      memomessage('fe out : ' + s);
+      Ret += s;
+    end;
+
+  Result := Ret;
+end;
+
+function TMTGSet.Colors(const idx: Integer): String;
+var
+  celist: TMTGColorSet;
+  ce: TMTGColor;
+  Ret: String;
+  s: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    celist := TSetCardRecord(FCards.Objects[idx]).FColors;
+
+  for ce in celist do
+    begin
+      if Length(Ret) > 0 then
+        Ret += ',';
+    s := GetEnumName(TypeInfo(TMTGColor), ord(ce));
+//  memomessage('Color out : ' + s);
+    Ret += s;
+    end;
+
+  Result := Ret;
+end;
+
+function TMTGSet.ColorIdentity(const idx: Integer): String;
+var
+  celist: TMTGColorSet;
+  ce: TMTGColor;
+  Ret: String;
+  s: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    celist := TSetCardRecord(FCards.Objects[idx]).FColorIdentity;
+
+  for ce in celist do
+    begin
+      if Length(Ret) > 0 then
+        Ret += ',';
+    s := GetEnumName(TypeInfo(TMTGColor), ord(ce));
+//  memomessage('ColorIdentity out : ' + s);
+    Ret += s;
+    end;
+
+  Result := Ret;
+end;
+
+function TMTGSet.ColorIndicator(const idx: Integer): String;
+var
+  celist: TMTGColorSet;
+  ce: TMTGColor;
+  Ret: String;
+  s: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    celist := TSetCardRecord(FCards.Objects[idx]).FColorIndicator;
+
+  for ce in celist do
+    begin
+      if Length(Ret) > 0 then
+        Ret += ',';
+    s := GetEnumName(TypeInfo(TMTGColor), ord(ce));
+//  memomessage('ColorIndicator out : ' + s);
+    Ret += s;
+    end;
+
+  Result := Ret;
+end;
+
+function TMTGSet.PromoTypes(const idx: Integer): String;
+var
+  ptlist: TPromoTypeSet;
+  pt: TPromoTypes;
+  Ret: String;
+  s: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    ptlist := TSetCardRecord(FCards.Objects[idx]).FPromoTypes;
+
+  for pt in ptlist do
+    begin
+      if Length(Ret) > 0 then
+        Ret += ',';
+    s := GetEnumName(TypeInfo(TPromoTypes), ord(pt));
+//  memomessage('pt out : ' + s);
+    Ret += s;
+    end;
+
+  Result := Ret;
+end;
+
+function TMTGSet.hasFoil(const idx: Integer): Boolean;
+var
+  Ret: Boolean;
+begin
+  Ret := False;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).FhasFoil;
+
+  Result := Ret;
+end;
+
+function TMTGSet.hasNonFoil(const idx: Integer): Boolean;
+var
+  Ret: Boolean;
+begin
+  Ret := False;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).FhasNonFoil;
+
+  Result := Ret;
+end;
+
+function TMTGSet.ArenaID(const idx: Integer): Integer;
+var
+  Ret: Integer;
+begin
+  Ret := 0;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := StrToIntDef(TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FmtgArenaId, 0);
 
   Result := Ret;
 end;

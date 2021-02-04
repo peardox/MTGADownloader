@@ -98,7 +98,10 @@ begin
           ',"' + StringToJSONString(MTGSet.ColorIdentity(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.ColorIndicator(idx)) + '"' +
           ',' + BoolToStr(MTGSet.hasFoil(idx), True) +
-          ',' + BoolToStr(MTGSet.hasNonFoil(idx), True);
+          ',' + BoolToStr(MTGSet.hasNonFoil(idx), True) +
+          ',' + MTGSet.tcgID(idx) +
+          ',' + MTGSet.MultiverseID(idx);
+
         OutFile.WriteLn(txt);
       end;
   finally
@@ -117,7 +120,7 @@ begin
   ticks := CastleGetTickCount64;
   OutFile := TTextWriter.Create(FileName);
   try
-    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall","FrameEffects","PromoTypes","Colors","ColorIdentity","ColorIndicator","hasFoil","hasNonFoil"');
+    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall","FrameEffects","PromoTypes","Colors","ColorIdentity","ColorIndicator","hasFoil","hasNonFoil","tcgID","MultiverseID"');
     MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
     try
       if not (MTGSetList.List = nil) then

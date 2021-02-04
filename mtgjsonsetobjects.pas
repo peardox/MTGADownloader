@@ -118,7 +118,7 @@ type
   private
     Fartist: String;
     FborderColor: String;
-    FconvertedManaCost: Integer;
+    FconvertedManaCost: Single;
     FflavorText: String;
     FframeVersion: String;
     FframeEffects: TFrameEffectsSet;
@@ -147,7 +147,7 @@ type
     FisReprint: Boolean;
     Floyalty: String;
     FisPromo: Boolean;
-    FfaceConvertedManaCost: Integer;
+    FfaceConvertedManaCost: Single;
     FfaceName: String;
     Fside: String;
     FisStorySpotlight: Boolean;
@@ -172,7 +172,7 @@ type
   published
     property setArtist: String read Fartist write Fartist;
     property setBorderColor: String read FborderColor write FborderColor;
-    property setConvertedManaCost: Integer read FconvertedManaCost write FconvertedManaCost;
+    property setConvertedManaCost: Single read FconvertedManaCost write FconvertedManaCost;
     property setFlavorText: String read FflavorText write FflavorText;
     property setFrameVersion: String read FframeVersion write FframeVersion;
     property setHasFoil: Boolean read FhasFoil write FhasFoil;
@@ -196,7 +196,7 @@ type
     property setIsReprint: Boolean read FisReprint write FisReprint;
     property setLoyalty: String read Floyalty write Floyalty;
     property setIsPromo: Boolean read FisPromo write FisPromo;
-    property setFaceConvertedManaCost: Integer read FfaceConvertedManaCost write FfaceConvertedManaCost;
+    property setFaceConvertedManaCost: Single read FfaceConvertedManaCost write FfaceConvertedManaCost;
     property setFaceName: String read FfaceName write FfaceName;
     property setSide: String read Fside write Fside;
     property setIsStorySpotlight: Boolean read FisStorySpotlight write FisStorySpotlight;
@@ -249,6 +249,8 @@ type
       procedure ProcessListObjectDataObject(const Json: TJsonNode); override;
     public
       function ExtractImageList: TStringList;
+      function tcgID(const idx: Integer): String;
+      function MultiverseID(const idx: Integer): String;
       function ImageID(const idx: Integer): String;
       function hasFoil(const idx: Integer): Boolean;
       function hasNonFoil(const idx: Integer): Boolean;
@@ -686,7 +688,7 @@ begin
           if not(Node.Kind = nkNumber) then
             MemoMessage('TypeError for convertedManaCost expected nkNumber got ' + Node.KindAsString)
           else
-            Rec.FconvertedManaCost := Trunc(Node.AsNumber);
+            Rec.FconvertedManaCost := StrToFloatDef(Node.AsString, 0);
         end;
       'flavorText':
         begin
@@ -854,7 +856,7 @@ begin
           if not(Node.Kind = nkNumber) then
             MemoMessage('TypeError for faceConvertedManaCost expected nkNumber got ' + Node.KindAsString)
           else
-            Rec.FfaceConvertedManaCost := Trunc(Node.AsNumber);
+            Rec.FfaceConvertedManaCost := StrToFloatDef(Node.AsString, 0);
         end;
       'faceName':
         begin
@@ -1415,6 +1417,30 @@ begin
       '====================' + LineEnding +
       propdec);
   Result := Rec;
+end;
+
+function TMTGSet.tcgID(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FtcgplayerProductId;
+
+  Result := Ret;
+end;
+
+function TMTGSet.MultiverseID(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FmultiverseId;
+
+  Result := Ret;
 end;
 
 function TMTGSet.ImageID(const idx: Integer): String;

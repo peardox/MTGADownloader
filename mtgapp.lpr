@@ -60,6 +60,7 @@ begin
   if HasOption('r', 'rebuild') then begin
     MemoMessage('Rebuilding Cards and Decks...');
     GetDecks(False);
+    GetSets(False);
     Terminate;
     Exit;
   end;

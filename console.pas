@@ -16,8 +16,8 @@ uses
   CastleTimeUtils, CastleURIUtils, CastleFilesUtils,
   CastleLog, fpjson,
   CacheFileUtils,
-//  AssetGatherers, MTGJsonDeckObjects, MTGJsonPriceObjects,
-  MTGJsonObjects, MTGJsonSetObjects;
+//  AssetGatherers, MTGJsonPriceObjects,
+  MTGJsonObjects, MTGJsonDeckObjects, MTGJsonSetObjects;
 
 const
   SCRYFALL_SETS_URI = 'https://api.scryfall.com/sets';
@@ -59,6 +59,7 @@ procedure ExportSetUUIDs(const setCode: String; const OutFile: TTextWriter; cons
 procedure ExportImages(const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
 procedure ExportSetImages(const setCode: String; const UseCache: Boolean = True; const reloadSpoilers: Boolean = False);
 procedure GetSets(const UseCache: Boolean = True);
+procedure GetDecks(const UseCache: Boolean = True);
 
 implementation
 
@@ -293,7 +294,7 @@ begin
   cards := 0;
   ticks := CastleGetTickCount64;
 
-MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
+  MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
   if not (MTGSetList.List = nil) then
     begin
     for idx := 0 to MTGSetList.List.Count -1 do
@@ -316,33 +317,41 @@ MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'c
     end;
   FreeAndNil(MTGSetList);
 
-{
-  MTGDeckList := TMTGDeckList.Create(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', 'fileName');
-  for idx := 0 to MTGDeckList.List.Count -1 do
-    begin
-//      MemoMessage('Key: ' + MTGDeckList.List[idx]);
-      data := GetMTGJsonDeckJson(MTGDeckList.List[idx], 'mtgjson/decks/json');
-      FreeAndNil(data);
-    end;
-//  MTGDeckList.DumpList;
-  FreeAndNil(MTGDeckList);
-}
-//  MemoMessage('----------- END -----------');
   ticks := CastleGetTickCount64 - ticks;
   MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
-{
-  MemoMessage('Sets analysed : ' + IntToStr(cnt));
-  MemoMessage('Sets cards : ' + IntToStr(cards));
-  MemoMessage('Img errors : ' + IntToStr(imerr));
-}
-{
-  data := DownloadNetworkFile('https://noapi.peardox.co.uk/prices/prices.json.gz', [], False);
-  if not(data = nil) then
-    MemoMessage('OK');
-
-  FreeAndNil(data);
-}
 end;
 
+procedure GetDecks(const UseCache: Boolean = True);
+var
+  data: TStream = nil;
+  ticks: Int64;
+  MTGDeckList: TMTGDeckList;
+  idx: Integer;
+  cnt: Integer;
+  decks: Integer;
+begin
+  cnt := 0;
+  decks := 0;
+  ticks := CastleGetTickCount64;
+
+  MTGDeckList := TMTGDeckList.Create(MTGJSON_DECKLIST_URI, 'mtgjson_decklist.json', 'fileName');
+  if not (MTGDeckList.List = nil) then
+    begin
+      for idx := 0 to MTGDeckList.List.Count -1 do
+        begin
+          data := GetMTGJsonDeckJson(MTGDeckList.List[idx], 'mtgjson/decks/json');
+          MemoMessage('Deck = ' + MTGDeckList.List[idx] + '(' + IntToStr(idx + 1) + '/' + IntToStr(MTGDeckList.List.Count) + ')');
+//          MTGDeck := TMTGDeck.Create(data, 'uuid'); // Wrong
+//          decks += MTGDeck.Cards.Count; // Wrong
+          Inc(cnt);
+//          FreeAndNil(MTGDeck); // Wrong
+          FreeAndNil(data);
+        end;
+    end;
+  FreeAndNil(MTGDeckList);
+
+  ticks := CastleGetTickCount64 - ticks;
+  MemoMessage('Time : ' + IntToStr(ticks) + 'ms');
+end;
 
 end.

@@ -58,8 +58,22 @@ begin
   end;
 
   if HasOption('r', 'rebuild') then begin
-    MemoMessage('Rebuilding...');
+    MemoMessage('Rebuilding Cards and Decks...');
+    GetDecks(False);
+    Terminate;
+    Exit;
+  end;
+
+  if HasOption('c', 'cards') then begin
+    MemoMessage('Rebuilding Cards...');
     GetSets(False);
+    Terminate;
+    Exit;
+  end;
+
+  if HasOption('d', 'decks') then begin
+    MemoMessage('Rebuilding Decks...');
+    GetDecks(False);
     Terminate;
     Exit;
   end;

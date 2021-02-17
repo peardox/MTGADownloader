@@ -252,10 +252,13 @@ type
       function tcgID(const idx: Integer): String;
       function MultiverseID(const idx: Integer): String;
       function ImageID(const idx: Integer): String;
+      function ScryfallIllustrationID(const idx: Integer): String;
       function hasFoil(const idx: Integer): Boolean;
       function hasNonFoil(const idx: Integer): Boolean;
       function Name(const idx: Integer): String;
       function ShortName(const idx: Integer): String;
+      function Power(const idx: Integer): String;
+      function Toughness(const idx: Integer): String;
       function Number(const idx: Integer): String;
       function Side(const idx: Integer): String;
       function Rarity(const idx: Integer): String;
@@ -265,6 +268,7 @@ type
       function FrameVersion(const idx: Integer): String;
       function FrameEffects(const idx: Integer): String;
       function PromoTypes(const idx: Integer): String;
+      function ManaCost(const idx: Integer): String;
       function Colors(const idx: Integer): String;
       function ColorIdentity(const idx: Integer): String;
       function ColorIndicator(const idx: Integer): String;
@@ -1455,6 +1459,18 @@ begin
   Result := Ret;
 end;
 
+function TMTGSet.ScryfallIllustrationID(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardIdentifiersRecord(TSetCardRecord(FCards.Objects[idx]).Fidentifiers).FscryfallIllustrationId;
+
+  Result := Ret;
+end;
+
 function TMTGSet.FrameEffects(const idx: Integer): String;
 var
   felist: TFrameEffectsSet;
@@ -1646,6 +1662,42 @@ begin
     end;
 
   Result := Ret.Trim(' ');
+end;
+
+function TMTGSet.Power(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).Fpower;
+
+  Result := Ret;
+end;
+
+function TMTGSet.Toughness(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).Ftoughness;
+
+  Result := Ret;
+end;
+
+function TMTGSet.ManaCost(const idx: Integer): String;
+var
+  Ret: String;
+begin
+  Ret := EmptyStr;
+
+  if((idx >= 0) and (idx < FCards.Count)) then
+    Ret := TSetCardRecord(FCards.Objects[idx]).FmanaCost;
+
+  Result := Ret;
 end;
 
 function TMTGSet.Number(const idx: Integer): String;

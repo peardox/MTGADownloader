@@ -17,7 +17,7 @@ type EImageCacheException = Class(Exception);
 var newFiles: Integer;
 
 function DownloadNetworkFile(const URI: String; const sOptions: TStreamOptions = []; const UsingCache: Boolean = False): TStream;
-function DirectDownloadNetworkFile(const URI: String): TStream;
+function DirectDownloadNetworkFile(const URI: String; var FinalURL: String; var UnixTime: Int64; const HeadOnly: Boolean = False): TStream;
 function DownloadHeadersNetworkFile(const URI: String): String;
 function CacheData(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False): TStream;
 function CacheImage(const URI: String; const FileName: String; const LoadFromCache: Boolean = False; FreeResult: Boolean = False; const ForceRefresh: Boolean = False): TStream;
@@ -234,19 +234,21 @@ begin
   end;
 end;
 
-function DirectDownloadNetworkFile(const URI: String): TStream;
+function DirectDownloadNetworkFile(const URI: String; var FinalURL: String; var UnixTime: Int64; const HeadOnly: Boolean = False): TStream;
 var
   fDownload: TCastleDownload;
   LastModified: String;
   idx: Integer;
 begin
-//  EnableAbortButton(True);
   Result := nil;
-
+  FinalURL := EmptyStr;
+  UnixTime := 0;
   fDownload := TCastleDownload.Create(nil);
   fDownload.HttpHeader('User-Agent', 'https://github.com/peardox/MTGADownloader');
   fDownload.Url := URI;
   fDownload.OwnsContents := True;
+  if HeadOnly then
+    fDownload.HttpMethod := hmHead;
 
   fDownload.Start;
   try
@@ -270,22 +272,18 @@ begin
 
       if fDownload.Status = dsSuccess then
         begin
-        Result := fDownload.Contents;
-        MemoMessage('Size : ' + IntToStr(fDownload.Contents.Size));
-        MemoMessage('URL : ' + fDownload.URL);
-        MemoMessage('Final URL : ' + fDownload.FinalUrl);
-        for idx := 0 to fDownload.HttpResponseHeaders.Count - 1 do
-          MemoMessage(fDownload.HttpResponseHeaders.Strings[idx]);
-        {$if defined(debugMessages)}
-          MemoMessage('Downloaded : ' + URI);
-          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
-          MemoMessage('LastModified : ' + LastModified);
-        {$endif}
-
-        if(fDownload.HttpResponseCode <> 200)  then
+        if(fDownload.HttpResponseCode = 200)  then
           begin
-          MemoMessage('Error Downloading : ' + URI);
-          MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
+            if not HeadOnly then
+              Result := fDownload.Contents;
+            FinalURL := fDownload.FinalUrl;
+            UnixTime := StrToInt64Def(fDownload.HttpResponseHeaders.Values['X-Bz-Upload-Timestamp'], 0);
+            UnixTime := UnixTime div 1000;
+          end
+        else
+          begin
+            MemoMessage('Error Downloading : ' + URI);
+            MemoMessage('HttpResponseCode : ' + IntToStr(fDownload.HttpResponseCode));
           end;
         end
       else

@@ -33,11 +33,17 @@ var
 { TMTGApp }
 
 procedure TMTGApp.DoRun;
-{$ifndef hackmode}
 var
+{$ifndef hackmode}
   ErrorMsg: String;
 {$endif}
+  fn: String;
+  FinalURL: String;
+  UnixTime: Int64;
+  ProcTime: Int64;
 begin
+  FinalURL := EmptyStr;
+  UnixTime := 0;
 {$ifndef hackmode}
   // quick check parameters
   ErrorMsg:=CheckOptions('h', 'help','r','rebuild');
@@ -95,12 +101,15 @@ begin
   end;
 
   if HasOption('t', 'test') then begin
-    MemoMessage('LongInt = ' + IntToStr(SizeOf(LongInt)));
+    ProcTime := CastleGetTickCount64;
     MemoMessage('Testing download...');
-//    MemoMessage('Time : ' + DownloadHeadersNetworkFile('https://decknet.co.uk/data/scryfall/sets/images/set_KHM/large/e079879b-0a43-52fe-b93d-1af4bb8808f4.jpg'));
-    DirectDownloadNetworkFile('https://decknet.co.uk/data/scryfall/sets/images/set_KHM/large/e079879b-0a43-52fe-b93d-1af4bb8808f4.jpg');
-//    MemoMessage('Time : ' + DownloadHeadersNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front'));
-//    DirectDownloadNetworkFile('https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front');
+    fn := 'https://api.scryfall.com/cards/b3b7a69c-75d2-49a6-ab56-ef608d0b0208?format=image&version=large&face=front';
+    MemoMessage('InputURL : ' + fn);
+    DirectDownloadNetworkFile(fn, FinalURL, UnixTime, True);
+    ProcTime := CastleGetTickCount64 - ProcTime;
+    MemoMessage('FinalURL : ' + FinalURL);
+    MemoMessage('UnixTime : ' + IntToStr(UnixTime));
+    MemoMessage('ProcTime : ' + FloatToStr(ProcTime / 1000));
     MemoMessage('Finished test');
     Terminate;
     Exit;

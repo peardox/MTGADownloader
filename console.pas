@@ -105,6 +105,7 @@ begin
           ',"' + StringToJSONString(MTGSet.Power(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.Toughness(idx)) + '"' +
           ',"' + StringToJSONString(MTGSet.ManaCost(idx)) + '"' +
+          ',"' + StringToJSONString(MTGSet.setParentCode) + '"' +
           ',"' + StringToJSONString(MTGSet.ScryfallIllustrationID(idx)) + '"';
 
         OutFile.WriteLn(txt);
@@ -125,7 +126,7 @@ begin
   ticks := CastleGetTickCount64;
   OutFile := TTextWriter.Create(FileName);
   try
-    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall","FrameEffects","PromoTypes","Colors","ColorIdentity","ColorIndicator","hasFoil","hasNonFoil","tcgID","MultiverseID","Power","Toughness","ManaCost","ScryfallIllustrationID"');
+    OutFile.WriteLn('"uuid","cardname","shortname","setcode","cardtype","cardlayout","cardnum","side","rarity","arenaid","scryfall","FrameEffects","PromoTypes","Colors","ColorIdentity","ColorIndicator","hasFoil","hasNonFoil","tcgID","MultiverseID","Power","Toughness","ManaCost","ParentSetCode", "ScryfallIllustrationID"');
     MTGSetList := TMTGSetList.Create(MTGJSON_SETLIST_URI, 'mtgjson_setlist.json', 'code', UseCache);
     try
       if not (MTGSetList.List = nil) then

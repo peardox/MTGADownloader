@@ -722,6 +722,13 @@ begin
           else
             Rec.FhasNonFoil := Node.AsBoolean;
         end;
+      'image':
+        begin
+          if not(Node.Kind = nkObject) then
+            MemoMessage('TypeError for image expected nkObject got ' + Node.KindAsString)
+          else
+            // Rec.Fimage := MapJsonObject(Node); // *** FIXME ***
+        end;
       'isStarter':
         begin
           if not(Node.Kind = nkBool) then

@@ -131,6 +131,7 @@ begin
     try
       if not (MTGSetList.List = nil) then
         begin
+        ExportSetUUIDs('AKHM', OutFile, UseCache);
         for idx := 0 to MTGSetList.List.Count -1 do
           begin
             if not(MTGSetList.List[idx] = 'MZNRdummy') then

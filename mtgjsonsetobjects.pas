@@ -1237,7 +1237,9 @@ begin
             else
               Txt += '      Rec.F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
+            {$ifdef track}
             MemoMessage(Txt);
+            {$endif}
 
             propdec += WritePropertyDeclaration('set', Node);
             membdec += WriteMemberDeclaration(Node);
@@ -1245,6 +1247,7 @@ begin
       end;
     end;
 
+  {$ifdef track}
   if not(Ext = EmptyStr) then
     MemoMessage('====================' + LineEnding +
       'Unhandled (ToDo)' + LineEnding +
@@ -1260,6 +1263,7 @@ begin
       'Properties' + LineEnding +
       '====================' + LineEnding +
       propdec);
+  {$endif}
   Result := Key;
 end;
 
@@ -1405,13 +1409,17 @@ begin
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
+            {$ifdef track}
             MemoMessage(Txt);
+            {$endif}
 
             propdec += WritePropertyDeclaration('set', Node);
             membdec += WriteMemberDeclaration(Node);
           end;
       end;
     end;
+
+  {$ifdef track}
   if not(Ext = EmptyStr) then
     MemoMessage('====================' + LineEnding +
       'Unhandled (ToDo)' + LineEnding +
@@ -1427,6 +1435,7 @@ begin
       'Properties' + LineEnding +
       '====================' + LineEnding +
       propdec);
+  {$endif}
   Result := Rec;
 end;
 
@@ -1844,13 +1853,16 @@ begin
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
+            {$ifdef track}
             MemoMessage(Txt);
+            {$endif}
 
             propdec += WritePropertyDeclaration('set', Node);
             membdec += WriteMemberDeclaration(Node);
           end;
       end;
     end;
+  {$ifdef track}
   if not(Ext = EmptyStr) then
     MemoMessage('====================' + LineEnding +
       'Unhandled (ToDo)' + LineEnding +
@@ -1866,6 +1878,7 @@ begin
       'Properties' + LineEnding +
       '====================' + LineEnding +
       propdec);
+  {$endif}
 end;
 
 procedure TMTGSet.MapJsonSetObject(const Json: TJsonNode);
@@ -2069,7 +2082,9 @@ begin
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
+            {$ifdef track}
             MemoMessage(Txt);
+            {$endif}
           end;
       end;
     end;

@@ -200,13 +200,16 @@ begin
             else
               Txt += '      F' + Node.Name + ' := Node.AsString; // *** FIXME ***' + LineEnding;
             Txt += '  end;';
+            {$ifdef track}
             MemoMessage(Txt);
+            {$endif}
 
             propdec += WritePropertyDeclaration('set', Node);
             membdec += WriteMemberDeclaration(Node);
           end;
       end;
     end;
+  {$ifdef track}
   if not(Ext = EmptyStr) then
     MemoMessage('====================' + LineEnding +
       'Unhandled (ToDo)' + LineEnding +
@@ -223,6 +226,7 @@ begin
       '====================' + LineEnding +
       propdec);
   MemoMessage('--------------- members ---------------');
+  {$endif}
 end;
 
 procedure TMTGList.DumpList;
